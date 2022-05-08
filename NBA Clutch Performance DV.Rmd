@@ -1,0 +1,138 @@
+---
+title: "NBA Prelim Analysis"
+author: "Jason Winik"
+date: "5/3/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+
+data <- read.csv("C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/Data_19_20/NBA_clutch_time_PER_2019_2020.csv")
+data_filters <- read.csv("C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/Data_19_20/abov_500.csv")
+colnames(data_filters) <- c("Player Name", "Total Minutes")
+
+```
+
+## 
+
+
+```{r echo=FALSE}
+grouped <- data %>%
+  group_by(player_on_court,clutch_time) %>%
+  summarize('Total_PER' = sum(PER, na.rm = TRUE),
+            'Avg_PER' = mean(PER, na.rm = TRUE),
+            'Total_Minutes' = sum(play_length_mins, na.rm = TRUE),
+            'Avg_Minutes' = mean(play_length_mins, na.rm = TRUE))
+
+grouped <- grouped %>%
+  filter(!is.infinite(Total_PER))
+
+merged <- merge(grouped, data_filters, by.x = "player_on_court", by.y = "Player Name")
+
+
+merged_500 <- merged %>%
+  filter("Total Minutes" >= 500)
+
+merged_500$clutch_time <- as.factor(merged_500$clutch_time)
+
+```
+
+
+
+
+# Average PER Histograms
+
+```{r echo=FALSE}
+
+
+clutch <- merged_500 %>%
+  filter(clutch_time ==1)
+
+not_clutch <- merged_500 %>%
+  filter(clutch_time ==0)
+
+
+
+ggplot(merged_500, aes(x = Avg_PER, fill = clutch_time)) +
+  geom_histogram(position = "dodge", alpha = 0.99) +
+  labs(title = "Average PER in Clutch and Non-Clutch Time (2019 - 2020)",
+       x = "Average PER",
+       y = "Count of Players",
+       caption = "Only includes players that played above 500 minutes in 2019-20.")+
+  scale_color_manual(values=c("#999999", "#E69F00"))
+  
+
+ggplot(clutch, aes(x = Avg_PER)) +
+  geom_histogram(alpha = 0.4, fill = "blue", color = "blue") +
+  labs(title = "Average PER in Clutch Time (2019 - 2020)",
+       x = "Average PER",
+       y = "Count of Players",
+       caption = "Only includes players that played above 500 minutes in 2019-20.") +
+  theme(legend.position="none")
+
+ggplot(not_clutch, aes(x = Avg_PER)) +
+  geom_histogram(position = "identity", color = "red", fill = "red", alpha = 0.4)+
+  labs(title = "Average PER in Non-Clutch Time (2019 - 2020)",
+       x = "Average PER",
+       y = "Count of Players",
+       caption = "Only includes players that played above 500 minutes in 2019-20.")+
+  theme(legend.position="none")
+
+
+
+```
+
+
+# Difference in PER in clutch and non-clutch times
+
+
+
+```{r echo=FALSE}
+
+#merge clutch and non-clutch
+
+wide <- merge(not_clutch, clutch, by = "player_on_court")
+
+wide$clutch_minus_non <- wide$Avg_PER.y - wide$Avg_PER.x
+
+
+ggplot(wide, aes(x = clutch_minus_non)) +
+  geom_histogram(position = "dodge", fill = "seagreen3",color ="seagreen4", alpha = 0.99) +
+  labs(title = "Change in Avg. PER in Clutch and Non-Clutch Time (2019 - 2020)",
+       x = "Clutch - Non-Clutch PER",
+       y = "Count of Players",
+       caption = "Only includes players that played above 500 minutes in 2019-20.")+scale_color_brewer(palette="Dark2")
+  
+ggplot(wide, aes(x = Total_Minutes.x, y = Total_Minutes.y)) +
+  geom_point() +
+  geom_smooth() +
+  labs(x = "Non-Clutch Time (minutes)",
+       y = "Clutch Time",
+       title = "Time Spent in Clutch and Non-Clutch Situations (2019-2020)")
+
+ggplot(merged_500, aes(y = Avg_Minutes, x=Avg_PER, fill = clutch_time, color = clutch_time)) +
+  geom_point()+
+  geom_smooth()
+
+ggplot(wide, aes(x = Avg_Minutes.x, y = Avg_PER.x)) +
+  geom_point(fill = "red", color="red") +
+  geom_smooth() +
+  labs(x = "Average Non-Clutch Time Played (minutes)",
+       y = "Average Non-Clutch PER",
+       title = "Time Spent in Non-Clutch Situations and Non-Clutch PER (2019-2020)")
+
+ggplot(wide, aes(x = Avg_Minutes.y, y = Avg_PER.y)) +
+  geom_point(fill = "blue", color="blue") +
+  geom_smooth() +
+  labs(x = "Average Clutch Time Played (minutes)",
+       y = "Average Clutch PER",
+       title = "Time Spent in Clutch Situations and Non-Clutch PER (2019-2020)")
+
+```
+
+
+
+
+
+
