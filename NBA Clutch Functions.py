@@ -115,7 +115,7 @@ def make_game_level_again(pbp_grouped, year_start, year_end):
 def create_clutch_df(input_data_path, year_csv, year_start, year_end
                      ,export_path, export_game_ungrouped = True, export_game_grouped = True):
     data_path = os.path.join(input_data_path, year_csv) 
-    pbp_player = pd.read_csv(data_path)
+    pbp_player = pd.read_csv(data_path, encoding= 'unicode_escape')
     
     pbp_player = clean_pbp(pbp_player)
     pbp_pivot = pivot_pbp(pbp_player, year_start, year_end)
@@ -142,6 +142,26 @@ input_data_path = r"C:\Users\jwini\Documents\Gtihub Repositories\NBA-clutch-perf
 export_path = r"C:\Users\jwini\Documents\Gtihub Repositories\NBA-clutch-perf\in_game_analysis\Outputs"
 
 #create_clutch_df creates two years of PER data (wide)
+
+data_16_17_csv = r"[10-25-2016]-[06-12-2017]-combined-stats.csv"
+season_16_17 = create_clutch_df(input_data_path, data_16_17_csv, 2016, 2017
+                         ,export_path
+                         ,export_game_ungrouped = True 
+                         ,export_game_grouped = True)
+data_17_18_csv = r"[10-17-2017]-[06-08-2018]-combined-stats.csv"
+season_17_18 = create_clutch_df(input_data_path, data_17_18_csv, 2017, 2018
+                         ,export_path
+                         ,export_game_ungrouped = True 
+                         ,export_game_grouped = True)
+
+
+data_18_19_csv = r"[10-16-2018]-[06-13-2019]-combined-stats.csv"
+season_18_19 = create_clutch_df(input_data_path, data_18_19_csv, 2018, 2019
+                         ,export_path
+                         ,export_game_ungrouped = True 
+                         ,export_game_grouped = True)
+
+
 data_19_20_csv = r"[10-22-2019]-[10-11-2020]-combined-stats.csv"
 season_19_20 = create_clutch_df(input_data_path, data_19_20_csv, 2019, 2020
                          ,export_path
@@ -151,27 +171,30 @@ season_19_20 = create_clutch_df(input_data_path, data_19_20_csv, 2019, 2020
 data_20_21_csv = r"[12-22-2020]-[07-20-2021]-combined-stats.csv"
 season_20_21 = create_clutch_df(input_data_path, data_20_21_csv, 2020, 2021
                          ,export_path
-                         ,export_game_ungrouped = True 
-                         ,export_game_grouped = True)
+                         ,export_game_ungrouped = False 
+                         ,export_game_grouped = False)
 
 #Take average stats for the season, then regress one year on the other.
 
 # Going to turn the below into a function. But stacks 2 years of game level data
 # then takes the average PER (PER_CT, PER_not_CT, PER_diff) for both years (6 columns)
-multiple = pd.concat([season_20_21, season_19_20])
 
-multiple_short = multiple[['player_on_court', 'Season', 'PER_CT', 'PER_not_CT', 'PER_Diff']]
+df_list = [season_20_21, season_19_20, season_18_19,season_16_17]
 
-multiple_mean = multiple_short.groupby(['player_on_court', 'Season']).mean().reset_index()
+def df_list_to_wide(df_list):
+    multiple = pd.concat(df_list)
+    multiple_short = multiple[['player_on_court', 'Season', 'PER_CT', 'PER_not_CT', 'PER_Diff']]
+    multiple_mean = multiple_short.groupby(['player_on_court', 'Season']).mean().reset_index()
 #multiple_agg = multiple_short.groupby(['player_on_court', 'Season']).agg(
 #    'Avg_PER_CT' )
+    
+    return multiple_mean
 
-
-unique = multiple_mean['Season'].unique().tolist()
-
+test = df_list_to_wide(df_list)
 #Adds the year to the end of the columns so the PER columns show the year in the name
 #merges on player name.
-def make_season_level(df, column = 'Season'):
+def make_season_level(df, column = 'Season', remove_nan_inf = True):
+    #unique = multiple_mean['Season'].unique().tolist()
     unique = df[column].unique()
     df_list = []
     for i in unique:
@@ -183,12 +206,14 @@ def make_season_level(df, column = 'Season'):
         #print(season.columns)
     combined = pd.merge(df_list[0], df_list[1], how = 'outer', on='player_on_court')
     combined = combined.loc[:, ~combined.columns.str.startswith('Season')]
+    if remove_nan_inf == True:
+        combined = combined[combined.replace([np.inf, -np.inf], np.nan).notnull().all(axis=1)]
     return combined
-
+test2 = make_season_level(test, column = 'Season', remove_nan_inf = True)
 #one thing I had to do was drop instances where players played in one season, but not the other
 #that's what the "clean" line does
-test = make_season_level(multiple_mean, 'Season')
-clean = test[test.replace([np.inf, -np.inf], np.nan).notnull().all(axis=1)]
+#test = make_season_level(multiple_mean, 'Season')
+#clean = test[test.replace([np.inf, -np.inf], np.nan).notnull().all(axis=1)]
 
 #Does PER_diff from year 1 impact year 2?
 X = clean['PER_Diff_2019-2020']
