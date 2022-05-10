@@ -179,7 +179,8 @@ season_20_21 = create_clutch_df(input_data_path, data_20_21_csv, 2020, 2021
 # Going to turn the below into a function. But stacks 2 years of game level data
 # then takes the average PER (PER_CT, PER_not_CT, PER_diff) for both years (6 columns)
 
-df_list = [season_20_21, season_19_20, season_18_19,season_16_17]
+df_list_19_21 = [season_20_21, season_19_20]
+df_list_18_20 = [season_18_19, season_19_20]
 
 def df_list_to_wide(df_list):
     multiple = pd.concat(df_list)
@@ -190,7 +191,7 @@ def df_list_to_wide(df_list):
     
     return multiple_mean
 
-test = df_list_to_wide(df_list)
+
 #Adds the year to the end of the columns so the PER columns show the year in the name
 #merges on player name.
 def make_season_level(df, column = 'Season', remove_nan_inf = True):
@@ -199,26 +200,36 @@ def make_season_level(df, column = 'Season', remove_nan_inf = True):
     df_list = []
     for i in unique:
         season = df[df[column] == i]
-        #season = season.drop('Season')
         season = season.rename(columns={col: col+"_"+i 
                         for col in season.columns if col not in ['player_on_court']})
         df_list.append(season)
-        #print(season.columns)
     combined = pd.merge(df_list[0], df_list[1], how = 'outer', on='player_on_court')
     combined = combined.loc[:, ~combined.columns.str.startswith('Season')]
+    #drop instances where players played in one season, but not the other
     if remove_nan_inf == True:
         combined = combined[combined.replace([np.inf, -np.inf], np.nan).notnull().all(axis=1)]
     return combined
-test2 = make_season_level(test, column = 'Season', remove_nan_inf = True)
-#one thing I had to do was drop instances where players played in one season, but not the other
-#that's what the "clean" line does
-#test = make_season_level(multiple_mean, 'Season')
-#clean = test[test.replace([np.inf, -np.inf], np.nan).notnull().all(axis=1)]
+
+def avg_df_merge_years(df_list, column = 'Season', remove_nan_inf = True):
+    wide = df_list_to_wide(df_list)
+    final = make_season_level(wide,column = 'Season', remove_nan_inf = True)
+    return final
+
+clean_19_21 = avg_df_merge_years(df_list_19_21)
+clean_18_20 = avg_df_merge_years(df_list_18_20) 
+
+
+
+
 
 #Does PER_diff from year 1 impact year 2?
-X = clean['PER_Diff_2019-2020']
-Y = clean['PER_Diff_2020-2021']
-X = sm.add_constant(X)
-model = sm.OLS(Y, X).fit()
-summary = model.summary()
-print(summary)
+def simple_ols(df, dep, ind):
+    X = df[str(ind)]
+    Y = df[str(dep)]
+    X = sm.add_constant(X)
+    model = sm.OLS(Y, X).fit()
+    summary = model.summary()
+    print(summary)
+    
+simple_ols(clean_19_21, "PER_Diff_2020-2021", "PER_Diff_2019-2020")
+simple_ols(clean_18_20, "PER_Diff_2019-2020", "PER_Diff_2018-2019")
