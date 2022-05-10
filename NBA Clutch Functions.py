@@ -8,7 +8,7 @@ Created on Sun May  8 13:08:11 2022
 import pandas as pd
 import numpy as np
 import os
-
+import statsmodels.api as sm
 
 
 
@@ -16,9 +16,7 @@ import os
 Play by Play Data
 '''
 
-# Was a play clutch?
 
-#pbp_player = pbp_player[(pbp_player['remaining_time'] <= '00:05:00')]
 def clean_pbp(pbp_player):      
     pbp_player['score_diff'] = np.abs(pbp_player['away_score'] - pbp_player['home_score'])
     pbp_player['clutch_time'] = (pbp_player['remaining_time'] <= '00:05:00') & (pbp_player['period'] == 4) & (pbp_player['score_diff']>= 5) | (pbp_player['period'] == 5)
@@ -61,7 +59,7 @@ def pivot_pbp(pbp_player, year_start, year_end):
                         - pbp_pivot['FT_Miss_PER'] * 20.091
                         - pbp_pivot['FG_Miss_PER'] * 39.190
                     - pbp_pivot['TO_PER'] * 53.897)
-    pbp_pivot['Season'] = str(year_start)+ "-" + str(year_end)
+    #pbp_pivot['Season'] = str(year_start)+ "-" + str(year_end)
     return pbp_pivot
 
 
@@ -71,13 +69,6 @@ def pivot_pbp(pbp_player, year_start, year_end):
 ##############################
 def game_level_clutch_df(pbp_pivot, year_start, year_end):
     pbp_groups = ['game_id','player_on_court', "clutch_time"]
-    
-    pbp_cols = ['elapsed', 'play_length', 'remaining_time', 'player',
-         'steal', 'block', 'assist', 'points', 'event_type', 'result', 'position_on_court',
-         'steal_PER', 'blocks_PER', 'TO_PER', 'FGM_PER', '3PTM_PER', 
-         'FTM_PER', 'Offensive_REB_PER', 'Deffensive_REB_PER', 'Assists_PER', 'Foul_PER', 
-         'FT_Miss_PER', 'FG_Miss_PER', 'PER_no_min']
-
     pbp_grouped = pbp_pivot.groupby(pbp_groups).sum()
     
     pbp_grouped['play_length_mins'] = pbp_grouped['play_length'] / 60 
@@ -95,11 +86,9 @@ def game_level_clutch_df(pbp_pivot, year_start, year_end):
                         - pbp_grouped['TO_PER'] * 53.897) * (1/pbp_grouped['play_length_mins'])
     pbp_grouped = pbp_grouped.reset_index()
     pbp_grouped['above_500_mins'] = np.where(pbp_grouped['play_length_mins'] >= 500,1,0)
-    #clutch_path = "NBA_clutch_time_PER_" +str(year_start) + "_" +str(year_end)+".csv"
-    #pbp_grouped.to_csv(os.path.join(export_path, clutch_path))
     return pbp_grouped
 
-def make_game_level_again(pbp_grouped):
+def make_game_level_again(pbp_grouped, year_start, year_end):
     clutch = pbp_grouped[pbp_grouped["clutch_time"] == 1]
     clutch = clutch.rename(columns={col: col+'_CT' 
                         for col in clutch.columns if col not in ['game_id', 'player_on_court']})
@@ -108,7 +97,9 @@ def make_game_level_again(pbp_grouped):
     not_clutch = not_clutch.rename(columns={col: col+'_not_CT' 
                         for col in not_clutch.columns if col not in ['game_id', 'player_on_court']})
     
-    clutch_merged = pd.merge(not_clutch, clutch, how="left",on=["game_id", "player_on_court"])
+    clutch_merged = pd.merge(not_clutch, clutch, how="outer",on=["game_id", "player_on_court"])
+    clutch_merged["PER_Diff"] = clutch_merged["PER_CT"] - clutch_merged["PER_not_CT"]
+    clutch_merged['Season'] = str(year_start)+ "-" + str(year_end)
     return clutch_merged
     
    
@@ -122,14 +113,18 @@ def create_clutch_df(input_data_path, year_csv, year_start, year_end
     pbp_player = clean_pbp(pbp_player)
     pbp_pivot = pivot_pbp(pbp_player, year_start, year_end)
     PER_pivot = game_level_clutch_df(pbp_pivot, year_start, year_end)
-    final_clutch = make_game_level_again(PER_pivot)
+    final_clutch = make_game_level_again(PER_pivot, year_start, year_end)
     
     if export_game_ungrouped == True:
-        ungrouped_path = "NBA_clutch_time_PER_" +str(year_start) + "_" +str(year_end)+".csv"
+        ungrouped_path = "NBA_clutch_time_PER_ungrouped_" +str(year_start) + "_" +str(year_end)+".csv"
         PER_pivot.to_csv(os.path.join(export_path, ungrouped_path))
+    else:
+        pass
     if export_game_grouped == True:
-        grouped_path = "NBA_clutch_time_PER_" +str(year_start) + "_" +str(year_end)+".csv"
+        grouped_path = "NBA_clutch_time_PER_grouped_" +str(year_start) + "_" +str(year_end)+".csv"
         final_clutch.to_csv(os.path.join(export_path, grouped_path))    
+    else:
+        pass
     
     return final_clutch
 
@@ -137,12 +132,55 @@ def create_clutch_df(input_data_path, year_csv, year_start, year_end
 
 ########### Just do it #############
 input_data_path = r"C:\Users\jwini\Documents\Gtihub Repositories\NBA-clutch-perf\in_game_analysis\BDB_data"
-data_19_20_csv = r"[10-22-2019]-[10-11-2020]-combined-stats.csv"
-
 export_path = r"C:\Users\jwini\Documents\Gtihub Repositories\NBA-clutch-perf\in_game_analysis\Outputs"
 
-
-final = create_clutch_df(input_data_path, data_19_20_csv, 2019, 2020
+data_19_20_csv = r"[10-22-2019]-[10-11-2020]-combined-stats.csv"
+season_19_20 = create_clutch_df(input_data_path, data_19_20_csv, 2019, 2020
                          ,export_path
                          ,export_game_ungrouped = True 
                          ,export_game_grouped = True)
+
+data_20_21_csv = r"[12-22-2020]-[07-20-2021]-combined-stats.csv"
+season_20_21 = create_clutch_df(input_data_path, data_20_21_csv, 2020, 2021
+                         ,export_path
+                         ,export_game_ungrouped = True 
+                         ,export_game_grouped = True)
+
+#Take average stats for the season, then regress one year on the other.
+
+multiple = pd.concat([season_20_21, season_19_20])
+
+multiple_short = multiple[['player_on_court', 'Season', 'PER_CT', 'PER_not_CT', 'PER_Diff']]
+
+multiple_mean = multiple_short.groupby(['player_on_court', 'Season']).mean().reset_index()
+multiple_agg = multiple_short.groupby(['player_on_court', 'Season']).agg(
+    'Avg_PER_CT' )
+
+
+unique = multiple_mean['Season'].unique().tolist()
+
+
+def make_season_level(df, column = 'Season'):
+    unique = df[column].unique()
+    df_list = []
+    for i in unique:
+        season = df[df[column] == i]
+        #season = season.drop('Season')
+        season = season.rename(columns={col: col+"_"+i 
+                        for col in season.columns if col not in ['player_on_court']})
+        df_list.append(season)
+        #print(season.columns)
+    combined = pd.merge(df_list[0], df_list[1], how = 'outer', on='player_on_court')
+    combined = combined.loc[:, ~combined.columns.str.startswith('Season')]
+    return combined
+
+test = make_season_level(multiple_mean, 'Season')
+clean = test[test.replace([np.inf, -np.inf], np.nan).notnull().all(axis=1)]
+
+
+X = clean['PER_Diff_2019-2020']
+Y = clean['PER_Diff_2020-2021']
+X = sm.add_constant(X)
+model = sm.OLS(Y, X).fit()
+summary = model.summary()
+print(summary)
