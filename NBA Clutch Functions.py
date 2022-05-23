@@ -31,6 +31,35 @@ def clean_pbp(pbp_player):
     pbp_player['play_length'] = pd.to_timedelta(pbp_player['play_length']).astype('timedelta64[s]')
     return pbp_player
 
+def clutch_time_col(data):
+    game_list = []
+    game_id_list = data.game_id.unique().tolist()
+    for id in game_id_list:
+        filtered = data[data['game_id'] == id]
+        
+        filtered = filtered.reset_index()
+        filtered = filtered.rename(columns = {'index':"play_number"})
+        filtered['score_diff'] = np.abs(filtered['away_score'] - filtered['home_score'])
+        filtered['clutch_time'] = ((filtered['remaining_time'] <= '00:05:00') & (filtered['period'] == 4) & (filtered['score_diff']>= 5) | (filtered['period'] == 5)).astype(int)
+        filtered['elapsed'] = pd.to_timedelta(filtered['elapsed']).astype('timedelta64[s]')
+        filtered['remaining_time'] = pd.to_timedelta(filtered['remaining_time']).astype('timedelta64[s]')
+        filtered['play_length'] = filtered['play_length'].str.replace('-12','00')
+        filtered['play_length'] = filtered['play_length'].str.replace('-5','00')
+        filtered['play_length'] = pd.to_timedelta(filtered['play_length']).astype('timedelta64[s]')
+        
+        
+        clutch_plays = filtered[filtered['clutch_time'] == 1]
+        if clutch_plays.empty:
+            game_list.append(filtered)
+        else:
+            first_clutch_play_index = min(clutch_plays['play_number'])
+            
+            filtered['clutch_time'] = np.where(filtered['play_number'] >= first_clutch_play_index,1,0)
+            
+            game_list.append(filtered)
+    data_clean = pd.concat(game_list)
+    return data_clean
+
 
 # takes the 10 player columns and pivots them long, such that there's 10 copies
 # of the play. Then calculates PER generated from each type of play. 
