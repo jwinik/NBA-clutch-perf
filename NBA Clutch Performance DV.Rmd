@@ -108,12 +108,19 @@ ggplot(wide, aes(x = Total_Minutes.x, y = Total_Minutes.y)) +
   geom_point() +
   geom_smooth() +
   labs(x = "Non-Clutch Time (minutes)",
-       y = "Clutch Time",
+       y = "Clutch Time (minutes)",
        title = "Time Spent in Clutch and Non-Clutch Situations (2019-2020)")
 
 ggplot(merged_500, aes(y = Avg_Minutes, x=Avg_PER, fill = clutch_time, color = clutch_time)) +
   geom_point()+
   geom_smooth()
+
+ggplot(wide, aes(y = Avg_PER.y, x=Avg_PER.x)) +
+  geom_point()+
+  geom_smooth() +
+  labs(title = "Clutch and Non-Clutch PER",
+       x = "Non-Clutch PER",
+       y = "Clutch PER")
 
 ggplot(wide, aes(x = Avg_Minutes.x, y = Avg_PER.x)) +
   geom_point(fill = "red", color="red") +
@@ -132,6 +139,15 @@ ggplot(wide, aes(x = Avg_Minutes.y, y = Avg_PER.y)) +
 ```
 
 
+
+```{r}
+library(tidyverse)
+
+data <- read.csv("C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Outputs/season_dummies_2020_21.csv")
+
+lm()
+
+```
 
 
 
