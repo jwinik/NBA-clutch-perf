@@ -27,40 +27,25 @@ Take play by play data:
 
 
 
-data = raw.copy()
-data = clean_pbp(data) #from 'NBA Clutch Functions.py'
+#data = raw.copy()
+#data = clean_pbp(data) #from 'NBA Clutch Functions.py'
 
-#create a list of players
-def get_player_list(data, players_start, players_end):
+#create a list of players. Not needed
+def get_player_list(data):
     #make a list of players
     player_cols = ['a1', 'a2', 'a3', 'a4', 'a5', 'h1', 'h2', 'h3', 'h4', 'h5']
     player_list = data[player_cols].values.tolist()
     flat = [item for sublist in player_list for item in sublist]
     flat = list(set(flat))
     return flat
-players = get_player_list(data, 'a1', 'h5')
-
-def dummy_score_cols(data, players_list):    
-    data['steal_PT'] = (pd.notna(data['steal'])).astype(int)
-    data['blocks_PT'] = (pd.notna(data['block'])).astype(int)
-    data['TO_PT'] = ((pd.notna(data['player']) & (data['event_type'] == 'turnover'))).astype(int)
-    data['FGM_PT'] =  ((pd.notna(data['player'])) & (data['event_type'] == 'shot') & (data['result'] == 'made') & ((data['points'] == 2) | (data['points'] == 3)))
-    data['3PTM_PT'] = ((pd.notna(data['player'])) & (data['event_type'] == 'shot') & (data['result'] == 'made') & (data['points'] == 3)).astype(int)
-    data['FTM_PT'] = ((pd.notna(data['player']))  & (data['event_type'] == 'free throw') & (data['result'] == 'made') & (data['points'] == 1)).astype(int)
-    data['Offensive_REB_PT'] = ((pd.notna(data['player'])) & (data['type'] == 'rebound offensive')).astype(int)
-    data['Assists_PT'] = (data['player'] == data['assist']).astype(int)
-    data['Deffensive_REB_PT'] = ((pd.notna(data['player'])) & (data['type'] == 'rebound deffensive')).astype(int)
-    data['Foul_PT'] = ((pd.notna(data['player'])) & (data['event_type'] == 'foul')).astype(int)
-    data['FT_Miss_PT'] = ((pd.notna(data['player']))  & (data['event_type'] == 'free throw') & (data['result'] == 'missed') & (data['points'] == 0)).astype(int)
-    data['FG_Miss_PT'] = ((pd.notna(data['player']))  & (data['event_type'] == 'miss') & (data['result'] == 'missed')).astype(int)
-    #add column for possessions
-    data['posessions'] = data['Deffensive_REB_PT'] + data['Offensive_REB_PT'] + data['TO_PT'] + data['FGM_PT'] + data['FTM_PT']/2
-    return data 
-
-data_dummies = dummy_score_cols(data, players)
+players = get_player_list(data)
 
 
 
+#data_dummies = get_possessions(data, players)
+
+#head = data_dummies.head(100)
+#input is get_players
 def group_season_data(data):
     grouped = data.groupby(['data_set', 'clutch_time']).sum()
     grouped['play_length_mins'] = grouped['play_length'] / 60
