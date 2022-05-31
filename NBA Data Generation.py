@@ -35,71 +35,102 @@ for i in schedule_path_list:
     schedule_list.append(temp)
     master_schedule = pd.concat(schedule_list)
 
-yo = pd.read_csv(r"C:\Users\jwini\Documents\Gtihub Repositories\NBA-clutch-perf\in_game_analysis\BDB_data\[10-20-2011]-[07-01-2012]-combined-stats.csv")
-yo.dtypes
+initials_df = pd.read_csv(r'C:\Users\jwini\Documents\Gtihub Repositories\NBA-clutch-perf\in_game_analysis\Schedules\Team Initials Mapping.csv')
+pace_data = pd.read_csv(r"C:\Users\jwini\Documents\Gtihub Repositories\NBA-clutch-perf\in_game_analysis\team_season_data.csv")
 
 data_10_11_csv = r"[10-20-2010]-[06-30-2011]-combined-stats.csv"
-season_10_11 = create_clutch_df(input_data_path, data_10_11_csv, 2010, 2011, master_schedule
+long_10_11, wide_10_11 = create_clutch_df(input_data_path, data_10_11_csv, 2010, 11, master_schedule
                          ,export_path
                          ,export_game_long = True 
                          ,export_game_wide = True)
 data_11_12_csv = r"[10-20-2011]-[07-01-2012]-combined-stats.csv"
-season_11_12 = create_clutch_df(input_data_path, data_11_12_csv, 2011, 2012, master_schedule
+long_11_12, wide_11_12 = create_clutch_df(input_data_path, data_11_12_csv, 2011, 12, master_schedule
                          ,export_path
                          ,export_game_long = True 
                          ,export_game_wide = True)
 data_12_13_csv = r"[10-20-2012]-[06-30-2013]-combined-stats.csv"
-season_12_13 = create_clutch_df(input_data_path, data_12_13_csv, 2012, 2013, master_schedule
+long_12_13, wide_12_13 = create_clutch_df(input_data_path, data_12_13_csv, 2012, 13, master_schedule
                          ,export_path
                          ,export_game_long = True 
                          ,export_game_wide = True)
 data_13_14_csv = r"[10-20-2013]-[06-30-2014]-combined-stats.csv"
-season_13_14 = create_clutch_df(input_data_path, data_13_14_csv, 2013, 2014, master_schedule
+long_13_14, wide_13_14 = create_clutch_df(input_data_path, data_13_14_csv, 2013, 14, master_schedule
                          ,export_path
                          ,export_game_long = True 
                          ,export_game_wide = True)
 data_14_15_csv = r"[10-20-2014]-[06-17-2015]-combined-stats.csv"
-season_14_15 = create_clutch_df(input_data_path, data_14_15_csv, 2014, 2015, master_schedule
+long_14_15, wide_14_15 = create_clutch_df(input_data_path, data_14_15_csv, 2014, 15, master_schedule
                          ,export_path
                          ,export_game_long = True 
                          ,export_game_wide = True)
 data_15_16_csv = r"[10-20-2015]-[06-20-2016]-combined-stats.csv"
-season_15_16 = create_clutch_df(input_data_path, data_15_16_csv, 2015, 2016, master_schedule
+long_15_16, wide_15_16 = create_clutch_df(input_data_path, data_15_16_csv, 2015, 16, master_schedule
                          ,export_path
                          ,export_game_long = True 
                          ,export_game_wide = True)
 
 
 data_16_17_csv = r"[10-25-2016]-[06-12-2017]-combined-stats.csv"
-season_16_17 = create_clutch_df(input_data_path, data_16_17_csv, 2016, 2017, master_schedule
+long_16_17, wide_16_17 = create_clutch_df(input_data_path, data_16_17_csv, 2016, 17, master_schedule
                          ,export_path
                          ,export_game_long = True 
                          ,export_game_wide = True)
 data_17_18_csv = r"[10-17-2017]-[06-08-2018]-combined-stats.csv"
-season_17_18 = create_clutch_df(input_data_path, data_17_18_csv, 2017, 2018, master_schedule
+long_17_18, wide_17_18 = create_clutch_df(input_data_path, data_17_18_csv, 2017, 18, master_schedule
                          ,export_path
                          ,export_game_long = True 
                          ,export_game_wide = True)
 
 
 data_18_19_csv = r"[10-16-2018]-[06-13-2019]-combined-stats.csv"
-season_18_19 = create_clutch_df(input_data_path, data_18_19_csv, 2018, 2019, master_schedule
+long_18_19, wide_18_19 = create_clutch_df(input_data_path, data_18_19_csv, 2018, 19, master_schedule
                          ,export_path
                          ,export_game_long = True 
                          ,export_game_wide = True)
 
 
-data_19_20_csv = r"[10-22-2019]-[10-11-2020]-combined-stats.csv"
-season_19_20 = create_clutch_df(input_data_path, data_19_20_csv, 2019, 2020, master_schedule
-                         ,export_path
-                         ,export_game_long = True 
-                         ,export_game_wide = True)
+#data_19_20_csv = r"[10-22-2019]-[10-11-2020]-combined-stats.csv"
+#long_19_20, wide_19_20 = create_clutch_df(input_data_path, data_19_20_csv, 2019, 20, master_schedule
+#                         ,export_path
+#                         ,export_game_long = True 
+#                         ,export_game_wide = True)
 
 data_20_21_csv = r"[12-22-2020]-[07-20-2021]-combined-stats.csv"
-season_20_21 = create_clutch_df(input_data_path, data_20_21_csv, 2020, 2021, master_schedule
+long_20_21, wide_20_21 = create_clutch_df(input_data_path, data_20_21_csv, 2020, 21, master_schedule
                          ,export_path
                          ,export_game_long = True 
                          ,export_game_wide = True)
+
+data_path = os.path.join(input_data_path, data_18_19_csv) 
+pbp_player = pd.read_csv(data_path, encoding= 'unicode_escape')
+pbp_player = clutch_time_col(pbp_player)
+pbp_player = get_possessions(pbp_player)
+pbp_pivot = pivot_pbp(pbp_player, 2018, 19, master_schedule)
+#PER_pivot = game_level_long(pbp_pivot, 2018, 2019)
+#final_clutch = game_level_long_to_wide(PER_pivot, year_start, year_end)
+test = pbp_pivot.head(1000)
+year_start = 2018
+year_end = 19
+
+
+    
+
+
+
+
+
+
+
+pbp_grouped = get_pace_adjustment(pbp_grouped, pace_data, year_start, year_end)
+pbp_grouped['clutch_adj'] = clutch_adj
+pbp_grouped.loc[pbp_grouped['clutch_time'] == 0, ['clutch_adj']] = 1 
+pbp_grouped['PER_adj'] = pbp_grouped['PER'] * pbp_grouped['Pace Adjustment'] * pbp_grouped['clutch_adj']
+return pbp_grouped
+
+#Need to calculate League Average Pace In Clutch time and non clutch time
+
+
+
 
 
 #Take average stats for the season, then regress one year on the other.

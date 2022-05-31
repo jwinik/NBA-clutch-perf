@@ -1,0 +1,859 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  landscape]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={NBA Regression Analysis New},
+  pdfauthor={Jason Winik},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{dcolumn}
+
+\title{NBA Regression Analysis New}
+\author{Jason Winik}
+\date{5/30/2022}
+
+\begin{document}
+\maketitle
+
+\hypertarget{wald-test}{%
+\subsection{Wald test:}\label{wald-test}}
+
+Chi-squared test: X2 = 265.5, df = 113, P(\textgreater{} X2) = 2.7e-14
+The Wald Statistic for Testing that all the deviations of player fixed
+effects from the average were zero was W\_stat = 265.5 and k = 113. The
+amount of variation explained by the presence of clutch time is
+0.578154425612053.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{stargazer}\NormalTok{(fixed_lm,}
+          \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{, }
+          \DataTypeTok{align =} \OtherTok{TRUE}\NormalTok{, }
+          \DataTypeTok{no.space =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard
+University. E-mail: hlavac at fas.harvard.edu \% Date and time: Mon, May
+30, 2022 - 8:33:25 PM \% Requires LaTeX packages: dcolumn
+
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\small 
+\begin{tabular}{@{\extracolsep{5pt}}lD{.}{.}{-3} } 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & \multicolumn{1}{c}{PER\_adj} \\ 
+\hline \\[-1.8ex] 
+ player\_on\_courtAl-Farouq Aminu & -6.787 \\ 
+  & (6.941) \\ 
+  player\_on\_courtAl Horford & -5.633 \\ 
+  & (7.748) \\ 
+  player\_on\_courtAllen Crabbe & -2.550 \\ 
+  & (7.407) \\ 
+  player\_on\_courtAndre Drummond & 3.484 \\ 
+  & (7.037) \\ 
+  player\_on\_courtAndre Iguodala & -3.365 \\ 
+  & (7.748) \\ 
+  player\_on\_courtAndre Roberson & -8.642 \\ 
+  & (7.407) \\ 
+  player\_on\_courtAndrew Wiggins & -3.605 \\ 
+  & (7.037) \\ 
+  player\_on\_courtBen Simmons & -3.037 \\ 
+  & (8.522) \\ 
+  player\_on\_courtBlake Griffin & 5.285 \\ 
+  & (7.962) \\ 
+  player\_on\_courtBojan Bogdanovic & -2.967 \\ 
+  & (7.406) \\ 
+  player\_on\_courtBradley Beal & 7.029 \\ 
+  & (6.333) \\ 
+  player\_on\_courtBrandon Jennings & -11.568 \\ 
+  & (8.524) \\ 
+  player\_on\_courtBrook Lopez & 2.503 \\ 
+  & (7.406) \\ 
+  player\_on\_courtCarmelo Anthony & -0.622 \\ 
+  & (7.748) \\ 
+  player\_on\_courtChris Paul & 14.404 \\ 
+  & (9.384) \\ 
+  player\_on\_courtCJ McCollum & 5.371 \\ 
+  & (6.940) \\ 
+  player\_on\_courtCollin Sexton & 11.511 \\ 
+  & (10.020) \\ 
+  player\_on\_courtCourtney Lee & 1.968 \\ 
+  & (10.018) \\ 
+  player\_on\_courtDamian Lillard & 5.969 \\ 
+  & (6.852) \\ 
+  player\_on\_courtDanny Green & -5.237 \\ 
+  & (7.565) \\ 
+  player\_on\_courtDario Saric & -3.515 \\ 
+  & (6.940) \\ 
+  player\_on\_courtDeAndre Jordan & -2.435 \\ 
+  & (8.222) \\ 
+  player\_on\_courtDelon Wright & 3.131 \\ 
+  & (7.962) \\ 
+  player\_on\_courtDeMar DeRozan & 11.290 \\ 
+  & (7.037) \\ 
+  player\_on\_courtDeMarre Carroll & 0.055 \\ 
+  & (8.216) \\ 
+  player\_on\_courtDennis Schroder & -0.840 \\ 
+  & (7.568) \\ 
+  player\_on\_courtDerrick Rose & 4.469 \\ 
+  & (7.750) \\ 
+  player\_on\_courtDevin Booker & -2.606 \\ 
+  & (8.216) \\ 
+  player\_on\_courtDraymond Green & -7.712 \\ 
+  & (8.522) \\ 
+  player\_on\_courtElfrid Payton & -0.781 \\ 
+  & (7.748) \\ 
+  player\_on\_courtEric Bledsoe & 4.775 \\ 
+  & (8.216) \\ 
+  player\_on\_courtEric Gordon & 4.218 \\ 
+  & (8.905) \\ 
+  player\_on\_courtEvan Fournier & -1.712 \\ 
+  & (7.268) \\ 
+  player\_on\_courtGary Harris & -5.557 \\ 
+  & (9.389) \\ 
+  player\_on\_courtGiannis Antetokounmpo & 5.159 \\ 
+  & (7.406) \\ 
+  player\_on\_courtGoran Dragic & -0.620 \\ 
+  & (7.268) \\ 
+  player\_on\_courtHarrison Barnes & 2.649 \\ 
+  & (7.412) \\ 
+  player\_on\_courtHassan Whiteside & 0.981 \\ 
+  & (7.748) \\ 
+  player\_on\_courtJabari Parker & 1.424 \\ 
+  & (8.525) \\ 
+  player\_on\_courtJae Crowder & -0.139 \\ 
+  & (7.748) \\ 
+  player\_on\_courtJamal Murray & -0.732 \\ 
+  & (7.037) \\ 
+  player\_on\_courtJames Harden & 14.782^{*} \\ 
+  & (7.565) \\ 
+  player\_on\_courtJarrett Allen & 4.691 \\ 
+  & (8.525) \\ 
+  player\_on\_courtJayson Tatum & 1.638 \\ 
+  & (7.963) \\ 
+  player\_on\_courtJeff Green & -5.570 \\ 
+  & (6.775) \\ 
+  player\_on\_courtJeff Teague & 5.665 \\ 
+  & (7.565) \\ 
+  player\_on\_courtJerami Grant & 1.707 \\ 
+  & (7.268) \\ 
+  player\_on\_courtJimmy Butler & 9.921 \\ 
+  & (7.750) \\ 
+  player\_on\_courtJJ Redick & -3.595 \\ 
+  & (8.524) \\ 
+  player\_on\_courtJoe Harris & -3.684 \\ 
+  & (7.409) \\ 
+  player\_on\_courtJoe Ingles & -4.531 \\ 
+  & (7.749) \\ 
+  player\_on\_courtJoel Embiid & 8.304 \\ 
+  & (7.748) \\ 
+  player\_on\_courtJohn Wall & 4.984 \\ 
+  & (6.852) \\ 
+  player\_on\_courtJosh Richardson & -6.449 \\ 
+  & (7.748) \\ 
+  player\_on\_courtJustin Holiday & -4.174 \\ 
+  & (7.146) \\ 
+  player\_on\_courtJustise Winslow & -9.369 \\ 
+  & (7.268) \\ 
+  player\_on\_courtKarl-Anthony Towns & 10.642 \\ 
+  & (6.774) \\ 
+  player\_on\_courtKelly Oubre Jr. & -4.342 \\ 
+  & (6.855) \\ 
+  player\_on\_courtKent Bazemore & -7.823 \\ 
+  & (7.567) \\ 
+  player\_on\_courtKentavious Caldwell-Pope & -4.246 \\ 
+  & (7.146) \\ 
+  player\_on\_courtKevin Durant & 13.014^{*} \\ 
+  & (7.565) \\ 
+  player\_on\_courtKevin Love & 4.335 \\ 
+  & (8.523) \\ 
+  player\_on\_courtKhris Middleton & -0.624 \\ 
+  & (7.962) \\ 
+  player\_on\_courtKlay Thompson & -9.284 \\ 
+  & (8.216) \\ 
+  player\_on\_courtKyle Kuzma & 4.997 \\ 
+  & (7.565) \\ 
+  player\_on\_courtKyle Lowry & 2.296 \\ 
+  & (7.962) \\ 
+  player\_on\_courtKyrie Irving & 6.366 \\ 
+  & (7.409) \\ 
+  player\_on\_courtLaMarcus Aldridge & 5.042 \\ 
+  & (7.748) \\ 
+  player\_on\_courtLauri Markkanen & 3.440 \\ 
+  & (8.904) \\ 
+  player\_on\_courtLeBron James & 11.713 \\ 
+  & (7.566) \\ 
+  player\_on\_courtMarc Gasol & 0.203 \\ 
+  & (7.041) \\ 
+  player\_on\_courtMarcin Gortat & -3.637 \\ 
+  & (6.703) \\ 
+  player\_on\_courtMarcus Morris & -5.364 \\ 
+  & (7.565) \\ 
+  player\_on\_courtMarcus Smart & -4.120 \\ 
+  & (7.567) \\ 
+  player\_on\_courtMarkieff Morris & -2.735 \\ 
+  & (6.467) \\ 
+  player\_on\_courtMason Plumlee & -0.383 \\ 
+  & (7.268) \\ 
+  player\_on\_courtMatthew Dellavedova & -8.493 \\ 
+  & (9.385) \\ 
+  player\_on\_courtMaurice Harkless & -5.783 \\ 
+  & (7.269) \\ 
+  player\_on\_courtMike Conley & 3.496 \\ 
+  & (7.971) \\ 
+  player\_on\_courtMyles Turner & 0.897 \\ 
+  & (7.565) \\ 
+  player\_on\_courtNikola Jokic & 9.819 \\ 
+  & (6.941) \\ 
+  player\_on\_courtNikola Vucevic & 3.054 \\ 
+  & (7.407) \\ 
+  player\_on\_courtOtto Porter Jr. & 0.551 \\ 
+  & (6.519) \\ 
+  player\_on\_courtPatty Mills & -0.098 \\ 
+  & (7.565) \\ 
+  player\_on\_courtPaul George & 2.087 \\ 
+  & (8.217) \\ 
+  player\_on\_courtPaul Millsap & 1.027 \\ 
+  & (7.043) \\ 
+  player\_on\_courtPJ Tucker & -4.891 \\ 
+  & (8.522) \\ 
+  player\_on\_courtReggie Jackson & 4.028 \\ 
+  & (8.901) \\ 
+  player\_on\_courtRicky Rubio & 4.965 \\ 
+  & (7.268) \\ 
+  player\_on\_courtRobert Covington & 4.292 \\ 
+  & (7.748) \\ 
+  player\_on\_courtRobin Lopez & -0.934 \\ 
+  & (7.565) \\ 
+  player\_on\_courtRudy Gay & 6.050 \\ 
+  & (7.962) \\ 
+  player\_on\_courtRudy Gobert & 0.928 \\ 
+  & (8.218) \\ 
+  player\_on\_courtRussell Westbrook & 8.990 \\ 
+  & (6.773) \\ 
+  player\_on\_courtSerge Ibaka & -1.883 \\ 
+  & (7.409) \\ 
+  player\_on\_courtStephen Curry & 11.495 \\ 
+  & (8.522) \\ 
+  player\_on\_courtSteven Adams & -7.183 \\ 
+  & (7.037) \\ 
+  player\_on\_courtTerrence Ross & -2.401 \\ 
+  & (7.748) \\ 
+  player\_on\_courtThaddeus Young & 0.609 \\ 
+  & (7.407) \\ 
+  player\_on\_courtTim Hardaway Jr. & 0.011 \\ 
+  & (9.383) \\ 
+  player\_on\_courtTobias Harris & 0.569 \\ 
+  & (7.962) \\ 
+  player\_on\_courtTomas Satoransky & -2.712 \\ 
+  & (6.940) \\ 
+  player\_on\_courtTony Snell & -12.293 \\ 
+  & (8.907) \\ 
+  player\_on\_courtTrae Young & 12.126 \\ 
+  & (8.527) \\ 
+  player\_on\_courtTrevor Ariza & -3.433 \\ 
+  & (7.962) \\ 
+  player\_on\_courtTyler Johnson & 2.172 \\ 
+  & (7.268) \\ 
+  player\_on\_courtVictor Oladipo & -0.677 \\ 
+  & (7.408) \\ 
+  player\_on\_courtVince Carter & 1.733 \\ 
+  & (8.524) \\ 
+  player\_on\_courtWesley Matthews & -4.115 \\ 
+  & (7.963) \\ 
+  player\_on\_courtWill Barton & -1.041 \\ 
+  & (7.568) \\ 
+  player\_on\_courtWillie Cauley-Stein & -3.056 \\ 
+  & (8.219) \\ 
+  player\_on\_courtZach LaVine & 5.575 \\ 
+  & (8.224) \\ 
+  player\_on\_courtZach Randolph & 5.037 \\ 
+  & (8.232) \\ 
+  clutch\_time & 3.271 \\ 
+  & (10.912) \\ 
+  DRtg\_minus\_Avg & 0.584^{***} \\ 
+  & (0.158) \\ 
+  player\_on\_courtAl-Farouq Aminu:clutch\_time & 4.985 \\ 
+  & (13.332) \\ 
+  player\_on\_courtAl Horford:clutch\_time & 5.881 \\ 
+  & (13.919) \\ 
+  player\_on\_courtAllen Crabbe:clutch\_time & -8.287 \\ 
+  & (15.485) \\ 
+  player\_on\_courtAndre Drummond:clutch\_time & 4.783 \\ 
+  & (13.388) \\ 
+  player\_on\_courtAndre Iguodala:clutch\_time & -1.038 \\ 
+  & (14.642) \\ 
+  player\_on\_courtAndre Roberson:clutch\_time & 6.198 \\ 
+  & (13.916) \\ 
+  player\_on\_courtAndrew Wiggins:clutch\_time & 14.850 \\ 
+  & (13.255) \\ 
+  player\_on\_courtBen Simmons:clutch\_time & 2.856 \\ 
+  & (15.061) \\ 
+  player\_on\_courtBlake Griffin:clutch\_time & -15.912 \\ 
+  & (15.762) \\ 
+  player\_on\_courtBojan Bogdanovic:clutch\_time & -8.346 \\ 
+  & (15.487) \\ 
+  player\_on\_courtBradley Beal:clutch\_time & -6.274 \\ 
+  & (12.428) \\ 
+  player\_on\_courtBrandon Jennings:clutch\_time & 0.869 \\ 
+  & (18.729) \\ 
+  player\_on\_courtBrook Lopez:clutch\_time & -3.740 \\ 
+  & (15.484) \\ 
+  player\_on\_courtCarmelo Anthony:clutch\_time & -5.575 \\ 
+  & (14.102) \\ 
+  player\_on\_courtChris Paul:clutch\_time & 6.401 \\ 
+  & (16.527) \\ 
+  player\_on\_courtCJ McCollum:clutch\_time & 1.068 \\ 
+  & (12.804) \\ 
+  player\_on\_courtCollin Sexton:clutch\_time & 20.875 \\ 
+  & (16.894) \\ 
+  player\_on\_courtCourtney Lee:clutch\_time & -15.252 \\ 
+  & (17.794) \\ 
+  player\_on\_courtDamian Lillard:clutch\_time & 2.546 \\ 
+  & (12.754) \\ 
+  player\_on\_courtDanny Green:clutch\_time & 12.902 \\ 
+  & (14.233) \\ 
+  player\_on\_courtDario Saric:clutch\_time & 8.679 \\ 
+  & (15.277) \\ 
+  player\_on\_courtDeAndre Jordan:clutch\_time & 14.080 \\ 
+  & (15.303) \\ 
+  player\_on\_courtDelon Wright:clutch\_time & 4.182 \\ 
+  & (16.708) \\ 
+  player\_on\_courtDeMar DeRozan:clutch\_time & -8.388 \\ 
+  & (12.984) \\ 
+  player\_on\_courtDeMarre Carroll:clutch\_time & -11.234 \\ 
+  & (15.303) \\ 
+  player\_on\_courtDennis Schroder:clutch\_time & -0.547 \\ 
+  & (13.674) \\ 
+  player\_on\_courtDerrick Rose:clutch\_time & -8.264 \\ 
+  & (15.065) \\ 
+  player\_on\_courtDevin Booker:clutch\_time & 6.653 \\ 
+  & (14.365) \\ 
+  player\_on\_courtDraymond Green:clutch\_time & 27.678^{*} \\ 
+  & (14.769) \\ 
+  player\_on\_courtElfrid Payton:clutch\_time & -3.759 \\ 
+  & (13.921) \\ 
+  player\_on\_courtEric Bledsoe:clutch\_time & 11.404 \\ 
+  & (14.186) \\ 
+  player\_on\_courtEric Gordon:clutch\_time & 16.205 \\ 
+  & (17.193) \\ 
+  player\_on\_courtEvan Fournier:clutch\_time & 35.187^{**} \\ 
+  & (13.662) \\ 
+  player\_on\_courtGary Harris:clutch\_time & -4.756 \\ 
+  & (17.438) \\ 
+  player\_on\_courtGiannis Antetokounmpo:clutch\_time & 9.126 \\ 
+  & (13.733) \\ 
+  player\_on\_courtGoran Dragic:clutch\_time & 16.405 \\ 
+  & (14.810) \\ 
+  player\_on\_courtHarrison Barnes:clutch\_time & 21.248 \\ 
+  & (13.732) \\ 
+  player\_on\_courtHassan Whiteside:clutch\_time & 9.168 \\ 
+  & (14.333) \\ 
+  player\_on\_courtJabari Parker:clutch\_time & -1.068 \\ 
+  & (18.709) \\ 
+  player\_on\_courtJae Crowder:clutch\_time & -1.671 \\ 
+  & (15.655) \\ 
+  player\_on\_courtJamal Murray:clutch\_time & 4.091 \\ 
+  & (13.962) \\ 
+  player\_on\_courtJames Harden:clutch\_time & 1.686 \\ 
+  & (13.669) \\ 
+  player\_on\_courtJarrett Allen:clutch\_time & -18.977 \\ 
+  & (15.463) \\ 
+  player\_on\_courtJayson Tatum:clutch\_time & 13.570 \\ 
+  & (14.452) \\ 
+  player\_on\_courtJeff Green:clutch\_time & 16.098 \\ 
+  & (13.833) \\ 
+  player\_on\_courtJeff Teague:clutch\_time & 16.812 \\ 
+  & (13.668) \\ 
+  player\_on\_courtJerami Grant:clutch\_time & 12.339 \\ 
+  & (13.503) \\ 
+  player\_on\_courtJimmy Butler:clutch\_time & 6.580 \\ 
+  & (13.771) \\ 
+  player\_on\_courtJJ Redick:clutch\_time & 19.919 \\ 
+  & (15.470) \\ 
+  player\_on\_courtJoe Harris:clutch\_time & -8.954 \\ 
+  & (14.155) \\ 
+  player\_on\_courtJoe Ingles:clutch\_time & 6.335 \\ 
+  & (15.054) \\ 
+  player\_on\_courtJoel Embiid:clutch\_time & 28.115^{*} \\ 
+  & (14.633) \\ 
+  player\_on\_courtJohn Wall:clutch\_time & 0.860 \\ 
+  & (13.159) \\ 
+  player\_on\_courtJosh Richardson:clutch\_time & 15.095 \\ 
+  & (14.337) \\ 
+  player\_on\_courtJustin Holiday:clutch\_time & 9.543 \\ 
+  & (14.018) \\ 
+  player\_on\_courtJustise Winslow:clutch\_time & 0.063 \\ 
+  & (14.083) \\ 
+  player\_on\_courtKarl-Anthony Towns:clutch\_time & -6.747 \\ 
+  & (13.401) \\ 
+  player\_on\_courtKelly Oubre Jr.:clutch\_time & 14.597 \\ 
+  & (13.286) \\ 
+  player\_on\_courtKent Bazemore:clutch\_time & 15.497 \\ 
+  & (14.960) \\ 
+  player\_on\_courtKentavious Caldwell-Pope:clutch\_time & 8.042 \\ 
+  & (13.317) \\ 
+  player\_on\_courtKevin Durant:clutch\_time & -0.263 \\ 
+  & (14.539) \\ 
+  player\_on\_courtKevin Love:clutch\_time & 12.902 \\ 
+  & (14.767) \\ 
+  player\_on\_courtKhris Middleton:clutch\_time & -6.177 \\ 
+  & (14.221) \\ 
+  player\_on\_courtKlay Thompson:clutch\_time & 12.561 \\ 
+  & (15.892) \\ 
+  player\_on\_courtKyle Kuzma:clutch\_time & -8.647 \\ 
+  & (14.239) \\ 
+  player\_on\_courtKyle Lowry:clutch\_time & 2.130 \\ 
+  & (14.039) \\ 
+  player\_on\_courtKyrie Irving:clutch\_time & 25.224^{*} \\ 
+  & (13.265) \\ 
+  player\_on\_courtLaMarcus Aldridge:clutch\_time & 0.492 \\ 
+  & (15.056) \\ 
+  player\_on\_courtLauri Markkanen:clutch\_time & -0.001 \\ 
+  & (15.282) \\ 
+  player\_on\_courtLeBron James:clutch\_time & 6.917 \\ 
+  & (13.668) \\ 
+  player\_on\_courtMarc Gasol:clutch\_time & 13.018 \\ 
+  & (13.387) \\ 
+  player\_on\_courtMarcin Gortat:clutch\_time & 6.778 \\ 
+  & (13.370) \\ 
+  player\_on\_courtMarcus Morris:clutch\_time & -5.751 \\ 
+  & (14.960) \\ 
+  player\_on\_courtMarcus Smart:clutch\_time & -7.706 \\ 
+  & (14.539) \\ 
+  player\_on\_courtMarkieff Morris:clutch\_time & 13.369 \\ 
+  & (12.964) \\ 
+  player\_on\_courtMason Plumlee:clutch\_time & 7.024 \\ 
+  & (13.851) \\ 
+  player\_on\_courtMatthew Dellavedova:clutch\_time & -5.196 \\ 
+  & (19.122) \\ 
+  player\_on\_courtMaurice Harkless:clutch\_time & 1.313 \\ 
+  & (14.398) \\ 
+  player\_on\_courtMike Conley:clutch\_time & 8.741 \\ 
+  & (14.218) \\ 
+  player\_on\_courtMyles Turner:clutch\_time & 14.030 \\ 
+  & (13.827) \\ 
+  player\_on\_courtNikola Jokic:clutch\_time & -0.665 \\ 
+  & (12.929) \\ 
+  player\_on\_courtNikola Vucevic:clutch\_time & -6.963 \\ 
+  & (14.155) \\ 
+  player\_on\_courtOtto Porter Jr.:clutch\_time & 2.500 \\ 
+  & (12.877) \\ 
+  player\_on\_courtPatty Mills:clutch\_time & 2.922 \\ 
+  & (13.546) \\ 
+  player\_on\_courtPaul George:clutch\_time & 8.730 \\ 
+  & (14.186) \\ 
+  player\_on\_courtPaul Millsap:clutch\_time & -0.539 \\ 
+  & (13.262) \\ 
+  player\_on\_courtPJ Tucker:clutch\_time & 13.155 \\ 
+  & (16.994) \\ 
+  player\_on\_courtReggie Jackson:clutch\_time & 1.313 \\ 
+  & (14.990) \\ 
+  player\_on\_courtRicky Rubio:clutch\_time & 6.427 \\ 
+  & (14.096) \\ 
+  player\_on\_courtRobert Covington:clutch\_time & -10.927 \\ 
+  & (13.918) \\ 
+  player\_on\_courtRobin Lopez:clutch\_time & 5.940 \\ 
+  & (14.956) \\ 
+  player\_on\_courtRudy Gay:clutch\_time & -10.118 \\ 
+  & (14.458) \\ 
+  player\_on\_courtRudy Gobert:clutch\_time & 16.859 \\ 
+  & (14.891) \\ 
+  player\_on\_courtRussell Westbrook:clutch\_time & 10.257 \\ 
+  & (12.774) \\ 
+  player\_on\_courtSerge Ibaka:clutch\_time & -4.445 \\ 
+  & (14.462) \\ 
+  player\_on\_courtStephen Curry:clutch\_time & 6.893 \\ 
+  & (15.464) \\ 
+  player\_on\_courtSteven Adams:clutch\_time & 2.162 \\ 
+  & (13.382) \\ 
+  player\_on\_courtTerrence Ross:clutch\_time & -0.445 \\ 
+  & (14.100) \\ 
+  player\_on\_courtThaddeus Young:clutch\_time & 6.023 \\ 
+  & (14.877) \\ 
+  player\_on\_courtTim Hardaway Jr.:clutch\_time & -11.048 \\ 
+  & (23.491) \\ 
+  player\_on\_courtTobias Harris:clutch\_time & -14.755 \\ 
+  & (14.449) \\ 
+  player\_on\_courtTomas Satoransky:clutch\_time & -5.706 \\ 
+  & (14.665) \\ 
+  player\_on\_courtTony Snell:clutch\_time & 8.289 \\ 
+  & (18.895) \\ 
+  player\_on\_courtTrae Young:clutch\_time & 2.134 \\ 
+  & (14.766) \\ 
+  player\_on\_courtTrevor Ariza:clutch\_time & -4.693 \\ 
+  & (14.758) \\ 
+  player\_on\_courtTyler Johnson:clutch\_time & 109.721^{***} \\ 
+  & (14.079) \\ 
+  player\_on\_courtVictor Oladipo:clutch\_time & 2.355 \\ 
+  & (13.460) \\ 
+  player\_on\_courtVince Carter:clutch\_time & -6.447 \\ 
+  & (16.981) \\ 
+  player\_on\_courtWesley Matthews:clutch\_time & -3.819 \\ 
+  & (16.706) \\ 
+  player\_on\_courtWill Barton:clutch\_time & 8.920 \\ 
+  & (14.001) \\ 
+  player\_on\_courtWillie Cauley-Stein:clutch\_time & 2.300 \\ 
+  & (15.302) \\ 
+  player\_on\_courtZach LaVine:clutch\_time & -3.758 \\ 
+  & (14.186) \\ 
+  player\_on\_courtZach Randolph:clutch\_time & 15.368 \\ 
+  & (15.300) \\ 
+  Constant & -44.744^{**} \\ 
+  & (18.116) \\ 
+ \hline \\[-1.8ex] 
+Observations & \multicolumn{1}{c}{2,204} \\ 
+R$^{2}$ & \multicolumn{1}{c}{0.266} \\ 
+Adjusted R$^{2}$ & \multicolumn{1}{c}{0.181} \\ 
+Residual Std. Error & \multicolumn{1}{c}{19.229 (df = 1975)} \\ 
+F Statistic & \multicolumn{1}{c}{3.139$^{***}$ (df = 228; 1975)} \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+===============================================================================
+Dependent variable:\\
+--------------------------- PER\_adj\\
+-------------------------------------------------------------------------------
+term -5.723 (6.915)\\
+estimate -5.282 (7.718)\\
+std.error -1.424 (7.377)\\
+statistic 2.968 (7.013)\\
+p.value -3.795 (7.719)\\
+player\_on\_courtAndre Roberson -7.680 (7.379)\\
+player\_on\_courtAndrew Wiggins -3.295 (7.010)\\
+player\_on\_courtBen Simmons -4.931 (8.503)\\
+player\_on\_courtBlake Griffin 4.624 (7.944)\\
+player\_on\_courtBojan Bogdanovic -2.609 (7.373)\\
+player\_on\_courtBradley Beal 7.529 (6.307)\\
+player\_on\_courtBrandon Jennings -10.337 (8.494)\\
+player\_on\_courtBrook Lopez 2.243 (7.377)\\
+player\_on\_courtCarmelo Anthony -0.775 (7.714)\\
+player\_on\_courtChris Paul 12.951 (9.347)\\
+player\_on\_courtCJ McCollum 5.997 (6.911)\\
+player\_on\_courtCollin Sexton 8.633 (10.003)\\
+player\_on\_courtCourtney Lee 3.030 (9.977)\\
+player\_on\_courtDamian Lillard 6.594 (6.826)\\
+player\_on\_courtDanny Green -5.965 (7.541)\\
+player\_on\_courtDario Saric -3.047 (6.916)\\
+player\_on\_courtDeAndre Jordan -3.243 (8.189)\\
+player\_on\_courtDelon Wright 2.277 (7.945)\\
+player\_on\_courtDeMar DeRozan 11.060 (7.007)\\
+player\_on\_courtDeMarre Carroll 1.458 (8.184)\\
+player\_on\_courtDennis Schroder -0.616 (7.534)\\
+player\_on\_courtDerrick Rose 3.946 (7.724)\\
+player\_on\_courtDevin Booker -2.500 (8.180)\\
+player\_on\_courtDraymond Green -7.153 (8.486)\\
+player\_on\_courtElfrid Payton -0.619 (7.714)\\
+player\_on\_courtEric Bledsoe 5.795 (8.188)\\
+player\_on\_courtEric Gordon 4.733 (8.877)\\
+player\_on\_courtEvan Fournier -1.405 (7.236)\\
+player\_on\_courtGary Harris -7.053 (9.359)\\
+player\_on\_courtGiannis Antetokounmpo 5.035 (7.373)\\
+player\_on\_courtGoran Dragic -0.091 (7.242)\\
+player\_on\_courtHarrison Barnes 2.820 (7.382)\\
+player\_on\_courtHassan Whiteside 1.498 (7.715)\\
+player\_on\_courtJabari Parker 2.967 (8.496)\\
+player\_on\_courtJae Crowder -0.242 (7.715)\\
+player\_on\_courtJamal Murray -1.051 (7.008)\\
+player\_on\_courtJames Harden 13.678* (7.541)\\
+player\_on\_courtJarrett Allen 3.155 (8.501)\\
+player\_on\_courtJayson Tatum 1.408 (7.946)\\
+player\_on\_courtJeff Green -5.381 (6.749)\\
+player\_on\_courtJeff Teague 5.943 (7.534)\\
+player\_on\_courtJerami Grant 1.660 (7.237)\\
+player\_on\_courtJimmy Butler 9.449 (7.718)\\
+player\_on\_courtJJ Redick -3.076 (8.498)\\
+player\_on\_courtJoe Harris -4.394 (7.379)\\
+player\_on\_courtJoe Ingles -4.845 (7.717)\\
+player\_on\_courtJoel Embiid 7.554 (7.723)\\
+player\_on\_courtJohn Wall 6.276 (6.827)\\
+player\_on\_courtJosh Richardson -6.275 (7.722)\\
+player\_on\_courtJustin Holiday -4.392 (7.115)\\
+player\_on\_courtJustise Winslow -9.403 (7.244)\\
+player\_on\_courtKarl-Anthony Towns 10.684 (6.748)\\
+player\_on\_courtKelly Oubre Jr.~-3.856 (6.825)\\
+player\_on\_courtKent Bazemore -7.194 (7.535)\\
+player\_on\_courtKentavious Caldwell-Pope -4.989 (7.119)\\
+player\_on\_courtKevin Durant 12.844* (7.534)\\
+player\_on\_courtKevin Love 3.826 (8.485)\\
+player\_on\_courtKhris Middleton -1.318 (7.933)\\
+player\_on\_courtKlay Thompson -8.343 (8.185)\\
+player\_on\_courtKyle Kuzma 3.449 (7.550)\\
+player\_on\_courtKyle Lowry 3.190 (7.936)\\
+player\_on\_courtKyrie Irving 6.486 (7.380)\\
+player\_on\_courtLaMarcus Aldridge 5.098 (7.716)\\
+player\_on\_courtLauri Markkanen 3.023 (8.879)\\
+player\_on\_courtLeBron James 11.529 (7.535)\\
+player\_on\_courtMarc Gasol -0.232 (7.014)\\
+player\_on\_courtMarcin Gortat -2.759 (6.675)\\
+player\_on\_courtMarcus Morris -4.480 (7.542)\\
+player\_on\_courtMarcus Smart -4.093 (7.536)\\
+player\_on\_courtMarkieff Morris -2.357 (6.441)\\
+player\_on\_courtMason Plumlee -0.525 (7.236)\\
+player\_on\_courtMatthew Dellavedova -7.635 (9.344)\\
+player\_on\_courtMaurice Harkless -4.663 (7.244)\\
+player\_on\_courtMike Conley 3.806 (7.940)\\
+player\_on\_courtMyles Turner 0.772 (7.531)\\
+player\_on\_courtNikola Jokic 9.157 (6.912)\\
+player\_on\_courtNikola Vucevic 3.658 (7.375)\\
+player\_on\_courtOtto Porter Jr.~1.133 (6.490)\\
+player\_on\_courtPatty Mills -1.378 (7.543)\\
+player\_on\_courtPaul George 2.900 (8.186)\\
+player\_on\_courtPaul Millsap 0.550 (7.012)\\
+player\_on\_courtPJ Tucker -3.697 (8.491)\\
+player\_on\_courtReggie Jackson 5.184 (8.878)\\
+player\_on\_courtRicky Rubio 4.317 (7.237)\\
+player\_on\_courtRobert Covington 4.795 (7.716)\\
+player\_on\_courtRobin Lopez -1.122 (7.534)\\
+player\_on\_courtRudy Gay 4.762 (7.936)\\
+player\_on\_courtRudy Gobert 0.902 (8.182)\\
+player\_on\_courtRussell Westbrook 9.378 (6.743)\\
+player\_on\_courtSerge Ibaka -1.124 (7.381)\\
+player\_on\_courtStephen Curry 11.345 (8.484)\\
+player\_on\_courtSteven Adams -5.959 (7.011)\\
+player\_on\_courtTerrence Ross -1.567 (7.716)\\
+player\_on\_courtThaddeus Young 0.190 (7.374)\\
+player\_on\_courtTim Hardaway Jr.~0.654 (9.342)\\
+player\_on\_courtTobias Harris 0.798 (7.929)\\
+player\_on\_courtTomas Satoransky -2.531 (6.913)\\
+player\_on\_courtTony Snell -11.683 (8.875)\\
+player\_on\_courtTrae Young 11.036 (8.509)\\
+player\_on\_courtTrevor Ariza -3.012 (7.941)\\
+player\_on\_courtTyler Johnson 2.596 (7.245)\\
+player\_on\_courtVictor Oladipo 0.746 (7.382)\\
+player\_on\_courtVince Carter 2.890 (8.500)\\
+player\_on\_courtWesley Matthews -4.768 (7.932)\\
+player\_on\_courtWill Barton -2.207 (7.543)\\
+player\_on\_courtWillie Cauley-Stein -2.996 (8.185)\\
+player\_on\_courtZach LaVine 4.993 (8.193)\\
+player\_on\_courtZach Randolph 5.548 (8.198)\\
+clutch\_time 3.593 (10.867)\\
+DRtg\_minus\_Avg 0.343* (0.183)\\
+Season2017-18 1.736 (1.218)\\
+Season2018-19 0.208 (1.208)\\
+Season2020-21 5.800*** (1.384)\\
+player\_on\_courtAl-Farouq Aminu:clutch\_time 4.786 (13.275)\\
+player\_on\_courtAl Horford:clutch\_time 6.217 (13.860)\\
+player\_on\_courtAllen Crabbe:clutch\_time -8.478 (15.419)\\
+player\_on\_courtAndre Drummond:clutch\_time 4.112 (13.336)\\
+player\_on\_courtAndre Iguodala:clutch\_time -0.019 (14.578)\\
+player\_on\_courtAndre Roberson:clutch\_time 6.253 (13.854)\\
+player\_on\_courtAndrew Wiggins:clutch\_time 14.341 (13.197)\\
+player\_on\_courtBen Simmons:clutch\_time 2.260 (14.994)\\
+player\_on\_courtBlake Griffin:clutch\_time -15.788 (15.694)\\
+player\_on\_courtBojan Bogdanovic:clutch\_time -7.816 (15.420)\\
+player\_on\_courtBradley Beal:clutch\_time -6.575 (12.374)\\
+player\_on\_courtBrandon Jennings:clutch\_time -0.151 (18.653)\\
+player\_on\_courtBrook Lopez:clutch\_time -6.244 (15.436)\\
+player\_on\_courtCarmelo Anthony:clutch\_time -5.706 (14.040)\\
+player\_on\_courtChris Paul:clutch\_time 4.485 (16.461)\\
+player\_on\_courtCJ McCollum:clutch\_time 0.913 (12.748)\\
+player\_on\_courtCollin Sexton:clutch\_time 19.512 (16.823)\\
+player\_on\_courtCourtney Lee:clutch\_time -16.264 (17.719)\\
+player\_on\_courtDamian Lillard:clutch\_time 2.194 (12.701)\\
+player\_on\_courtDanny Green:clutch\_time 13.333 (14.176)\\
+player\_on\_courtDario Saric:clutch\_time 8.344 (15.209)\\
+player\_on\_courtDeAndre Jordan:clutch\_time 14.903 (15.235)\\
+player\_on\_courtDelon Wright:clutch\_time 3.861 (16.634)\\
+player\_on\_courtDeMar DeRozan:clutch\_time -8.551 (12.928)\\
+player\_on\_courtDeMarre Carroll:clutch\_time -12.176 (15.236)\\
+player\_on\_courtDennis Schroder:clutch\_time -0.777 (13.615)\\
+player\_on\_courtDerrick Rose:clutch\_time -9.010 (15.005)\\
+player\_on\_courtDevin Booker:clutch\_time 6.362 (14.307)\\
+player\_on\_courtDraymond Green:clutch\_time 27.190* (14.705)\\
+player\_on\_courtElfrid Payton:clutch\_time -3.115 (13.861)\\
+player\_on\_courtEric Bledsoe:clutch\_time 11.083 (14.125)\\
+player\_on\_courtEric Gordon:clutch\_time 15.864 (17.131)\\
+player\_on\_courtEvan Fournier:clutch\_time 34.762** (13.605)\\
+player\_on\_courtGary Harris:clutch\_time -4.362 (17.364)\\
+player\_on\_courtGiannis Antetokounmpo:clutch\_time 8.266 (13.678)\\
+player\_on\_courtGoran Dragic:clutch\_time 15.450 (14.746)\\
+player\_on\_courtHarrison Barnes:clutch\_time 21.016 (13.676)\\
+player\_on\_courtHassan Whiteside:clutch\_time 9.748 (14.273)\\
+player\_on\_courtJabari Parker:clutch\_time -1.832 (18.630)\\
+player\_on\_courtJae Crowder:clutch\_time -3.282 (15.602)\\
+player\_on\_courtJamal Murray:clutch\_time 2.520 (13.906)\\
+player\_on\_courtJames Harden:clutch\_time 1.598 (13.612)\\
+player\_on\_courtJarrett Allen:clutch\_time -19.229 (15.404)\\
+player\_on\_courtJayson Tatum:clutch\_time 12.959 (14.394)\\
+player\_on\_courtJeff Green:clutch\_time 14.571 (13.779)\\
+player\_on\_courtJeff Teague:clutch\_time 16.676 (13.613)\\
+player\_on\_courtJerami Grant:clutch\_time 11.979 (13.450)\\
+player\_on\_courtJimmy Butler:clutch\_time 6.129 (13.711)\\
+player\_on\_courtJJ Redick:clutch\_time 19.383 (15.409)\\
+player\_on\_courtJoe Harris:clutch\_time -8.766 (14.096)\\
+player\_on\_courtJoe Ingles:clutch\_time 6.057 (14.990)\\
+player\_on\_courtJoel Embiid:clutch\_time 26.778* (14.571)\\
+player\_on\_courtJohn Wall:clutch\_time 0.731 (13.105)\\
+player\_on\_courtJosh Richardson:clutch\_time 14.445 (14.278)\\
+player\_on\_courtJustin Holiday:clutch\_time 9.123 (13.960)\\
+player\_on\_courtJustise Winslow:clutch\_time 0.559 (14.022)\\
+player\_on\_courtKarl-Anthony Towns:clutch\_time -7.156 (13.346)\\
+player\_on\_courtKelly Oubre Jr.:clutch\_time 14.151 (13.232)\\
+player\_on\_courtKent Bazemore:clutch\_time 15.234 (14.897)\\
+player\_on\_courtKentavious Caldwell-Pope:clutch\_time 7.072 (13.262)\\
+player\_on\_courtKevin Durant:clutch\_time -1.124 (14.477)\\
+player\_on\_courtKevin Love:clutch\_time 12.614 (14.706)\\
+player\_on\_courtKhris Middleton:clutch\_time -6.809 (14.162)\\
+player\_on\_courtKlay Thompson:clutch\_time 12.236 (15.822)\\
+player\_on\_courtKyle Kuzma:clutch\_time -9.264 (14.177)\\
+player\_on\_courtKyle Lowry:clutch\_time 2.026 (13.980)\\
+player\_on\_courtKyrie Irving:clutch\_time 24.902* (13.208)\\
+player\_on\_courtLaMarcus Aldridge:clutch\_time -0.137 (15.003)\\
+player\_on\_courtLauri Markkanen:clutch\_time 0.230 (15.215)\\
+player\_on\_courtLeBron James:clutch\_time 6.279 (13.610)\\
+player\_on\_courtMarc Gasol:clutch\_time 13.942 (13.331)\\
+player\_on\_courtMarcin Gortat:clutch\_time 6.067 (13.312)\\
+player\_on\_courtMarcus Morris:clutch\_time -6.105 (14.893)\\
+player\_on\_courtMarcus Smart:clutch\_time -8.968 (14.484)\\
+player\_on\_courtMarkieff Morris:clutch\_time 13.172 (12.907)\\
+player\_on\_courtMason Plumlee:clutch\_time 7.191 (13.794)\\
+player\_on\_courtMatthew Dellavedova:clutch\_time -6.310 (19.049)\\
+player\_on\_courtMaurice Harkless:clutch\_time 0.500 (14.342)\\
+player\_on\_courtMike Conley:clutch\_time 8.496 (14.156)\\
+player\_on\_courtMyles Turner:clutch\_time 14.749 (13.768)\\
+player\_on\_courtNikola Jokic:clutch\_time -1.372 (12.874)\\
+player\_on\_courtNikola Vucevic:clutch\_time -8.000 (14.100)\\
+player\_on\_courtOtto Porter Jr.:clutch\_time 2.173 (12.823)\\
+player\_on\_courtPatty Mills:clutch\_time 2.346 (13.489)\\
+player\_on\_courtPaul George:clutch\_time 8.409 (14.125)\\
+player\_on\_courtPaul Millsap:clutch\_time 0.537 (13.206)\\
+player\_on\_courtPJ Tucker:clutch\_time 11.562 (16.925)\\
+player\_on\_courtReggie Jackson:clutch\_time 0.992 (14.926)\\
+player\_on\_courtRicky Rubio:clutch\_time 5.257 (14.037)\\
+player\_on\_courtRobert Covington:clutch\_time -11.553 (13.856)\\
+player\_on\_courtRobin Lopez:clutch\_time 5.792 (14.891)\\
+player\_on\_courtRudy Gay:clutch\_time -9.947 (14.399)\\
+player\_on\_courtRudy Gobert:clutch\_time 16.234 (14.829)\\
+player\_on\_courtRussell Westbrook:clutch\_time 9.717 (12.722)\\
+player\_on\_courtSerge Ibaka:clutch\_time -4.995 (14.400)\\
+player\_on\_courtStephen Curry:clutch\_time 6.076 (15.402)\\
+player\_on\_courtSteven Adams:clutch\_time 2.112 (13.327)\\
+player\_on\_courtTerrence Ross:clutch\_time -0.799 (14.039)\\
+player\_on\_courtThaddeus Young:clutch\_time 3.841 (14.819)\\
+player\_on\_courtTim Hardaway Jr.:clutch\_time -11.808 (23.427)\\
+player\_on\_courtTobias Harris:clutch\_time -14.413 (14.388)\\
+player\_on\_courtTomas Satoransky:clutch\_time -6.146 (14.604)\\
+player\_on\_courtTony Snell:clutch\_time 8.998 (18.824)\\
+player\_on\_courtTrae Young:clutch\_time 2.323 (14.702)\\
+player\_on\_courtTrevor Ariza:clutch\_time -5.522 (14.698)\\
+player\_on\_courtTyler Johnson:clutch\_time 110.477*** (14.027)\\
+player\_on\_courtVictor Oladipo:clutch\_time 1.911 (13.403)\\
+player\_on\_courtVince Carter:clutch\_time -6.306 (16.905)\\
+player\_on\_courtWesley Matthews:clutch\_time -3.645 (16.634)\\
+player\_on\_courtWill Barton:clutch\_time 8.144 (13.942)\\
+player\_on\_courtWillie Cauley-Stein:clutch\_time 1.131 (15.235)\\
+player\_on\_courtZach LaVine:clutch\_time -4.079 (14.125)\\
+player\_on\_courtZach Randolph:clutch\_time 14.894 (15.233)\\
+Constant -19.834 (20.572)\\
+-------------------------------------------------------------------------------
+Observations 2,204\\
+R2 0.274\\
+Adjusted R2 0.189\\
+Residual Std. Error 19.141 (df = 1972)\\
+F Statistic 3.218*** (df = 231; 1972)
+===============================================================================
+Note: \emph{p\textless0.1; \textbf{p\textless0.05; }}p\textless0.01
+
+\end{document}

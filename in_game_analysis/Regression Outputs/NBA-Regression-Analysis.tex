@@ -1,0 +1,4077 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  landscape]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Analysis},
+  pdfauthor={Jason Winik},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{dcolumn}
+
+\title{Analysis}
+\author{Jason Winik}
+\date{5/28/2022}
+
+\begin{document}
+\maketitle
+
+\hypertarget{fixed-effects-regression-results}{%
+\section{2020-21 Fixed Effects Regression
+Results}\label{fixed-effects-regression-results}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fixed_lm_}\DecValTok{2020}\NormalTok{_}\DecValTok{21}\NormalTok{ =}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, PER_adj }\OperatorTok{~}\StringTok{ }\NormalTok{player_on_court }\OperatorTok{+}\StringTok{ }\NormalTok{DRtg_minus_Avg }\OperatorTok{+}\StringTok{ }\NormalTok{player_on_court }\OperatorTok{*}\StringTok{ }\NormalTok{clutch_time)}
+\KeywordTok{summary}\NormalTok{(fixed_lm_}\DecValTok{2020}\NormalTok{_}\DecValTok{21}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm(formula = PER\_adj \textasciitilde{} player\_on\_court +
+DRtg\_minus\_Avg + player\_on\_court * clutch\_time, data = data)
+
+Residuals: Min 1Q Median 3Q Max -970.30 -8.12 -0.50 7.15 2908.84
+
+Coefficients: (238 not defined because of singularities) Estimate Std.
+Error (Intercept) 21.889251 3.554476 player\_on\_courtAaron Holiday
+-3.130872 4.901648 player\_on\_courtAaron Nesmith -7.056988 5.263003
+player\_on\_courtAbdel Nader 1.021016 6.240564 player\_on\_courtAdam
+Mokoka -20.763719 8.210225 player\_on\_courtAl-Farouq Aminu -10.714688
+6.598642 player\_on\_courtAl Horford 7.177051 6.407777
+player\_on\_courtAlec Burks 1.744792 5.122427 player\_on\_courtAleksej
+Pokusevski -7.774255 5.469995 player\_on\_courtAlen Smailagic -8.049802
+8.209969 player\_on\_courtAlex Caruso -6.012940 4.940712
+player\_on\_courtAlex Len -3.049296 4.847409 player\_on\_courtAlfonzo
+McKinnie 0.682042 5.639328 player\_on\_courtAlize Johnson -0.343389
+7.076437 player\_on\_courtAmida Brimah -7.371063 11.465826
+player\_on\_courtAmir Coffey -11.100579 5.148828
+player\_on\_courtAnderson Varejao 9.077953 12.458983
+player\_on\_courtAndre Drummond 5.646440 5.204070 player\_on\_courtAndre
+Iguodala -7.848516 4.901702 player\_on\_courtAndre Roberson -15.495582
+12.458817 player\_on\_courtAndrew Wiggins 3.853799 4.781092
+player\_on\_courtAnfernee Simons -0.521529 4.813355
+player\_on\_courtAnthony Davis 11.061613 5.509610
+player\_on\_courtAnthony Edwards 4.631515 4.813304
+player\_on\_courtAnthony Gill -2.919751 6.092902
+player\_on\_courtAnthony Lamb -6.362039 6.599099
+player\_on\_courtAnthony Tolliver -13.671756 8.484004
+player\_on\_courtAnzejs Pasecniks -53.608128 26.945645
+player\_on\_courtArmoni Brooks -3.237099 6.942879 player\_on\_courtAron
+Baynes -4.869701 5.232875 player\_on\_courtAshton Hagans -33.266763
+19.217406 player\_on\_courtAustin Rivers -6.538517 5.395567
+player\_on\_courtAvery Bradley -5.877309 6.500026 player\_on\_courtAxel
+Toupane -6.398281 8.797421 player\_on\_courtBam Adebayo 8.728707
+4.864855 player\_on\_courtBen McLemore -2.799449 5.148714
+player\_on\_courtBen Simmons 3.126337 4.847162 player\_on\_courtBlake
+Griffin -0.730980 5.048940 player\_on\_courtBoban Marjanovic 7.153826
+5.842945 player\_on\_courtBobby Portis 5.602626 4.618084
+player\_on\_courtBogdan Bogdanovic 4.081130 5.004258
+player\_on\_courtBojan Bogdanovic 1.940645 4.654645 player\_on\_courtBol
+Bol -2.675731 5.788258 player\_on\_courtBrad Wanamaker -5.389969
+5.639334 player\_on\_courtBradley Beal 15.730117 4.883212
+player\_on\_courtBrandon Clarke 2.289524 4.981959
+player\_on\_courtBrandon Goodwin -3.816718 5.432079
+player\_on\_courtBrian Bowen II -18.827126 11.464626
+player\_on\_courtBrodric Thomas -9.095824 6.092794
+player\_on\_courtBrook Lopez 0.860257 4.531554 player\_on\_courtBruce
+Brown -1.827231 4.721563 player\_on\_courtBruno Caboclo 3.340116
+11.464793 player\_on\_courtBruno Fernando -10.819295 5.639576
+player\_on\_courtBryn Forbes -1.273531 4.572985 player\_on\_courtBuddy
+Hield 1.266389 4.813347 player\_on\_courtCam Reddish -1.518758 6.164822
+player\_on\_courtCameron Johnson -0.810548 4.680715
+player\_on\_courtCameron Oliver 2.407579 13.816613
+player\_on\_courtCameron Payne 4.203541 4.655002
+player\_on\_courtCameron Reynolds 0.405906 12.459518
+player\_on\_courtCaris LeVert 10.411920 5.326710
+player\_on\_courtCarmelo Anthony 3.810678 4.765667
+player\_on\_courtCarsen Edwards -4.430401 5.900439
+player\_on\_courtCassius Stanley 3.289776 6.499816
+player\_on\_courtCassius Winston -5.828090 6.598545
+player\_on\_courtCedi Osman -0.561881 5.048914 player\_on\_courtChandler
+Hutchison -9.345533 6.240774 player\_on\_courtCharlie Brown
+Jr.~-6.532442 10.085161 player\_on\_courtChasson Randle -8.046218
+5.594575 player\_on\_courtChimezie Metu 2.409345 5.843162
+player\_on\_courtChris Boucher 6.830299 5.048848 player\_on\_courtChris
+Chiozza 0.624427 6.322029 player\_on\_courtChris Paul 10.250062 4.573276
+player\_on\_courtChris Silva -10.345669 7.967633
+player\_on\_courtChristian Wood 8.114484 5.594160 player\_on\_courtChuma
+Okeke -4.305418 5.395614 player\_on\_courtCJ Elleby -7.029375 5.900475
+player\_on\_courtCJ McCollum 12.895996 5.175793 player\_on\_courtClint
+Capela 5.161486 4.681194 player\_on\_courtCoby White 0.508110 4.864861
+player\_on\_courtCole Anthony 0.833228 5.395479 player\_on\_courtCollin
+Sexton 10.105469 5.003573 player\_on\_courtCory Joseph -1.871475
+4.960990 player\_on\_courtCristiano Felicio -4.877569 7.557502
+player\_on\_courtD'Angelo Russell 10.359030 5.469975
+player\_on\_courtD.J. Augustin -1.479704 5.097148 player\_on\_courtD.J.
+Wilson -2.522370 5.842962 player\_on\_courtDakota Mathias -4.903767
+10.698106 player\_on\_courtDamian Jones -4.728202 5.788225
+player\_on\_courtDamian Lillard 18.281493 4.781136
+player\_on\_courtDamion Lee -4.989126 5.048857 player\_on\_courtDamyean
+Dotson -5.808184 5.360484 player\_on\_courtDaniel Gafford 4.567814
+5.026065 player\_on\_courtDaniel Oturu -7.308680 5.788277
+player\_on\_courtDaniel Theis -1.384278 4.901755 player\_on\_courtDanilo
+Gallinari 3.944205 4.797660 player\_on\_courtDanny Green -3.405091
+4.735795 player\_on\_courtDante Exum -22.029155 11.464900
+player\_on\_courtDanuel House Jr.~-6.549094 5.961112
+player\_on\_courtDaQuan Jeffries -9.585048 6.025860
+player\_on\_courtDario Saric 2.033710 4.940893 player\_on\_courtDarius
+Bazley -3.624351 5.148715 player\_on\_courtDarius Garland 4.287226
+5.148702 player\_on\_courtDarius Miller -4.295598 7.222033
+player\_on\_courtDavid Nwaba 0.476747 6.240602 player\_on\_courtDavis
+Bertans -1.515705 4.921009 player\_on\_courtDe'Aaron Fox 12.105398
+5.097148 player\_on\_courtDe'Andre Hunter -0.126914 6.321617
+player\_on\_courtDe'Anthony Melton 1.639865 5.003662
+player\_on\_courtDean Wade -7.205548 4.982051 player\_on\_courtDeAndre'
+Bembry -6.780438 5.203812 player\_on\_courtDeandre Ayton 3.118614
+4.562632 player\_on\_courtDeAndre Jordan -3.083760 5.072604
+player\_on\_courtDeividas Sirvydis -7.006866 7.076118
+player\_on\_courtDejounte Murray 4.558034 4.882994
+player\_on\_courtDelon Wright 0.474305 4.940920 player\_on\_courtDeMar
+DeRozan 10.909788 5.003586 player\_on\_courtDeMarcus Cousins 17.653240
+5.395575 player\_on\_courtDeni Avdija -9.652075 5.148762
+player\_on\_courtDennis Schroder 1.660186 4.882976
+player\_on\_courtDennis Smith Jr.~-0.060468 6.942159
+player\_on\_courtDenzel Valentine -3.064944 5.003617
+player\_on\_courtDerrick Favors 0.440693 4.707449
+player\_on\_courtDerrick Jones Jr.~-5.412417 5.025868
+player\_on\_courtDerrick Rose 8.337836 5.148640 player\_on\_courtDerrick
+White 4.489317 5.842914 player\_on\_courtDesmond Bane -2.425028 4.750643
+player\_on\_courtDevin Booker 11.733481 4.584194 player\_on\_courtDevin
+Cannady 9.671446 10.698100 player\_on\_courtDevin Vassell -5.030939
+4.961017 player\_on\_courtDevon Dotson 29.848931 9.581145
+player\_on\_courtDevontae Cacok -2.226530 7.076178
+player\_on\_courtDewayne Dedmon 4.625425 7.076104
+player\_on\_courtDillon Brooks 5.402006 4.781234
+player\_on\_courtDomantas Sabonis 7.491160 4.982041
+player\_on\_courtDonovan Mitchell 18.100957 4.982051
+player\_on\_courtDonta Hall 7.781781 8.484097 player\_on\_courtDonte
+DiVincenzo -1.876094 4.847189 player\_on\_courtDorian Finney-Smith
+-4.412843 4.883111 player\_on\_courtDoug McDermott 2.983543 4.901697
+player\_on\_courtDraymond Green -4.839804 4.920894 player\_on\_courtDrew
+Eubanks -0.625214 5.148727 player\_on\_courtDuncan Robinson -2.224542
+4.750549 player\_on\_courtDwayne Bacon -1.981277 4.813318
+player\_on\_courtDwight Howard -0.810379 4.680403
+player\_on\_courtDwight Powell -1.437168 4.920975 player\_on\_courtDylan
+Windler -8.761621 6.092783 player\_on\_courtE'Twaun Moore -2.286505
+6.025210 player\_on\_courtEd Davis -6.272625 6.704546
+player\_on\_courtEdmond Sumner -2.215433 5.122430
+player\_on\_courtElfrid Payton -0.783410 4.940622
+player\_on\_courtElijah Bryant -9.308050 8.483964
+player\_on\_courtElijah Hughes 3.378239 7.222351 player\_on\_courtEnes
+Kanter 3.574588 4.735878 player\_on\_courtEric Gordon 4.914493 6.407684
+player\_on\_courtEric Paschall 2.137106 5.639384 player\_on\_courtErsan
+Ilyasova -0.455212 7.222180 player\_on\_courtEvan Fournier 5.937778
+5.431987 player\_on\_courtFacundo Campazzo -4.073520 4.765594
+player\_on\_courtFrank Jackson 0.048078 5.639326 player\_on\_courtFrank
+Kaminsky -0.593942 5.097241 player\_on\_courtFrank Mason -10.207793
+13.816566 player\_on\_courtFrank Ntilikina -6.957208 5.842966
+player\_on\_courtFred VanVleet 8.265118 5.232859
+player\_on\_courtFreddie Gillespie -3.361252 6.942281
+player\_on\_courtFurkan Korkmaz 0.435250 4.847163 player\_on\_courtGabe
+Vincent -3.305308 5.148758 player\_on\_courtGabriel Deck 3.275121
+9.581108 player\_on\_courtGarrett Temple -8.259448 5.148677
+player\_on\_courtGarrison Mathews -8.070314 4.864955
+player\_on\_courtGary Clark -11.625271 5.639338 player\_on\_courtGary
+Harris -3.274539 5.639426 player\_on\_courtGary Payton II -0.120755
+9.158116 player\_on\_courtGary Trent Jr.~1.331058 5.072612
+player\_on\_courtGeorge Hill -5.217351 5.594157 player\_on\_courtGeorges
+Niang -5.347547 4.654645 player\_on\_courtGiannis Antetokounmpo
+17.936096 4.654658 player\_on\_courtGlenn Robinson III -6.384083
+6.704539 player\_on\_courtGoga Bitadze 1.877807 5.432306
+player\_on\_courtGoran Dragic 2.784494 5.175724 player\_on\_courtGorgui
+Dieng 1.910566 5.736367 player\_on\_courtGrant Williams -8.090401
+4.847171 player\_on\_courtGrayson Allen -2.750176 5.072968
+player\_on\_courtGreg Whittington -23.225422 13.816540
+player\_on\_courtHamidou Diallo 0.723233 5.232849
+player\_on\_courtHarrison Barnes -0.352615 5.097134
+player\_on\_courtHarry Giles III -2.350162 5.551003
+player\_on\_courtHassan Whiteside 4.003931 5.788227
+player\_on\_courtHenry Ellenson -4.921059 26.945006
+player\_on\_courtIgnas Brazdeikis -2.794195 8.484224
+player\_on\_courtIman Shumpert -12.454956 19.217520
+player\_on\_courtImmanuel Quickley 5.436745 4.864832
+player\_on\_courtIsaac Bonga -14.613628 5.432383 player\_on\_courtIsaac
+Okoro -7.085762 4.901690 player\_on\_courtIsaiah Hartenstein 2.288911
+5.470022 player\_on\_courtIsaiah Joe -3.791093 5.395561
+player\_on\_courtIsaiah Roby -3.379612 4.981952 player\_on\_courtIsaiah
+Stewart -0.490066 4.883039 player\_on\_courtIsh Smith -2.582072 5.233061
+player\_on\_courtIvica Zubac 0.157817 4.584011 player\_on\_courtJa
+Morant 7.334911 4.830133 player\_on\_courtJabari Parker -3.515977
+7.751509 player\_on\_courtJaden McDaniels -3.607123 4.982017
+player\_on\_courtJae'Sean Tate -1.225823 4.847194 player\_on\_courtJae
+Crowder -3.076743 4.667695 player\_on\_courtJahlil Okafor -2.064995
+6.321454 player\_on\_courtJahmi'us Ramsey 0.823241 8.210012
+player\_on\_courtJaKarr Sampson -6.214379 6.240544 player\_on\_courtJake
+Layman -5.835492 5.395583 player\_on\_courtJakob Poeltl -0.942923
+4.847173 player\_on\_courtJalen Brunson 2.872333 4.750589
+player\_on\_courtJalen Harris -3.053878 8.484154 player\_on\_courtJalen
+Lecque 16.125098 13.816534 player\_on\_courtJalen Smith -9.282329
+5.961278 player\_on\_courtJamal Murray 7.714109 5.326767
+player\_on\_courtJames Ennis III -4.456735 5.594152
+player\_on\_courtJames Harden 13.009513 5.097093 player\_on\_courtJames
+Johnson -3.644825 6.240713 player\_on\_courtJames Wiseman 1.744823
+5.594262 player\_on\_courtJaMychal Green 0.004169 4.864840
+player\_on\_courtJared Dudley -15.778654 8.209978 player\_on\_courtJared
+Harper -25.696355 10.084999 player\_on\_courtJaren Jackson Jr.~8.756364
+7.382126 player\_on\_courtJarred Vanderbilt -5.766744 4.961038
+player\_on\_courtJarrell Brantley 3.111893 6.092807
+player\_on\_courtJarrett Allen 2.313108 4.961009
+player\_on\_courtJarrett Culver -4.925679 5.900496
+player\_on\_courtJaVale McGee 3.110652 5.263079 player\_on\_courtJavonte
+Green -6.751350 5.551005 player\_on\_courtJay Scrubb -19.828818 9.581661
+player\_on\_courtJaylen Adams -19.332250 10.698069
+player\_on\_courtJaylen Brown 12.368149 5.072613 player\_on\_courtJaylen
+Hoard -5.789202 7.222147 player\_on\_courtJaylen Nowell 2.981520
+5.550996 player\_on\_courtJayson Tatum 13.796363 4.847162
+player\_on\_courtJeff Green -2.603611 4.781229 player\_on\_courtJeff
+Teague -6.305082 4.765607 player\_on\_courtJerami Grant 8.604728
+5.122568 player\_on\_courtJeremiah Martin -9.227460 10.085318
+player\_on\_courtJeremy Lamb 2.115730 5.843034 player\_on\_courtJerome
+Robinson -13.509101 7.751501 player\_on\_courtJevon Carter -3.031464
+4.864948 player\_on\_courtJimmy Butler 14.647832 5.148672
+player\_on\_courtJJ Redick -6.458452 8.210473 player\_on\_courtJoe
+Harris -1.102043 4.680513 player\_on\_courtJoe Ingles 0.389071 4.721484
+player\_on\_courtJoel Embiid 20.847420 5.003640 player\_on\_courtJohn
+Collins 5.701075 4.642770 player\_on\_courtJohn Konchar -4.656124
+5.509619 player\_on\_courtJohn Wall 8.516577 5.639342
+player\_on\_courtJonas Valanciunas 9.227713 4.865067
+player\_on\_courtJontay Porter -7.708037 8.796772
+player\_on\_courtJordan Bell -6.311538 13.816750 player\_on\_courtJordan
+Bone -6.223206 8.209970 player\_on\_courtJordan Clarkson 10.123458
+4.707513 player\_on\_courtJordan McLaughlin -3.198620 5.263137
+player\_on\_courtJordan Nwora -2.160932 5.843070 player\_on\_courtJordan
+Poole 5.984919 5.175777 player\_on\_courtJosh Green -6.585020 5.639326
+player\_on\_courtJosh Hall -14.249316 7.076110 player\_on\_courtJosh
+Jackson 2.309482 4.981953 player\_on\_courtJosh Okogie -7.816786
+5.048968 player\_on\_courtJosh Richardson -0.901192 4.901743
+player\_on\_courtJrue Holiday 6.918461 4.642179 player\_on\_courtJuan
+Toscano-Anderson -8.921884 5.175728 player\_on\_courtJuancho Hernangomez
+-4.760967 5.175794 player\_on\_courtJulius Randle 8.827677 4.750507
+player\_on\_courtJustin Holiday -4.506276 4.796984
+player\_on\_courtJustin Jackson -1.541897 5.550953
+player\_on\_courtJustin James -4.085776 5.736307 player\_on\_courtJustin
+Patton -3.244276 8.484008 player\_on\_courtJustin Robinson -12.611983
+10.085346 player\_on\_courtJustise Winslow -5.900970 6.240537
+player\_on\_courtJusuf Nurkic 4.839796 5.432051 player\_on\_courtJuwan
+Morgan -12.254525 6.092785 player\_on\_courtKarim Mane -15.961365
+9.158028 player\_on\_courtKarl-Anthony Towns 14.460348 5.294343
+player\_on\_courtKawhi Leonard 16.782081 4.961078 player\_on\_courtKeita
+Bates-Diop -6.101235 6.165016 player\_on\_courtKelan Martin 0.070172
+5.736197 player\_on\_courtKeldon Johnson -0.507900 4.830025
+player\_on\_courtKeljin Blevins -13.526815 7.076322
+player\_on\_courtKelly Olynyk 2.023417 4.813428 player\_on\_courtKelly
+Oubre Jr.~0.997889 5.097141 player\_on\_courtKemba Walker 8.587994
+5.395644 player\_on\_courtKendrick Nunn 1.651447 5.003562
+player\_on\_courtKenrich Williams -2.421262 4.901706
+player\_on\_courtKent Bazemore -4.412313 4.864873
+player\_on\_courtKentavious Caldwell-Pope -5.149665 4.796947
+player\_on\_courtKenyon Martin Jr.~-1.699580 5.395782
+player\_on\_courtKevin Durant 17.916369 5.360517 player\_on\_courtKevin
+Huerter -1.335587 4.606961 player\_on\_courtKevin Knox II -2.117244
+5.509636 player\_on\_courtKevin Love 0.567875 6.818741
+player\_on\_courtKevin Porter Jr.~2.047090 6.407813
+player\_on\_courtKevon Looney -6.580754 4.961041 player\_on\_courtKhem
+Birch -2.192393 4.864858 player\_on\_courtKhris Middleton 7.300882
+4.551836 player\_on\_courtKhyri Thomas 11.878937 12.459441
+player\_on\_courtKillian Hayes -8.722564 6.499869
+player\_on\_courtKillian Tillie -2.401030 7.222039
+player\_on\_courtKostas Antetokounmpo -20.599998 7.967812
+player\_on\_courtKris Dunn -15.920420 9.582538 player\_on\_courtKristaps
+Porzingis 9.118003 5.263015 player\_on\_courtKyle Anderson 1.760386
+4.750670 player\_on\_courtKyle Guy -6.701293 6.093265
+player\_on\_courtKyle Kuzma -1.305925 4.765597 player\_on\_courtKyle
+Lowry 4.999262 5.470005 player\_on\_courtKyrie Irving 17.083617 4.981973
+player\_on\_courtKZ Okpala -15.655075 5.686637 player\_on\_courtLamar
+Stevens -3.865533 5.594246 player\_on\_courtLaMarcus Aldridge 2.344927
+6.704524 player\_on\_courtLandry Shamet -4.462278 4.781179
+player\_on\_courtLangston Galloway -3.405312 5.594175
+player\_on\_courtLarry Nance Jr.~-4.116097 5.961192
+player\_on\_courtLauri Markkanen 1.811928 5.232976
+player\_on\_courtLeBron James 13.752478 5.203782 player\_on\_courtLonnie
+Walker IV -1.806153 5.025986 player\_on\_courtLou Williams 3.525607
+4.655240 player\_on\_courtLouis King -4.445503 11.464733
+player\_on\_courtLuguentz Dort -0.700416 5.232982 player\_on\_courtLuka
+Doncic 17.795909 4.781167 player\_on\_courtLuka Samanic -4.633590
+5.961261 player\_on\_courtLuke Kennard -3.638141 4.707530
+player\_on\_courtLuke Kornet -6.170770 6.025207 player\_on\_courtMalachi
+Flynn -3.888995 5.360468 player\_on\_courtMalcolm Brogdon 8.699425
+5.097128 player\_on\_courtMalik Beasley 5.083221 5.736391
+player\_on\_courtMalik Fitts -16.756156 15.823094
+player\_on\_courtMamadi Diakite -7.573914 6.942488 player\_on\_courtMarc
+Gasol -4.349093 5.048845 player\_on\_courtMarcus Morris Sr.~1.124114
+4.750729 player\_on\_courtMarcus Smart 1.738211 5.148638
+player\_on\_courtMarkelle Fultz 5.287853 10.085008
+player\_on\_courtMarkieff Morris -7.618612 4.901644
+player\_on\_courtMarkus Howard -6.183789 5.360466
+player\_on\_courtMarques Bolden 3.823864 12.459023
+player\_on\_courtMarquese Chriss 3.349103 19.216540
+player\_on\_courtMarvin Bagley III 2.872166 5.550996
+player\_on\_courtMason Jones -1.081446 6.164674 player\_on\_courtMason
+Plumlee 0.585146 5.097269 player\_on\_courtMatisse Thybulle -6.961305
+4.735794 player\_on\_courtMatt Thomas -6.512872 5.294262
+player\_on\_courtMatthew Dellavedova -5.446579 9.158128
+player\_on\_courtMaurice Harkless -10.921074 5.736218
+player\_on\_courtMax Strus -2.411545 5.594212 player\_on\_courtMaxi
+Kleber -7.949464 5.097177 player\_on\_courtMeyers Leonard -22.564590
+19.216554 player\_on\_courtMfiondu Kabengele -5.943500 5.639330
+player\_on\_courtMichael Carter-Williams -3.686495 5.961160
+player\_on\_courtMichael Porter Jr.~6.702193 4.829985
+player\_on\_courtMikal Bridges 0.062966 4.531819 player\_on\_courtMike
+Conley 9.050955 5.122436 player\_on\_courtMike James -4.901746 6.704515
+player\_on\_courtMike Muscala 0.177741 5.900456 player\_on\_courtMike
+Scott -9.958984 5.072607 player\_on\_courtMitchell Robinson -1.195061
+6.025089 player\_on\_courtMiye Oni -12.204935 4.981947
+player\_on\_courtMo Bamba 4.521093 5.395643 player\_on\_courtMonte
+Morris 1.329196 5.025900 player\_on\_courtMontrezl Harrell 7.216181
+4.765604 player\_on\_courtMoritz Wagner -3.120241 5.470391
+player\_on\_courtMoses Brown 3.561296 5.509647 player\_on\_courtMychal
+Mulder -5.511334 5.003575 player\_on\_courtMyles Turner 0.571603
+5.432116 player\_on\_courtNassir Little -7.940194 5.294251
+player\_on\_courtNate Hinton -1.404739 7.076119 player\_on\_courtNathan
+Knight 1.041045 5.788507 player\_on\_courtNaz Reid 5.906730 4.847209
+player\_on\_courtNemanja Bjelica -3.714278 5.639377
+player\_on\_courtNerlens Noel -6.096304 4.847161 player\_on\_courtNico
+Mannion -9.309327 6.164514 player\_on\_courtNicolas Batum -4.327866
+4.618185 player\_on\_courtNicolas Claxton -2.003696 5.469993
+player\_on\_courtNicolo Melli -6.065385 6.407699 player\_on\_courtNikola
+Jokic 21.107193 4.667360 player\_on\_courtNikola Vucevic 13.608712
+4.829990 player\_on\_courtNoah Vonleh -31.279355 13.817353
+player\_on\_courtNorman Powell 4.565763 4.781183 player\_on\_courtNorvel
+Pelle -8.104605 8.484443 player\_on\_courtObi Toppin -3.020464 4.882979
+player\_on\_courtOG Anunoby 2.649243 5.551174 player\_on\_courtOnyeka
+Okongwu -1.588414 4.848008 player\_on\_courtOshae Brissett 0.184918
+6.704540 player\_on\_courtOtto Porter Jr.~0.551879 6.321538
+player\_on\_courtP.J. Tucker -13.204380 4.750515 player\_on\_courtPascal
+Siakam 8.688739 5.122523 player\_on\_courtPat Connaughton -5.935660
+4.551835 player\_on\_courtPatrick Beverley -2.760157 5.122864
+player\_on\_courtPatrick McCaw -10.470442 12.459318
+player\_on\_courtPatrick Patterson -4.524060 5.736256
+player\_on\_courtPatrick Williams -5.749981 4.830036
+player\_on\_courtPatty Mills -0.370195 4.864846 player\_on\_courtPaul
+George 11.657387 4.797255 player\_on\_courtPaul Millsap 3.909274
+4.940620 player\_on\_courtPaul Reed 5.815967 6.240560
+player\_on\_courtPaul Watson 0.883814 6.321501 player\_on\_courtPayton
+Pritchard -2.909849 4.813256 player\_on\_courtPJ Dozier -2.794525
+5.294266 player\_on\_courtPrecious Achiuwa -1.960291 4.961031
+player\_on\_courtQuinn Cook 3.419540 6.818727 player\_on\_courtQuinndary
+Weatherspoon -14.635561 6.942159 player\_on\_courtR.J. Hampton -4.383048
+5.232924 player\_on\_courtRajon Rondo -3.691221 5.025950
+player\_on\_courtRaul Neto -1.615980 4.797249 player\_on\_courtRay
+Spalding -15.825012 19.217085 player\_on\_courtRayjon Tucker 1.523130
+7.751537 player\_on\_courtReggie Bullock -3.941360 4.829975
+player\_on\_courtReggie Jackson 1.408093 4.606596
+player\_on\_courtReggie Perry 0.507893 6.164527 player\_on\_courtRichaun
+Holmes 4.232911 5.026022 player\_on\_courtRicky Rubio -1.189416 4.883023
+player\_on\_courtRJ Barrett 2.234324 4.735794 player\_on\_courtRobert
+Covington -6.083418 4.750623 player\_on\_courtRobert Franks 14.423741
+11.464629 player\_on\_courtRobert Williams III 5.085226 5.122427
+player\_on\_courtRobert Woodard II -0.622222 8.210595
+player\_on\_courtRobin Lopez 0.173657 4.721665 player\_on\_courtRodions
+Kurucs -5.327959 7.381832 player\_on\_courtRodney Hood -9.902088
+5.148637 player\_on\_courtRodney McGruder -0.427179 7.968771
+player\_on\_courtRomeo Langford -10.751948 6.818704
+player\_on\_courtRondae Hollis-Jefferson -3.728258 7.751660
+player\_on\_courtRoyce O'Neale -7.873110 4.667395 player\_on\_courtRudy
+Gay 3.860360 4.920894 player\_on\_courtRudy Gobert 3.461038 4.667373
+player\_on\_courtRui Hachimura -2.620070 4.940990
+player\_on\_courtRussell Westbrook 9.231482 4.797208
+player\_on\_courtRyan Arcidiacono -5.008958 5.509703
+player\_on\_courtSaben Lee -2.328917 5.360433 player\_on\_courtSaddiq
+Bey -1.599418 4.847193 player\_on\_courtSam Merrill -4.799029 5.736428
+player\_on\_courtSean McDermott -12.953057 7.557502
+player\_on\_courtSekou Doumbouya -7.945459 5.122485
+player\_on\_courtSemi Ojeleye -9.453172 4.982069 player\_on\_courtSerge
+Ibaka 4.818096 5.469978 player\_on\_courtSeth Curry 1.198406 4.864834
+player\_on\_courtShai Gilgeous-Alexander 11.260669 5.900466
+player\_on\_courtShake Milton 2.021224 4.765596
+player\_on\_courtShaquille Harrison -9.179197 5.594162
+player\_on\_courtSindarius Thornwell -9.116615 11.465009
+player\_on\_courtSkylar Mays -0.075456 5.639676 player\_on\_courtSolomon
+Hill -11.557905 4.630500 player\_on\_courtSpencer Dinwiddie -6.538025
+19.216760 player\_on\_courtStanley Johnson -7.474081 5.025853
+player\_on\_courtStephen Curry 20.568666 4.901660
+player\_on\_courtSterling Brown -5.509596 5.294245 player\_on\_courtSvi
+Mykhailiuk -1.788669 4.921039 player\_on\_courtT.J. Leaf -3.303145
+9.158090 player\_on\_courtT.J. McConnell 0.284017 4.847208
+player\_on\_courtT.J. Warren 0.637435 13.816748 player\_on\_courtTacko
+Fall 2.920002 7.076181 player\_on\_courtTaj Gibson -4.045647 5.294246
+player\_on\_courtTalen Horton-Tucker -0.591363 4.847164
+player\_on\_courtTaurean Prince -0.590670 5.594375
+player\_on\_courtTerance Mann -2.738679 4.606563
+player\_on\_courtTerence Davis -0.176508 5.003596
+player\_on\_courtTerrance Ferguson -24.424765 8.484092
+player\_on\_courtTerrence Ross 3.404264 5.395478
+player\_on\_courtThaddeus Young 7.271584 4.883022
+player\_on\_courtThanasis Antetokounmpo -6.646218 4.813258
+player\_on\_courtTheo Maledon -4.700912 4.940643 player\_on\_courtTheo
+Pinson -18.773379 7.381686 player\_on\_courtThomas Bryant 0.460952
+9.158046 player\_on\_courtThon Maker 0.520785 10.085226
+player\_on\_courtTim Frazier -10.996715 12.459825 player\_on\_courtTim
+Hardaway Jr.~4.436171 4.735898 player\_on\_courtTimothe Luwawu-Cabarrot
+-4.273455 4.940797 player\_on\_courtTobias Harris 7.956335 4.781071
+player\_on\_courtTomas Satoransky -1.714011 5.097208
+player\_on\_courtTony Bradley 2.798550 5.470027 player\_on\_courtTony
+Snell -11.665024 5.072853 player\_on\_courtTorrey Craig -3.362428
+4.781761 player\_on\_courtTrae Young 16.771833 4.680894
+player\_on\_courtTre Jones -4.321557 5.686821 player\_on\_courtTremont
+Waters 1.296263 6.240574 player\_on\_courtTrent Forrest -9.450559
+5.842907 player\_on\_courtTrevor Ariza -4.776919 5.900453
+player\_on\_courtTrey Burke -0.751339 4.960978 player\_on\_courtTrey
+Lyles -7.736507 6.818803 player\_on\_courtTristan Thompson -2.597058
+5.003579 player\_on\_courtTroy Brown Jr.~-6.469910 5.843031
+player\_on\_courtTy-Shon Alexander -11.728259 7.967710
+player\_on\_courtTy Jerome 1.662016 5.961125 player\_on\_courtTyler Bey
+-8.864893 7.557335 player\_on\_courtTyler Cook -9.448951 6.092900
+player\_on\_courtTyler Herro 2.614428 5.072708 player\_on\_courtTyler
+Johnson -5.255046 5.294243 player\_on\_courtTyrell Terry -4.623358
+9.581746 player\_on\_courtTyrese Haliburton 3.431577 5.072687
+player\_on\_courtTyrese Maxey 0.318128 4.781073 player\_on\_courtTyus
+Jones 0.635043 4.735979 player\_on\_courtUdoka Azubuike -5.498701
+7.967783 player\_on\_courtUdonis Haslem 38.455838 26.947551
+player\_on\_courtVictor Oladipo 5.933068 6.025124
+player\_on\_courtVincent Poirier -15.695681 9.581688
+player\_on\_courtVlatko Cancar -9.170824 5.360427 player\_on\_courtWayne
+Ellington -1.085177 5.432283 player\_on\_courtWendell Carter
+Jr.~1.665181 5.122514 player\_on\_courtWes Iwundu -12.822225 6.818739
+player\_on\_courtWesley Matthews -10.180060 4.940697
+player\_on\_courtWill Barton -1.050590 5.025852 player\_on\_courtWillie
+Cauley-Stein -4.721145 5.048943 player\_on\_courtXavier Tillman
+-2.361962 4.940684 player\_on\_courtYogi Ferrell -2.790280 7.382517
+player\_on\_courtYuta Watanabe -6.223034 5.263004 player\_on\_courtZach
+LaVine 13.250593 5.072591 player\_on\_courtZeke Nnaji -0.362235 5.326708
+DRtg\_minus\_Avg 0.283869 0.075347 clutch\_time -11.467419 19.216954
+player\_on\_courtAaron Holiday:clutch\_time 8.870840 33.080253
+player\_on\_courtAaron Nesmith:clutch\_time 30.827312 33.135873
+player\_on\_courtAbdel Nader:clutch\_time -11.840570 33.305202
+player\_on\_courtAdam Mokoka:clutch\_time NA NA
+player\_on\_courtAl-Farouq Aminu:clutch\_time NA NA player\_on\_courtAl
+Horford:clutch\_time -25.058043 27.474059 player\_on\_courtAlec
+Burks:clutch\_time 66.656999 27.200920 player\_on\_courtAleksej
+Pokusevski:clutch\_time NA NA player\_on\_courtAlen
+Smailagic:clutch\_time NA NA player\_on\_courtAlex Caruso:clutch\_time
+26.195158 24.880557 player\_on\_courtAlex Len:clutch\_time 11.956681
+27.148024 player\_on\_courtAlfonzo McKinnie:clutch\_time NA NA
+player\_on\_courtAlize Johnson:clutch\_time NA NA player\_on\_courtAmida
+Brimah:clutch\_time NA NA player\_on\_courtAmir Coffey:clutch\_time NA
+NA player\_on\_courtAnderson Varejao:clutch\_time NA NA
+player\_on\_courtAndre Drummond:clutch\_time 19.060896 24.935066
+player\_on\_courtAndre Iguodala:clutch\_time -2.816591 27.160359
+player\_on\_courtAndre Roberson:clutch\_time 3.709192 35.007335
+player\_on\_courtAndrew Wiggins:clutch\_time 20.706186 27.137084
+player\_on\_courtAnfernee Simons:clutch\_time -11.066153 33.067440
+player\_on\_courtAnthony Davis:clutch\_time -0.795327 27.275425
+player\_on\_courtAnthony Edwards:clutch\_time -0.636734 23.628637
+player\_on\_courtAnthony Gill:clutch\_time -8.781479 33.277651
+player\_on\_courtAnthony Lamb:clutch\_time NA NA
+player\_on\_courtAnthony Tolliver:clutch\_time NA NA
+player\_on\_courtAnzejs Pasecniks:clutch\_time NA NA
+player\_on\_courtArmoni Brooks:clutch\_time NA NA player\_on\_courtAron
+Baynes:clutch\_time NA NA player\_on\_courtAshton Hagans:clutch\_time NA
+NA player\_on\_courtAustin Rivers:clutch\_time 21.458601 33.157123
+player\_on\_courtAvery Bradley:clutch\_time NA NA player\_on\_courtAxel
+Toupane:clutch\_time NA NA player\_on\_courtBam Adebayo:clutch\_time
+14.086222 24.865689 player\_on\_courtBen McLemore:clutch\_time NA NA
+player\_on\_courtBen Simmons:clutch\_time 13.841274 22.869432
+player\_on\_courtBlake Griffin:clutch\_time -4.840617 23.677734
+player\_on\_courtBoban Marjanovic:clutch\_time NA NA
+player\_on\_courtBobby Portis:clutch\_time NA NA player\_on\_courtBogdan
+Bogdanovic:clutch\_time 1.040284 27.176991 player\_on\_courtBojan
+Bogdanovic:clutch\_time -7.006902 24.827838 player\_on\_courtBol
+Bol:clutch\_time NA NA player\_on\_courtBrad Wanamaker:clutch\_time NA
+NA player\_on\_courtBradley Beal:clutch\_time 22.426480 24.869312
+player\_on\_courtBrandon Clarke:clutch\_time 3.864812 27.173295
+player\_on\_courtBrandon Goodwin:clutch\_time -6.663874 33.165539
+player\_on\_courtBrian Bowen II:clutch\_time NA NA
+player\_on\_courtBrodric Thomas:clutch\_time -2.264762 33.278385
+player\_on\_courtBrook Lopez:clutch\_time 6.827048 23.573810
+player\_on\_courtBruce Brown:clutch\_time 21.364125 24.837406
+player\_on\_courtBruno Caboclo:clutch\_time NA NA player\_on\_courtBruno
+Fernando:clutch\_time NA NA player\_on\_courtBryn Forbes:clutch\_time NA
+NA player\_on\_courtBuddy Hield:clutch\_time 28.239959 33.067445
+player\_on\_courtCam Reddish:clutch\_time 23.579543 33.290758
+player\_on\_courtCameron Johnson:clutch\_time 9.608111 22.306927
+player\_on\_courtCameron Oliver:clutch\_time NA NA
+player\_on\_courtCameron Payne:clutch\_time -30.343054 27.114216
+player\_on\_courtCameron Reynolds:clutch\_time NA NA
+player\_on\_courtCaris LeVert:clutch\_time 2.457404 23.738865
+player\_on\_courtCarmelo Anthony:clutch\_time -9.721120 33.060564
+player\_on\_courtCarsen Edwards:clutch\_time NA NA
+player\_on\_courtCassius Stanley:clutch\_time NA NA
+player\_on\_courtCassius Winston:clutch\_time NA NA
+player\_on\_courtCedi Osman:clutch\_time 10.376895 24.901736
+player\_on\_courtChandler Hutchison:clutch\_time -2.355696 33.304990
+player\_on\_courtCharlie Brown Jr.:clutch\_time NA NA
+player\_on\_courtChasson Randle:clutch\_time NA NA
+player\_on\_courtChimezie Metu:clutch\_time NA NA player\_on\_courtChris
+Boucher:clutch\_time NA NA player\_on\_courtChris Chiozza:clutch\_time
+-11.899852 33.320527 player\_on\_courtChris Paul:clutch\_time 11.589182
+22.284644 player\_on\_courtChris Silva:clutch\_time NA NA
+player\_on\_courtChristian Wood:clutch\_time 2.440125 33.190187
+player\_on\_courtChuma Okeke:clutch\_time NA NA player\_on\_courtCJ
+Elleby:clutch\_time NA NA player\_on\_courtCJ McCollum:clutch\_time
+6.575426 27.208526 player\_on\_courtClint Capela:clutch\_time 17.375216
+24.829869 player\_on\_courtCoby White:clutch\_time 12.598458 23.639049
+player\_on\_courtCole Anthony:clutch\_time -12.506070 33.157223
+player\_on\_courtCollin Sexton:clutch\_time 34.406703 23.668860
+player\_on\_courtCory Joseph:clutch\_time -9.716206 33.089355
+player\_on\_courtCristiano Felicio:clutch\_time NA NA
+player\_on\_courtD'Angelo Russell:clutch\_time 24.114609 27.266253
+player\_on\_courtD.J. Augustin:clutch\_time NA NA player\_on\_courtD.J.
+Wilson:clutch\_time NA NA player\_on\_courtDakota Mathias:clutch\_time
+12.746545 34.420736 player\_on\_courtDamian Jones:clutch\_time NA NA
+player\_on\_courtDamian Lillard:clutch\_time 37.548200 27.136221
+player\_on\_courtDamion Lee:clutch\_time NA NA player\_on\_courtDamyean
+Dotson:clutch\_time -5.382081 27.245280 player\_on\_courtDaniel
+Gafford:clutch\_time -2.966669 27.180503 player\_on\_courtDaniel
+Oturu:clutch\_time NA NA player\_on\_courtDaniel Theis:clutch\_time
+6.640975 33.080842 player\_on\_courtDanilo Gallinari:clutch\_time
+2.440930 33.064843 player\_on\_courtDanny Green:clutch\_time 18.727601
+22.845682 player\_on\_courtDante Exum:clutch\_time NA NA
+player\_on\_courtDanuel House Jr.:clutch\_time -6.145677 33.253877
+player\_on\_courtDaQuan Jeffries:clutch\_time NA NA
+player\_on\_courtDario Saric:clutch\_time 11.814368 27.165783
+player\_on\_courtDarius Bazley:clutch\_time -3.457904 27.208037
+player\_on\_courtDarius Garland:clutch\_time 42.414692 27.204853
+player\_on\_courtDarius Miller:clutch\_time NA NA player\_on\_courtDavid
+Nwaba:clutch\_time NA NA player\_on\_courtDavis Bertans:clutch\_time
+1.963989 23.651341 player\_on\_courtDe'Aaron Fox:clutch\_time -2.554221
+33.109986 player\_on\_courtDe'Andre Hunter:clutch\_time -11.943345
+33.320169 player\_on\_courtDe'Anthony Melton:clutch\_time 3.554382
+33.095683 player\_on\_courtDean Wade:clutch\_time 12.380746 27.174270
+player\_on\_courtDeAndre' Bembry:clutch\_time 38.879249 33.126384
+player\_on\_courtDeandre Ayton:clutch\_time 3.576361 22.282434
+player\_on\_courtDeAndre Jordan:clutch\_time -2.768879 27.189536
+player\_on\_courtDeividas Sirvydis:clutch\_time NA NA
+player\_on\_courtDejounte Murray:clutch\_time 15.002117 22.350008
+player\_on\_courtDelon Wright:clutch\_time 11.183331 24.880563
+player\_on\_courtDeMar DeRozan:clutch\_time 5.267947 22.376657
+player\_on\_courtDeMarcus Cousins:clutch\_time NA NA
+player\_on\_courtDeni Avdija:clutch\_time -0.516261 33.121411
+player\_on\_courtDennis Schroder:clutch\_time 8.538491 23.643214
+player\_on\_courtDennis Smith Jr.:clutch\_time NA NA
+player\_on\_courtDenzel Valentine:clutch\_time 9.089446 27.176339
+player\_on\_courtDerrick Favors:clutch\_time -11.801280 33.052607
+player\_on\_courtDerrick Jones Jr.:clutch\_time 10.095424 33.098887
+player\_on\_courtDerrick Rose:clutch\_time -7.166246 23.699833
+player\_on\_courtDerrick White:clutch\_time -5.369349 27.343513
+player\_on\_courtDesmond Bane:clutch\_time 960.657804 23.616609
+player\_on\_courtDevin Booker:clutch\_time 23.837589 22.814253
+player\_on\_courtDevin Cannady:clutch\_time NA NA player\_on\_courtDevin
+Vassell:clutch\_time NA NA player\_on\_courtDevon Dotson:clutch\_time NA
+NA player\_on\_courtDevontae Cacok:clutch\_time NA NA
+player\_on\_courtDewayne Dedmon:clutch\_time NA NA
+player\_on\_courtDillon Brooks:clutch\_time 18.357533 23.622680
+player\_on\_courtDomantas Sabonis:clutch\_time 10.782699 22.897200
+player\_on\_courtDonovan Mitchell:clutch\_time 0.231744 27.174270
+player\_on\_courtDonta Hall:clutch\_time NA NA player\_on\_courtDonte
+DiVincenzo:clutch\_time 6.860359 24.863211 player\_on\_courtDorian
+Finney-Smith:clutch\_time 3.636452 33.077650 player\_on\_courtDoug
+McDermott:clutch\_time -9.667892 24.872228 player\_on\_courtDraymond
+Green:clutch\_time 33.075210 33.083774 player\_on\_courtDrew
+Eubanks:clutch\_time 15.445224 33.117684 player\_on\_courtDuncan
+Robinson:clutch\_time 13.316173 23.617273 player\_on\_courtDwayne
+Bacon:clutch\_time NA NA player\_on\_courtDwight Howard:clutch\_time
+0.944295 27.120707 player\_on\_courtDwight Powell:clutch\_time NA NA
+player\_on\_courtDylan Windler:clutch\_time -1.548650 33.281028
+player\_on\_courtE'Twaun Moore:clutch\_time NA NA player\_on\_courtEd
+Davis:clutch\_time NA NA player\_on\_courtEdmond Sumner:clutch\_time
+-0.677351 24.916742 player\_on\_courtElfrid Payton:clutch\_time NA NA
+player\_on\_courtElijah Bryant:clutch\_time NA NA
+player\_on\_courtElijah Hughes:clutch\_time NA NA player\_on\_courtEnes
+Kanter:clutch\_time 4.665168 33.056275 player\_on\_courtEric
+Gordon:clutch\_time NA NA player\_on\_courtEric Paschall:clutch\_time
+-13.469306 33.198115 player\_on\_courtErsan Ilyasova:clutch\_time
+-9.713124 33.507770 player\_on\_courtEvan Fournier:clutch\_time
+11.559375 27.258755 player\_on\_courtFacundo Campazzo:clutch\_time
+-8.187694 23.619033 player\_on\_courtFrank Jackson:clutch\_time NA NA
+player\_on\_courtFrank Kaminsky:clutch\_time -8.698611 27.193686
+player\_on\_courtFrank Mason:clutch\_time NA NA player\_on\_courtFrank
+Ntilikina:clutch\_time -3.764673 27.345647 player\_on\_courtFred
+VanVleet:clutch\_time 16.630137 33.130979 player\_on\_courtFreddie
+Gillespie:clutch\_time NA NA player\_on\_courtFurkan
+Korkmaz:clutch\_time 23.610789 33.072864 player\_on\_courtGabe
+Vincent:clutch\_time -7.004962 33.120876 player\_on\_courtGabriel
+Deck:clutch\_time NA NA player\_on\_courtGarrett Temple:clutch\_time
+17.322348 24.921964 player\_on\_courtGarrison Mathews:clutch\_time
+90.921295 27.152696 player\_on\_courtGary Clark:clutch\_time NA NA
+player\_on\_courtGary Harris:clutch\_time -3.646362 23.810504
+player\_on\_courtGary Payton II:clutch\_time NA NA player\_on\_courtGary
+Trent Jr.:clutch\_time 5.254292 33.106025 player\_on\_courtGeorge
+Hill:clutch\_time -1.410822 33.190008 player\_on\_courtGeorges
+Niang:clutch\_time NA NA player\_on\_courtGiannis
+Antetokounmpo:clutch\_time 8.106186 23.597701 player\_on\_courtGlenn
+Robinson III:clutch\_time NA NA player\_on\_courtGoga
+Bitadze:clutch\_time -13.720971 33.162928 player\_on\_courtGoran
+Dragic:clutch\_time 31.109633 33.122600 player\_on\_courtGorgui
+Dieng:clutch\_time -12.220837 33.217194 player\_on\_courtGrant
+Williams:clutch\_time -4.320500 33.072233 player\_on\_courtGrayson
+Allen:clutch\_time 11.663118 22.917568 player\_on\_courtGreg
+Whittington:clutch\_time NA NA player\_on\_courtHamidou
+Diallo:clutch\_time -7.805488 27.224723 player\_on\_courtHarrison
+Barnes:clutch\_time 66.184947 33.109999 player\_on\_courtHarry Giles
+III:clutch\_time NA NA player\_on\_courtHassan Whiteside:clutch\_time
+-15.591612 33.223529 player\_on\_courtHenry Ellenson:clutch\_time NA NA
+player\_on\_courtIgnas Brazdeikis:clutch\_time NA NA
+player\_on\_courtIman Shumpert:clutch\_time NA NA
+player\_on\_courtImmanuel Quickley:clutch\_time 19.465144 27.151588
+player\_on\_courtIsaac Bonga:clutch\_time NA NA player\_on\_courtIsaac
+Okoro:clutch\_time 2.425761 23.647441 player\_on\_courtIsaiah
+Hartenstein:clutch\_time NA NA player\_on\_courtIsaiah Joe:clutch\_time
+9.381694 33.157946 player\_on\_courtIsaiah Roby:clutch\_time NA NA
+player\_on\_courtIsaiah Stewart:clutch\_time NA NA player\_on\_courtIsh
+Smith:clutch\_time NA NA player\_on\_courtIvica Zubac:clutch\_time NA NA
+player\_on\_courtJa Morant:clutch\_time 27.909472 23.632912
+player\_on\_courtJabari Parker:clutch\_time NA NA player\_on\_courtJaden
+McDaniels:clutch\_time -2.647602 24.888252 player\_on\_courtJae'Sean
+Tate:clutch\_time -11.468948 33.072515 player\_on\_courtJae
+Crowder:clutch\_time 2.615696 24.827938 player\_on\_courtJahlil
+Okafor:clutch\_time -9.863329 33.320216 player\_on\_courtJahmi'us
+Ramsey:clutch\_time NA NA player\_on\_courtJaKarr Sampson:clutch\_time
+NA NA player\_on\_courtJake Layman:clutch\_time NA NA
+player\_on\_courtJakob Poeltl:clutch\_time -3.334061 22.868360
+player\_on\_courtJalen Brunson:clutch\_time NA NA player\_on\_courtJalen
+Harris:clutch\_time NA NA player\_on\_courtJalen Lecque:clutch\_time NA
+NA player\_on\_courtJalen Smith:clutch\_time -2.631802 27.368779
+player\_on\_courtJamal Murray:clutch\_time 10.359927 23.738727
+player\_on\_courtJames Ennis III:clutch\_time NA NA
+player\_on\_courtJames Harden:clutch\_time 14.863867 22.922543
+player\_on\_courtJames Johnson:clutch\_time NA NA player\_on\_courtJames
+Wiseman:clutch\_time NA NA player\_on\_courtJaMychal Green:clutch\_time
+-11.847332 33.074840 player\_on\_courtJared Dudley:clutch\_time NA NA
+player\_on\_courtJared Harper:clutch\_time NA NA player\_on\_courtJaren
+Jackson Jr.:clutch\_time NA NA player\_on\_courtJarred
+Vanderbilt:clutch\_time -19.378697 33.089129 player\_on\_courtJarrell
+Brantley:clutch\_time NA NA player\_on\_courtJarrett Allen:clutch\_time
+-6.906780 23.660093 player\_on\_courtJarrett Culver:clutch\_time NA NA
+player\_on\_courtJaVale McGee:clutch\_time NA NA
+player\_on\_courtJavonte Green:clutch\_time NA NA player\_on\_courtJay
+Scrubb:clutch\_time NA NA player\_on\_courtJaylen Adams:clutch\_time NA
+NA player\_on\_courtJaylen Brown:clutch\_time 10.513731 24.906482
+player\_on\_courtJaylen Hoard:clutch\_time NA NA player\_on\_courtJaylen
+Nowell:clutch\_time NA NA player\_on\_courtJayson Tatum:clutch\_time
+45.022158 27.147942 player\_on\_courtJeff Green:clutch\_time 17.033505
+23.622077 player\_on\_courtJeff Teague:clutch\_time 46.226223 33.061099
+player\_on\_courtJerami Grant:clutch\_time 40.091398 23.693930
+player\_on\_courtJeremiah Martin:clutch\_time -2.133126 34.235495
+player\_on\_courtJeremy Lamb:clutch\_time 4.634233 25.074617
+player\_on\_courtJerome Robinson:clutch\_time NA NA
+player\_on\_courtJevon Carter:clutch\_time 62.478287 27.151097
+player\_on\_courtJimmy Butler:clutch\_time -10.234398 24.922731
+player\_on\_courtJJ Redick:clutch\_time NA NA player\_on\_courtJoe
+Harris:clutch\_time -6.556053 22.833633 player\_on\_courtJoe
+Ingles:clutch\_time -8.706007 24.840392 player\_on\_courtJoel
+Embiid:clutch\_time 29.817849 23.668960 player\_on\_courtJohn
+Collins:clutch\_time -8.741591 27.112078 player\_on\_courtJohn
+Konchar:clutch\_time NA NA player\_on\_courtJohn Wall:clutch\_time NA NA
+player\_on\_courtJonas Valanciunas:clutch\_time -7.901789 24.865363
+player\_on\_courtJontay Porter:clutch\_time NA NA
+player\_on\_courtJordan Bell:clutch\_time NA NA player\_on\_courtJordan
+Bone:clutch\_time NA NA player\_on\_courtJordan Clarkson:clutch\_time
+-11.565406 27.127724 player\_on\_courtJordan McLaughlin:clutch\_time NA
+NA player\_on\_courtJordan Nwora:clutch\_time NA NA
+player\_on\_courtJordan Poole:clutch\_time 25.001841 33.122622
+player\_on\_courtJosh Green:clutch\_time NA NA player\_on\_courtJosh
+Hall:clutch\_time NA NA player\_on\_courtJosh Jackson:clutch\_time
+5.360707 33.096375 player\_on\_courtJosh Okogie:clutch\_time -3.927023
+27.184785 player\_on\_courtJosh Richardson:clutch\_time 34.161196
+33.080431 player\_on\_courtJrue Holiday:clutch\_time -3.736692 23.595310
+player\_on\_courtJuan Toscano-Anderson:clutch\_time 19.223864 33.122836
+player\_on\_courtJuancho Hernangomez:clutch\_time -6.940262 33.122062
+player\_on\_courtJulius Randle:clutch\_time 8.919837 23.618125
+player\_on\_courtJustin Holiday:clutch\_time 11.068598 22.331377
+player\_on\_courtJustin Jackson:clutch\_time -8.626439 33.186984
+player\_on\_courtJustin James:clutch\_time NA NA player\_on\_courtJustin
+Patton:clutch\_time NA NA player\_on\_courtJustin Robinson:clutch\_time
+NA NA player\_on\_courtJustise Winslow:clutch\_time NA NA
+player\_on\_courtJusuf Nurkic:clutch\_time 24.693599 33.163019
+player\_on\_courtJuwan Morgan:clutch\_time 27.182545 33.281587
+player\_on\_courtKarim Mane:clutch\_time NA NA
+player\_on\_courtKarl-Anthony Towns:clutch\_time -11.909250 24.952618
+player\_on\_courtKawhi Leonard:clutch\_time NA NA player\_on\_courtKeita
+Bates-Diop:clutch\_time -5.969024 33.290779 player\_on\_courtKelan
+Martin:clutch\_time NA NA player\_on\_courtKeldon Johnson:clutch\_time
+7.982831 23.632288 player\_on\_courtKeljin Blevins:clutch\_time NA NA
+player\_on\_courtKelly Olynyk:clutch\_time -8.719769 27.144290
+player\_on\_courtKelly Oubre Jr.:clutch\_time -4.850511 33.110340
+player\_on\_courtKemba Walker:clutch\_time 63.416381 33.157117
+player\_on\_courtKendrick Nunn:clutch\_time -12.671391 33.096848
+player\_on\_courtKenrich Williams:clutch\_time -0.536632 24.874825
+player\_on\_courtKent Bazemore:clutch\_time 22.127599 27.151909
+player\_on\_courtKentavious Caldwell-Pope:clutch\_time 18.341838
+22.858697 player\_on\_courtKenyon Martin Jr.:clutch\_time NA NA
+player\_on\_courtKevin Durant:clutch\_time -4.805234 24.966638
+player\_on\_courtKevin Huerter:clutch\_time 2.956896 23.587443
+player\_on\_courtKevin Knox II:clutch\_time -9.811080 33.175835
+player\_on\_courtKevin Love:clutch\_time 14.289301 27.568688
+player\_on\_courtKevin Porter Jr.:clutch\_time NA NA
+player\_on\_courtKevon Looney:clutch\_time NA NA player\_on\_courtKhem
+Birch:clutch\_time -1.942227 33.074828 player\_on\_courtKhris
+Middleton:clutch\_time -1.915558 23.577748 player\_on\_courtKhyri
+Thomas:clutch\_time NA NA player\_on\_courtKillian Hayes:clutch\_time NA
+NA player\_on\_courtKillian Tillie:clutch\_time NA NA
+player\_on\_courtKostas Antetokounmpo:clutch\_time NA NA
+player\_on\_courtKris Dunn:clutch\_time NA NA player\_on\_courtKristaps
+Porzingis:clutch\_time NA NA player\_on\_courtKyle Anderson:clutch\_time
+6.673074 22.848609 player\_on\_courtKyle Guy:clutch\_time NA NA
+player\_on\_courtKyle Kuzma:clutch\_time 0.367733 22.852133
+player\_on\_courtKyle Lowry:clutch\_time NA NA player\_on\_courtKyrie
+Irving:clutch\_time 19.791522 24.888091 player\_on\_courtKZ
+Okpala:clutch\_time NA NA player\_on\_courtLamar Stevens:clutch\_time
+13.712155 33.193118 player\_on\_courtLaMarcus Aldridge:clutch\_time
+-4.154467 33.395047 player\_on\_courtLandry Shamet:clutch\_time
+-7.068629 27.136571 player\_on\_courtLangston Galloway:clutch\_time NA
+NA player\_on\_courtLarry Nance Jr.:clutch\_time 3.575868 27.368802
+player\_on\_courtLauri Markkanen:clutch\_time -3.232635 33.130889
+player\_on\_courtLeBron James:clutch\_time 1.189618 23.711163
+player\_on\_courtLonnie Walker IV:clutch\_time 7.171973 24.897549
+player\_on\_courtLou Williams:clutch\_time -1.090478 33.046624
+player\_on\_courtLouis King:clutch\_time NA NA player\_on\_courtLuguentz
+Dort:clutch\_time 9.574956 24.942018 player\_on\_courtLuka
+Doncic:clutch\_time 51.490361 33.062782 player\_on\_courtLuka
+Samanic:clutch\_time -7.436669 33.253682 player\_on\_courtLuke
+Kennard:clutch\_time NA NA player\_on\_courtLuke Kornet:clutch\_time NA
+NA player\_on\_courtMalachi Flynn:clutch\_time NA NA
+player\_on\_courtMalcolm Brogdon:clutch\_time 6.398582 23.687941
+player\_on\_courtMalik Beasley:clutch\_time 17.080743 25.050041
+player\_on\_courtMalik Fitts:clutch\_time NA NA player\_on\_courtMamadi
+Diakite:clutch\_time NA NA player\_on\_courtMarc Gasol:clutch\_time
+-7.494071 33.102428 player\_on\_courtMarcus Morris Sr.:clutch\_time NA
+NA player\_on\_courtMarcus Smart:clutch\_time -4.902556 24.922098
+player\_on\_courtMarkelle Fultz:clutch\_time NA NA
+player\_on\_courtMarkieff Morris:clutch\_time 10.751336 33.083162
+player\_on\_courtMarkus Howard:clutch\_time NA NA
+player\_on\_courtMarques Bolden:clutch\_time NA NA
+player\_on\_courtMarquese Chriss:clutch\_time NA NA
+player\_on\_courtMarvin Bagley III:clutch\_time NA NA
+player\_on\_courtMason Jones:clutch\_time NA NA player\_on\_courtMason
+Plumlee:clutch\_time -2.373292 23.688437 player\_on\_courtMatisse
+Thybulle:clutch\_time 62.738948 22.846162 player\_on\_courtMatt
+Thomas:clutch\_time NA NA player\_on\_courtMatthew
+Dellavedova:clutch\_time NA NA player\_on\_courtMaurice
+Harkless:clutch\_time NA NA player\_on\_courtMax Strus:clutch\_time NA
+NA player\_on\_courtMaxi Kleber:clutch\_time 19.040077 33.109964
+player\_on\_courtMeyers Leonard:clutch\_time NA NA
+player\_on\_courtMfiondu Kabengele:clutch\_time 91.790333 33.198272
+player\_on\_courtMichael Carter-Williams:clutch\_time NA NA
+player\_on\_courtMichael Porter Jr.:clutch\_time -4.881748 22.864642
+player\_on\_courtMikal Bridges:clutch\_time 26.076129 22.276188
+player\_on\_courtMike Conley:clutch\_time -2.820861 27.200653
+player\_on\_courtMike James:clutch\_time NA NA player\_on\_courtMike
+Muscala:clutch\_time 48.676634 33.242985 player\_on\_courtMike
+Scott:clutch\_time -0.947412 27.190990 player\_on\_courtMitchell
+Robinson:clutch\_time NA NA player\_on\_courtMiye Oni:clutch\_time NA NA
+player\_on\_courtMo Bamba:clutch\_time NA NA player\_on\_courtMonte
+Morris:clutch\_time 10.055990 24.897194 player\_on\_courtMontrezl
+Harrell:clutch\_time -5.255448 24.845696 player\_on\_courtMoritz
+Wagner:clutch\_time NA NA player\_on\_courtMoses Brown:clutch\_time NA
+NA player\_on\_courtMychal Mulder:clutch\_time NA NA
+player\_on\_courtMyles Turner:clutch\_time -4.878721 22.999299
+player\_on\_courtNassir Little:clutch\_time NA NA player\_on\_courtNate
+Hinton:clutch\_time NA NA player\_on\_courtNathan Knight:clutch\_time NA
+NA player\_on\_courtNaz Reid:clutch\_time -14.390197 33.072264
+player\_on\_courtNemanja Bjelica:clutch\_time NA NA
+player\_on\_courtNerlens Noel:clutch\_time 4.240277 24.862914
+player\_on\_courtNico Mannion:clutch\_time NA NA
+player\_on\_courtNicolas Batum:clutch\_time NA NA
+player\_on\_courtNicolas Claxton:clutch\_time NA NA
+player\_on\_courtNicolo Melli:clutch\_time NA NA player\_on\_courtNikola
+Jokic:clutch\_time 16.552925 21.919815 player\_on\_courtNikola
+Vucevic:clutch\_time -18.984703 33.069873 player\_on\_courtNoah
+Vonleh:clutch\_time NA NA player\_on\_courtNorman Powell:clutch\_time
+-16.153444 33.062772 player\_on\_courtNorvel Pelle:clutch\_time NA NA
+player\_on\_courtObi Toppin:clutch\_time NA NA player\_on\_courtOG
+Anunoby:clutch\_time NA NA player\_on\_courtOnyeka Okongwu:clutch\_time
+NA NA player\_on\_courtOshae Brissett:clutch\_time 4.423042 33.395148
+player\_on\_courtOtto Porter Jr.:clutch\_time -3.060714 27.449565
+player\_on\_courtP.J. Tucker:clutch\_time 19.921968 24.842814
+player\_on\_courtPascal Siakam:clutch\_time 52.347960 33.113674
+player\_on\_courtPat Connaughton:clutch\_time 3.446731 24.806708
+player\_on\_courtPatrick Beverley:clutch\_time NA NA
+player\_on\_courtPatrick McCaw:clutch\_time NA NA
+player\_on\_courtPatrick Patterson:clutch\_time NA NA
+player\_on\_courtPatrick Williams:clutch\_time -5.922861 33.069830
+player\_on\_courtPatty Mills:clutch\_time 14.520740 21.962860
+player\_on\_courtPaul George:clutch\_time NA NA player\_on\_courtPaul
+Millsap:clutch\_time -2.127582 33.086753 player\_on\_courtPaul
+Reed:clutch\_time NA NA player\_on\_courtPaul Watson:clutch\_time NA NA
+player\_on\_courtPayton Pritchard:clutch\_time NA NA player\_on\_courtPJ
+Dozier:clutch\_time -5.041912 23.731760 player\_on\_courtPrecious
+Achiuwa:clutch\_time 53.487587 33.092425 player\_on\_courtQuinn
+Cook:clutch\_time NA NA player\_on\_courtQuinndary
+Weatherspoon:clutch\_time NA NA player\_on\_courtR.J.
+Hampton:clutch\_time NA NA player\_on\_courtRajon Rondo:clutch\_time NA
+NA player\_on\_courtRaul Neto:clutch\_time -4.265437 24.851788
+player\_on\_courtRay Spalding:clutch\_time NA NA player\_on\_courtRayjon
+Tucker:clutch\_time NA NA player\_on\_courtReggie Bullock:clutch\_time
+13.068149 23.634191 player\_on\_courtReggie Jackson:clutch\_time NA NA
+player\_on\_courtReggie Perry:clutch\_time NA NA
+player\_on\_courtRichaun Holmes:clutch\_time NA NA
+player\_on\_courtRicky Rubio:clutch\_time -3.940873 24.868618
+player\_on\_courtRJ Barrett:clutch\_time 12.133520 23.615154
+player\_on\_courtRobert Covington:clutch\_time 5.956287 27.130846
+player\_on\_courtRobert Franks:clutch\_time NA NA
+player\_on\_courtRobert Williams III:clutch\_time -3.479756 24.916737
+player\_on\_courtRobert Woodard II:clutch\_time NA NA
+player\_on\_courtRobin Lopez:clutch\_time 28.938652 27.127265
+player\_on\_courtRodions Kurucs:clutch\_time NA NA
+player\_on\_courtRodney Hood:clutch\_time -1.941076 33.117775
+player\_on\_courtRodney McGruder:clutch\_time NA NA
+player\_on\_courtRomeo Langford:clutch\_time NA NA
+player\_on\_courtRondae Hollis-Jefferson:clutch\_time -7.859424
+33.620966 player\_on\_courtRoyce O'Neale:clutch\_time 11.565539
+24.830204 player\_on\_courtRudy Gay:clutch\_time -39.856802 22.884537
+player\_on\_courtRudy Gobert:clutch\_time 2.487320 27.118615
+player\_on\_courtRui Hachimura:clutch\_time -6.146809 24.880614
+player\_on\_courtRussell Westbrook:clutch\_time 5.917687 23.625789
+player\_on\_courtRyan Arcidiacono:clutch\_time -6.578724 33.175953
+player\_on\_courtSaben Lee:clutch\_time NA NA player\_on\_courtSaddiq
+Bey:clutch\_time 13.341175 27.150303 player\_on\_courtSam
+Merrill:clutch\_time NA NA player\_on\_courtSean McDermott:clutch\_time
+NA NA player\_on\_courtSekou Doumbouya:clutch\_time -3.258999 27.199445
+player\_on\_courtSemi Ojeleye:clutch\_time -1.822254 33.092824
+player\_on\_courtSerge Ibaka:clutch\_time NA NA player\_on\_courtSeth
+Curry:clutch\_time -13.281214 24.865606 player\_on\_courtShai
+Gilgeous-Alexander:clutch\_time -26.354853 27.357291
+player\_on\_courtShake Milton:clutch\_time 7.066690 23.620428
+player\_on\_courtShaquille Harrison:clutch\_time 109.954705 27.291276
+player\_on\_courtSindarius Thornwell:clutch\_time NA NA
+player\_on\_courtSkylar Mays:clutch\_time NA NA player\_on\_courtSolomon
+Hill:clutch\_time 13.708938 24.820517 player\_on\_courtSpencer
+Dinwiddie:clutch\_time NA NA player\_on\_courtStanley
+Johnson:clutch\_time NA NA player\_on\_courtStephen Curry:clutch\_time
+14.870187 27.158610 player\_on\_courtSterling Brown:clutch\_time NA NA
+player\_on\_courtSvi Mykhailiuk:clutch\_time -10.677288 24.876376
+player\_on\_courtT.J. Leaf:clutch\_time NA NA player\_on\_courtT.J.
+McConnell:clutch\_time 12.745316 23.635432 player\_on\_courtT.J.
+Warren:clutch\_time NA NA player\_on\_courtTacko Fall:clutch\_time NA NA
+player\_on\_courtTaj Gibson:clutch\_time -6.122689 33.145052
+player\_on\_courtTalen Horton-Tucker:clutch\_time 18.389515 27.148886
+player\_on\_courtTaurean Prince:clutch\_time 37.329137 33.189872
+player\_on\_courtTerance Mann:clutch\_time NA NA
+player\_on\_courtTerence Davis:clutch\_time NA NA
+player\_on\_courtTerrance Ferguson:clutch\_time NA NA
+player\_on\_courtTerrence Ross:clutch\_time -9.814683 33.157233
+player\_on\_courtThaddeus Young:clutch\_time 9.134673 24.868506
+player\_on\_courtThanasis Antetokounmpo:clutch\_time NA NA
+player\_on\_courtTheo Maledon:clutch\_time NA NA player\_on\_courtTheo
+Pinson:clutch\_time NA NA player\_on\_courtThomas Bryant:clutch\_time NA
+NA player\_on\_courtThon Maker:clutch\_time NA NA player\_on\_courtTim
+Frazier:clutch\_time NA NA player\_on\_courtTim Hardaway
+Jr.:clutch\_time NA NA player\_on\_courtTimothe
+Luwawu-Cabarrot:clutch\_time 54.337813 27.165006 player\_on\_courtTobias
+Harris:clutch\_time 17.893339 23.623934 player\_on\_courtTomas
+Satoransky:clutch\_time -18.119178 27.193670 player\_on\_courtTony
+Bradley:clutch\_time NA NA player\_on\_courtTony Snell:clutch\_time
+-0.078785 27.189157 player\_on\_courtTorrey Craig:clutch\_time -7.586548
+27.137325 player\_on\_courtTrae Young:clutch\_time 27.834355 24.829468
+player\_on\_courtTre Jones:clutch\_time -7.748702 33.205582
+player\_on\_courtTremont Waters:clutch\_time NA NA
+player\_on\_courtTrent Forrest:clutch\_time NA NA
+player\_on\_courtTrevor Ariza:clutch\_time 2.215864 27.356091
+player\_on\_courtTrey Burke:clutch\_time NA NA player\_on\_courtTrey
+Lyles:clutch\_time -4.333752 33.418071 player\_on\_courtTristan
+Thompson:clutch\_time 20.614040 27.176291 player\_on\_courtTroy Brown
+Jr.:clutch\_time NA NA player\_on\_courtTy-Shon Alexander:clutch\_time
+35.466563 33.671328 player\_on\_courtTy Jerome:clutch\_time NA NA
+player\_on\_courtTyler Bey:clutch\_time NA NA player\_on\_courtTyler
+Cook:clutch\_time -2.337439 33.277858 player\_on\_courtTyler
+Herro:clutch\_time 11.485165 24.907911 player\_on\_courtTyler
+Johnson:clutch\_time -6.531344 33.140797 player\_on\_courtTyrell
+Terry:clutch\_time NA NA player\_on\_courtTyrese Haliburton:clutch\_time
+NA NA player\_on\_courtTyrese Maxey:clutch\_time NA NA
+player\_on\_courtTyus Jones:clutch\_time 26.051924 33.056021
+player\_on\_courtUdoka Azubuike:clutch\_time NA NA
+player\_on\_courtUdonis Haslem:clutch\_time NA NA
+player\_on\_courtVictor Oladipo:clutch\_time NA NA
+player\_on\_courtVincent Poirier:clutch\_time NA NA
+player\_on\_courtVlatko Cancar:clutch\_time NA NA player\_on\_courtWayne
+Ellington:clutch\_time -10.559279 27.258550 player\_on\_courtWendell
+Carter Jr.:clutch\_time 5.453063 27.198477 player\_on\_courtWes
+Iwundu:clutch\_time NA NA player\_on\_courtWesley Matthews:clutch\_time
+12.074927 23.655008 player\_on\_courtWill Barton:clutch\_time 28.938779
+22.906900 player\_on\_courtWillie Cauley-Stein:clutch\_time 5.456011
+33.102560 player\_on\_courtXavier Tillman:clutch\_time 29.928691
+27.165572 player\_on\_courtYogi Ferrell:clutch\_time NA NA
+player\_on\_courtYuta Watanabe:clutch\_time NA NA player\_on\_courtZach
+LaVine:clutch\_time 9.265999 23.682694 player\_on\_courtZeke
+Nnaji:clutch\_time NA NA t value Pr(\textgreater\textbar t\textbar)\\
+(Intercept) 6.158 7.48e-10 \textbf{\emph{ player\_on\_courtAaron Holiday
+-0.639 0.523000\\
+player\_on\_courtAaron Nesmith -1.341 0.179977\\
+player\_on\_courtAbdel Nader 0.164 0.870040\\
+player\_on\_courtAdam Mokoka -2.529 0.011446 }\\
+player\_on\_courtAl-Farouq Aminu -1.624 0.104439\\
+player\_on\_courtAl Horford 1.120 0.262703\\
+player\_on\_courtAlec Burks 0.341 0.733394\\
+player\_on\_courtAleksej Pokusevski -1.421 0.155257\\
+player\_on\_courtAlen Smailagic -0.980 0.326855\\
+player\_on\_courtAlex Caruso -1.217 0.223610\\
+player\_on\_courtAlex Len -0.629 0.529318\\
+player\_on\_courtAlfonzo McKinnie 0.121 0.903737\\
+player\_on\_courtAlize Johnson -0.049 0.961298\\
+player\_on\_courtAmida Brimah -0.643 0.520314\\
+player\_on\_courtAmir Coffey -2.156 0.031099 *\\
+player\_on\_courtAnderson Varejao 0.729 0.466238\\
+player\_on\_courtAndre Drummond 1.085 0.277932\\
+player\_on\_courtAndre Iguodala -1.601 0.109351\\
+player\_on\_courtAndre Roberson -1.244 0.213607\\
+player\_on\_courtAndrew Wiggins 0.806 0.420223\\
+player\_on\_courtAnfernee Simons -0.108 0.913719\\
+player\_on\_courtAnthony Davis 2.008 0.044688 *\\
+player\_on\_courtAnthony Edwards 0.962 0.335944\\
+player\_on\_courtAnthony Gill -0.479 0.631797\\
+player\_on\_courtAnthony Lamb -0.964 0.335018\\
+player\_on\_courtAnthony Tolliver -1.611 0.107091\\
+player\_on\_courtAnzejs Pasecniks -1.989 0.046659 *\\
+player\_on\_courtArmoni Brooks -0.466 0.641043\\
+player\_on\_courtAron Baynes -0.931 0.352072\\
+player\_on\_courtAshton Hagans -1.731 0.083453 .\\
+player\_on\_courtAustin Rivers -1.212 0.225590\\
+player\_on\_courtAvery Bradley -0.904 0.365900\\
+player\_on\_courtAxel Toupane -0.727 0.467056\\
+player\_on\_courtBam Adebayo 1.794 0.072789 .\\
+player\_on\_courtBen McLemore -0.544 0.586641\\
+player\_on\_courtBen Simmons 0.645 0.518945\\
+player\_on\_courtBlake Griffin -0.145 0.884887\\
+player\_on\_courtBoban Marjanovic 1.224 0.220832\\
+player\_on\_courtBobby Portis 1.213 0.225069\\
+player\_on\_courtBogdan Bogdanovic 0.816 0.414777\\
+player\_on\_courtBojan Bogdanovic 0.417 0.676736\\
+player\_on\_courtBol Bol -0.462 0.643893\\
+player\_on\_courtBrad Wanamaker -0.956 0.339193\\
+player\_on\_courtBradley Beal 3.221 0.001278 } player\_on\_courtBrandon
+Clarke 0.460 0.645834\\
+player\_on\_courtBrandon Goodwin -0.703 0.482297\\
+player\_on\_courtBrian Bowen II -1.642 0.100564\\
+player\_on\_courtBrodric Thomas -1.493 0.135482\\
+player\_on\_courtBrook Lopez 0.190 0.849439\\
+player\_on\_courtBruce Brown -0.387 0.698762\\
+player\_on\_courtBruno Caboclo 0.291 0.770797\\
+player\_on\_courtBruno Fernando -1.918 0.055066 .\\
+player\_on\_courtBryn Forbes -0.278 0.780639\\
+player\_on\_courtBuddy Hield 0.263 0.792476\\
+player\_on\_courtCam Reddish -0.246 0.805407\\
+player\_on\_courtCameron Johnson -0.173 0.862521\\
+player\_on\_courtCameron Oliver 0.174 0.861669\\
+player\_on\_courtCameron Payne 0.903 0.366527\\
+player\_on\_courtCameron Reynolds 0.033 0.974011\\
+player\_on\_courtCaris LeVert 1.955 0.050636 .\\
+player\_on\_courtCarmelo Anthony 0.800 0.423945\\
+player\_on\_courtCarsen Edwards -0.751 0.452745\\
+player\_on\_courtCassius Stanley 0.506 0.612768\\
+player\_on\_courtCassius Winston -0.883 0.377117\\
+player\_on\_courtCedi Osman -0.111 0.911389\\
+player\_on\_courtChandler Hutchison -1.497 0.134279\\
+player\_on\_courtCharlie Brown Jr.~-0.648 0.517168\\
+player\_on\_courtChasson Randle -1.438 0.150387\\
+player\_on\_courtChimezie Metu 0.412 0.680097\\
+player\_on\_courtChris Boucher 1.353 0.176120\\
+player\_on\_courtChris Chiozza 0.099 0.921322\\
+player\_on\_courtChris Paul 2.241 0.025017 *\\
+player\_on\_courtChris Silva -1.298 0.194142\\
+player\_on\_courtChristian Wood 1.451 0.146926\\
+player\_on\_courtChuma Okeke -0.798 0.424910\\
+player\_on\_courtCJ Elleby -1.191 0.233539\\
+player\_on\_courtCJ McCollum 2.492 0.012724 *\\
+player\_on\_courtClint Capela 1.103 0.270213\\
+player\_on\_courtCoby White 0.104 0.916817\\
+player\_on\_courtCole Anthony 0.154 0.877272\\
+player\_on\_courtCollin Sexton 2.020 0.043432 *\\
+player\_on\_courtCory Joseph -0.377 0.706000\\
+player\_on\_courtCristiano Felicio -0.645 0.518678\\
+player\_on\_courtD'Angelo Russell 1.894 0.058265 .\\
+player\_on\_courtD.J. Augustin -0.290 0.771589\\
+player\_on\_courtD.J. Wilson -0.432 0.665968\\
+player\_on\_courtDakota Mathias -0.458 0.646686\\
+player\_on\_courtDamian Jones -0.817 0.414014\\
+player\_on\_courtDamian Lillard 3.824 0.000132 \textbf{\emph{
+player\_on\_courtDamion Lee -0.988 0.323081\\
+player\_on\_courtDamyean Dotson -1.084 0.278590\\
+player\_on\_courtDaniel Gafford 0.909 0.363452\\
+player\_on\_courtDaniel Oturu -1.263 0.206721\\
+player\_on\_courtDaniel Theis -0.282 0.777636\\
+player\_on\_courtDanilo Gallinari 0.822 0.411023\\
+player\_on\_courtDanny Green -0.719 0.472142\\
+player\_on\_courtDante Exum -1.921 0.054689 .\\
+player\_on\_courtDanuel House Jr.~-1.099 0.271939\\
+player\_on\_courtDaQuan Jeffries -1.591 0.111702\\
+player\_on\_courtDario Saric 0.412 0.680631\\
+player\_on\_courtDarius Bazley -0.704 0.481482\\
+player\_on\_courtDarius Garland 0.833 0.405034\\
+player\_on\_courtDarius Miller -0.595 0.551990\\
+player\_on\_courtDavid Nwaba 0.076 0.939106\\
+player\_on\_courtDavis Bertans -0.308 0.758080\\
+player\_on\_courtDe'Aaron Fox 2.375 0.017561 }\\
+player\_on\_courtDe'Andre Hunter -0.020 0.983983\\
+player\_on\_courtDe'Anthony Melton 0.328 0.743117\\
+player\_on\_courtDean Wade -1.446 0.148107\\
+player\_on\_courtDeAndre' Bembry -1.303 0.192597\\
+player\_on\_courtDeandre Ayton 0.684 0.494291\\
+player\_on\_courtDeAndre Jordan -0.608 0.543244\\
+player\_on\_courtDeividas Sirvydis -0.990 0.322081\\
+player\_on\_courtDejounte Murray 0.933 0.350598\\
+player\_on\_courtDelon Wright 0.096 0.923525\\
+player\_on\_courtDeMar DeRozan 2.180 0.029239 *\\
+player\_on\_courtDeMarcus Cousins 3.272 0.001070 } player\_on\_courtDeni
+Avdija -1.875 0.060856 .\\
+player\_on\_courtDennis Schroder 0.340 0.733864\\
+player\_on\_courtDennis Smith Jr.~-0.009 0.993050\\
+player\_on\_courtDenzel Valentine -0.613 0.540183\\
+player\_on\_courtDerrick Favors 0.094 0.925415\\
+player\_on\_courtDerrick Jones Jr.~-1.077 0.281532\\
+player\_on\_courtDerrick Rose 1.619 0.105370\\
+player\_on\_courtDerrick White 0.768 0.442296\\
+player\_on\_courtDesmond Bane -0.510 0.609732\\
+player\_on\_courtDevin Booker 2.560 0.010487 *\\
+player\_on\_courtDevin Cannady 0.904 0.365987\\
+player\_on\_courtDevin Vassell -1.014 0.310549\\
+player\_on\_courtDevon Dotson 3.115 0.001839 **
+player\_on\_courtDevontae Cacok -0.315 0.753029\\
+player\_on\_courtDewayne Dedmon 0.654 0.513332\\
+player\_on\_courtDillon Brooks 1.130 0.258558\\
+player\_on\_courtDomantas Sabonis 1.504 0.132690\\
+player\_on\_courtDonovan Mitchell 3.633 0.000281 \textbf{\emph{
+player\_on\_courtDonta Hall 0.917 0.359038\\
+player\_on\_courtDonte DiVincenzo -0.387 0.698725\\
+player\_on\_courtDorian Finney-Smith -0.904 0.366167\\
+player\_on\_courtDoug McDermott 0.609 0.542746\\
+player\_on\_courtDraymond Green -0.984 0.325362\\
+player\_on\_courtDrew Eubanks -0.121 0.903351\\
+player\_on\_courtDuncan Robinson -0.468 0.639596\\
+player\_on\_courtDwayne Bacon -0.412 0.680619\\
+player\_on\_courtDwight Howard -0.173 0.862541\\
+player\_on\_courtDwight Powell -0.292 0.770252\\
+player\_on\_courtDylan Windler -1.438 0.150439\\
+player\_on\_courtE'Twaun Moore -0.379 0.704328\\
+player\_on\_courtEd Davis -0.936 0.349501\\
+player\_on\_courtEdmond Sumner -0.432 0.665385\\
+player\_on\_courtElfrid Payton -0.159 0.874013\\
+player\_on\_courtElijah Bryant -1.097 0.272595\\
+player\_on\_courtElijah Hughes 0.468 0.639970\\
+player\_on\_courtEnes Kanter 0.755 0.450384\\
+player\_on\_courtEric Gordon 0.767 0.443108\\
+player\_on\_courtEric Paschall 0.379 0.704721\\
+player\_on\_courtErsan Ilyasova -0.063 0.949743\\
+player\_on\_courtEvan Fournier 1.093 0.274356\\
+player\_on\_courtFacundo Campazzo -0.855 0.392684\\
+player\_on\_courtFrank Jackson 0.009 0.993198\\
+player\_on\_courtFrank Kaminsky -0.117 0.907240\\
+player\_on\_courtFrank Mason -0.739 0.460031\\
+player\_on\_courtFrank Ntilikina -1.191 0.233785\\
+player\_on\_courtFred VanVleet 1.579 0.114244\\
+player\_on\_courtFreddie Gillespie -0.484 0.628269\\
+player\_on\_courtFurkan Korkmaz 0.090 0.928451\\
+player\_on\_courtGabe Vincent -0.642 0.520904\\
+player\_on\_courtGabriel Deck 0.342 0.732481\\
+player\_on\_courtGarrett Temple -1.604 0.108687\\
+player\_on\_courtGarrison Mathews -1.659 0.097157 .\\
+player\_on\_courtGary Clark -2.061 0.039271 }\\
+player\_on\_courtGary Harris -0.581 0.561482\\
+player\_on\_courtGary Payton II -0.013 0.989480\\
+player\_on\_courtGary Trent Jr.~0.262 0.793015\\
+player\_on\_courtGeorge Hill -0.933 0.351015\\
+player\_on\_courtGeorges Niang -1.149 0.250625\\
+player\_on\_courtGiannis Antetokounmpo 3.853 0.000117 }\emph{
+player\_on\_courtGlenn Robinson III -0.952 0.341004\\
+player\_on\_courtGoga Bitadze 0.346 0.729591\\
+player\_on\_courtGoran Dragic 0.538 0.590589\\
+player\_on\_courtGorgui Dieng 0.333 0.739091\\
+player\_on\_courtGrant Williams -1.669 0.095112 .\\
+player\_on\_courtGrayson Allen -0.542 0.587739\\
+player\_on\_courtGreg Whittington -1.681 0.092780 .\\
+player\_on\_courtHamidou Diallo 0.138 0.890076\\
+player\_on\_courtHarrison Barnes -0.069 0.944848\\
+player\_on\_courtHarry Giles III -0.423 0.672025\\
+player\_on\_courtHassan Whiteside 0.692 0.489110\\
+player\_on\_courtHenry Ellenson -0.183 0.855087\\
+player\_on\_courtIgnas Brazdeikis -0.329 0.741902\\
+player\_on\_courtIman Shumpert -0.648 0.516924\\
+player\_on\_courtImmanuel Quickley 1.118 0.263767\\
+player\_on\_courtIsaac Bonga -2.690 0.007149 \textbf{
+player\_on\_courtIsaac Okoro -1.446 0.148311\\
+player\_on\_courtIsaiah Hartenstein 0.418 0.675625\\
+player\_on\_courtIsaiah Joe -0.703 0.482293\\
+player\_on\_courtIsaiah Roby -0.678 0.497544\\
+player\_on\_courtIsaiah Stewart -0.100 0.920059\\
+player\_on\_courtIsh Smith -0.493 0.621724\\
+player\_on\_courtIvica Zubac 0.034 0.972536\\
+player\_on\_courtJa Morant 1.519 0.128884\\
+player\_on\_courtJabari Parker -0.454 0.650131\\
+player\_on\_courtJaden McDaniels -0.724 0.469056\\
+player\_on\_courtJae'Sean Tate -0.253 0.800353\\
+player\_on\_courtJae Crowder -0.659 0.509802\\
+player\_on\_courtJahlil Okafor -0.327 0.743925\\
+player\_on\_courtJahmi'us Ramsey 0.100 0.920129\\
+player\_on\_courtJaKarr Sampson -0.996 0.319355\\
+player\_on\_courtJake Layman -1.082 0.279473\\
+player\_on\_courtJakob Poeltl -0.195 0.845762\\
+player\_on\_courtJalen Brunson 0.605 0.545433\\
+player\_on\_courtJalen Harris -0.360 0.718887\\
+player\_on\_courtJalen Lecque 1.167 0.243188\\
+player\_on\_courtJalen Smith -1.557 0.119460\\
+player\_on\_courtJamal Murray 1.448 0.147581\\
+player\_on\_courtJames Ennis III -0.797 0.425647\\
+player\_on\_courtJames Harden 2.552 0.010707 *\\
+player\_on\_courtJames Johnson -0.584 0.559199\\
+player\_on\_courtJames Wiseman 0.312 0.755123\\
+player\_on\_courtJaMychal Green 0.001 0.999316\\
+player\_on\_courtJared Dudley -1.922 0.054633 .\\
+player\_on\_courtJared Harper -2.548 0.010842 *\\
+player\_on\_courtJaren Jackson Jr.~1.186 0.235573\\
+player\_on\_courtJarred Vanderbilt -1.162 0.245083\\
+player\_on\_courtJarrell Brantley 0.511 0.609532\\
+player\_on\_courtJarrett Allen 0.466 0.641036\\
+player\_on\_courtJarrett Culver -0.835 0.403845\\
+player\_on\_courtJaVale McGee 0.591 0.554505\\
+player\_on\_courtJavonte Green -1.216 0.223907\\
+player\_on\_courtJay Scrubb -2.069 0.038515 *\\
+player\_on\_courtJaylen Adams -1.807 0.070764 .\\
+player\_on\_courtJaylen Brown 2.438 0.014768 *\\
+player\_on\_courtJaylen Hoard -0.802 0.422799\\
+player\_on\_courtJaylen Nowell 0.537 0.591194\\
+player\_on\_courtJayson Tatum 2.846 0.004427 } player\_on\_courtJeff
+Green -0.545 0.586070\\
+player\_on\_courtJeff Teague -1.323 0.185836\\
+player\_on\_courtJerami Grant 1.680 0.093017 .\\
+player\_on\_courtJeremiah Martin -0.915 0.360233\\
+player\_on\_courtJeremy Lamb 0.362 0.717285\\
+player\_on\_courtJerome Robinson -1.743 0.081387 .\\
+player\_on\_courtJevon Carter -0.623 0.533210\\
+player\_on\_courtJimmy Butler 2.845 0.004446 \textbf{
+player\_on\_courtJJ Redick -0.787 0.431518\\
+player\_on\_courtJoe Harris -0.235 0.813859\\
+player\_on\_courtJoe Ingles 0.082 0.934326\\
+player\_on\_courtJoel Embiid 4.166 3.11e-05 }} player\_on\_courtJohn
+Collins 1.228 0.219480\\
+player\_on\_courtJohn Konchar -0.845 0.398070\\
+player\_on\_courtJohn Wall 1.510 0.131005\\
+player\_on\_courtJonas Valanciunas 1.897 0.057877 .\\
+player\_on\_courtJontay Porter -0.876 0.380912\\
+player\_on\_courtJordan Bell -0.457 0.647817\\
+player\_on\_courtJordan Bone -0.758 0.448456\\
+player\_on\_courtJordan Clarkson 2.150 0.031527 *\\
+player\_on\_courtJordan McLaughlin -0.608 0.543366\\
+player\_on\_courtJordan Nwora -0.370 0.711514\\
+player\_on\_courtJordan Poole 1.156 0.247558\\
+player\_on\_courtJosh Green -1.168 0.242942\\
+player\_on\_courtJosh Hall -2.014 0.044051 *\\
+player\_on\_courtJosh Jackson 0.464 0.642961\\
+player\_on\_courtJosh Okogie -1.548 0.121590\\
+player\_on\_courtJosh Richardson -0.184 0.854132\\
+player\_on\_courtJrue Holiday 1.490 0.136147\\
+player\_on\_courtJuan Toscano-Anderson -1.724 0.084759 .\\
+player\_on\_courtJuancho Hernangomez -0.920 0.357660\\
+player\_on\_courtJulius Randle 1.858 0.063146 .\\
+player\_on\_courtJustin Holiday -0.939 0.347537\\
+player\_on\_courtJustin Jackson -0.278 0.781190\\
+player\_on\_courtJustin James -0.712 0.476308\\
+player\_on\_courtJustin Patton -0.382 0.702169\\
+player\_on\_courtJustin Robinson -1.251 0.211121\\
+player\_on\_courtJustise Winslow -0.946 0.344370\\
+player\_on\_courtJusuf Nurkic 0.891 0.372955\\
+player\_on\_courtJuwan Morgan -2.011 0.044304 *\\
+player\_on\_courtKarim Mane -1.743 0.081368 .\\
+player\_on\_courtKarl-Anthony Towns 2.731 0.006314 **
+player\_on\_courtKawhi Leonard 3.383 0.000719 \textbf{\emph{
+player\_on\_courtKeita Bates-Diop -0.990 0.322354\\
+player\_on\_courtKelan Martin 0.012 0.990240\\
+player\_on\_courtKeldon Johnson -0.105 0.916254\\
+player\_on\_courtKeljin Blevins -1.912 0.055946 .\\
+player\_on\_courtKelly Olynyk 0.420 0.674220\\
+player\_on\_courtKelly Oubre Jr.~0.196 0.844789\\
+player\_on\_courtKemba Walker 1.592 0.111477\\
+player\_on\_courtKendrick Nunn 0.330 0.741362\\
+player\_on\_courtKenrich Williams -0.494 0.621337\\
+player\_on\_courtKent Bazemore -0.907 0.364430\\
+player\_on\_courtKentavious Caldwell-Pope -1.074 0.283045\\
+player\_on\_courtKenyon Martin Jr.~-0.315 0.752777\\
+player\_on\_courtKevin Durant 3.342 0.000832 }} player\_on\_courtKevin
+Huerter -0.290 0.771891\\
+player\_on\_courtKevin Knox II -0.384 0.700774\\
+player\_on\_courtKevin Love 0.083 0.933628\\
+player\_on\_courtKevin Porter Jr.~0.319 0.749375\\
+player\_on\_courtKevon Looney -1.326 0.184692\\
+player\_on\_courtKhem Birch -0.451 0.652240\\
+player\_on\_courtKhris Middleton 1.604 0.108741\\
+player\_on\_courtKhyri Thomas 0.953 0.340394\\
+player\_on\_courtKillian Hayes -1.342 0.179623\\
+player\_on\_courtKillian Tillie -0.332 0.739546\\
+player\_on\_courtKostas Antetokounmpo -2.585 0.009733 **
+player\_on\_courtKris Dunn -1.661 0.096648 .\\
+player\_on\_courtKristaps Porzingis 1.732 0.083204 .\\
+player\_on\_courtKyle Anderson 0.371 0.710972\\
+player\_on\_courtKyle Guy -1.100 0.271437\\
+player\_on\_courtKyle Kuzma -0.274 0.784063\\
+player\_on\_courtKyle Lowry 0.914 0.360758\\
+player\_on\_courtKyrie Irving 3.429 0.000607 \emph{\textbf{
+player\_on\_courtKZ Okpala -2.753 0.005911 } player\_on\_courtLamar
+Stevens -0.691 0.489583\\
+player\_on\_courtLaMarcus Aldridge 0.350 0.726527\\
+player\_on\_courtLandry Shamet -0.933 0.350675\\
+player\_on\_courtLangston Galloway -0.609 0.542713\\
+player\_on\_courtLarry Nance Jr.~-0.690 0.489898\\
+player\_on\_courtLauri Markkanen 0.346 0.729157\\
+player\_on\_courtLeBron James 2.643 0.008229 \textbf{
+player\_on\_courtLonnie Walker IV -0.359 0.719327\\
+player\_on\_courtLou Williams 0.757 0.448853\\
+player\_on\_courtLouis King -0.388 0.698201\\
+player\_on\_courtLuguentz Dort -0.134 0.893525\\
+player\_on\_courtLuka Doncic 3.722 0.000198 }} player\_on\_courtLuka
+Samanic -0.777 0.437000\\
+player\_on\_courtLuke Kennard -0.773 0.439629\\
+player\_on\_courtLuke Kornet -1.024 0.305771\\
+player\_on\_courtMalachi Flynn -0.725 0.468156\\
+player\_on\_courtMalcolm Brogdon 1.707 0.087886 .\\
+player\_on\_courtMalik Beasley 0.886 0.375554\\
+player\_on\_courtMalik Fitts -1.059 0.289626\\
+player\_on\_courtMamadi Diakite -1.091 0.275306\\
+player\_on\_courtMarc Gasol -0.861 0.389025\\
+player\_on\_courtMarcus Morris Sr.~0.237 0.812954\\
+player\_on\_courtMarcus Smart 0.338 0.735663\\
+player\_on\_courtMarkelle Fultz 0.524 0.600056\\
+player\_on\_courtMarkieff Morris -1.554 0.120128\\
+player\_on\_courtMarkus Howard -1.154 0.248680\\
+player\_on\_courtMarques Bolden 0.307 0.758911\\
+player\_on\_courtMarquese Chriss 0.174 0.861645\\
+player\_on\_courtMarvin Bagley III 0.517 0.604872\\
+player\_on\_courtMason Jones -0.175 0.860746\\
+player\_on\_courtMason Plumlee 0.115 0.908608\\
+player\_on\_courtMatisse Thybulle -1.470 0.141594\\
+player\_on\_courtMatt Thomas -1.230 0.218645\\
+player\_on\_courtMatthew Dellavedova -0.595 0.552033\\
+player\_on\_courtMaurice Harkless -1.904 0.056939 .\\
+player\_on\_courtMax Strus -0.431 0.666415\\
+player\_on\_courtMaxi Kleber -1.560 0.118873\\
+player\_on\_courtMeyers Leonard -1.174 0.240317\\
+player\_on\_courtMfiondu Kabengele -1.054 0.291923\\
+player\_on\_courtMichael Carter-Williams -0.618 0.536306\\
+player\_on\_courtMichael Porter Jr.~1.388 0.165266\\
+player\_on\_courtMikal Bridges 0.014 0.988915\\
+player\_on\_courtMike Conley 1.767 0.077255 .\\
+player\_on\_courtMike James -0.731 0.464719\\
+player\_on\_courtMike Muscala 0.030 0.975969\\
+player\_on\_courtMike Scott -1.963 0.049625 *\\
+player\_on\_courtMitchell Robinson -0.198 0.842775\\
+player\_on\_courtMiye Oni -2.450 0.014300 *\\
+player\_on\_courtMo Bamba 0.838 0.402087\\
+player\_on\_courtMonte Morris 0.264 0.791421\\
+player\_on\_courtMontrezl Harrell 1.514 0.129984\\
+player\_on\_courtMoritz Wagner -0.570 0.568421\\
+player\_on\_courtMoses Brown 0.646 0.518044\\
+player\_on\_courtMychal Mulder -1.101 0.270700\\
+player\_on\_courtMyles Turner 0.105 0.916197\\
+player\_on\_courtNassir Little -1.500 0.133687\\
+player\_on\_courtNate Hinton -0.199 0.842641\\
+player\_on\_courtNathan Knight 0.180 0.857274\\
+player\_on\_courtNaz Reid 1.219 0.223015\\
+player\_on\_courtNemanja Bjelica -0.659 0.510139\\
+player\_on\_courtNerlens Noel -1.258 0.208511\\
+player\_on\_courtNico Mannion -1.510 0.131020\\
+player\_on\_courtNicolas Batum -0.937 0.348699\\
+player\_on\_courtNicolas Claxton -0.366 0.714140\\
+player\_on\_courtNicolo Melli -0.947 0.343864\\
+player\_on\_courtNikola Jokic 4.522 6.15e-06 \emph{\textbf{
+player\_on\_courtNikola Vucevic 2.818 0.004844 } player\_on\_courtNoah
+Vonleh -2.264 0.023598 }\\
+player\_on\_courtNorman Powell 0.955 0.339616\\
+player\_on\_courtNorvel Pelle -0.955 0.339471\\
+player\_on\_courtObi Toppin -0.619 0.536206\\
+player\_on\_courtOG Anunoby 0.477 0.633196\\
+player\_on\_courtOnyeka Okongwu -0.328 0.743185\\
+player\_on\_courtOshae Brissett 0.028 0.977997\\
+player\_on\_courtOtto Porter Jr.~0.087 0.930433\\
+player\_on\_courtP.J. Tucker -2.780 0.005448 ** player\_on\_courtPascal
+Siakam 1.696 0.089865 .\\
+player\_on\_courtPat Connaughton -1.304 0.192242\\
+player\_on\_courtPatrick Beverley -0.539 0.590036\\
+player\_on\_courtPatrick McCaw -0.840 0.400710\\
+player\_on\_courtPatrick Patterson -0.789 0.430309\\
+player\_on\_courtPatrick Williams -1.190 0.233877\\
+player\_on\_courtPatty Mills -0.076 0.939343\\
+player\_on\_courtPaul George 2.430 0.015106 *\\
+player\_on\_courtPaul Millsap 0.791 0.428806\\
+player\_on\_courtPaul Reed 0.932 0.351366\\
+player\_on\_courtPaul Watson 0.140 0.888811\\
+player\_on\_courtPayton Pritchard -0.605 0.545485\\
+player\_on\_courtPJ Dozier -0.528 0.597616\\
+player\_on\_courtPrecious Achiuwa -0.395 0.692745\\
+player\_on\_courtQuinn Cook 0.501 0.616030\\
+player\_on\_courtQuinndary Weatherspoon -2.108 0.035024 *\\
+player\_on\_courtR.J. Hampton -0.838 0.402270\\
+player\_on\_courtRajon Rondo -0.734 0.462693\\
+player\_on\_courtRaul Neto -0.337 0.736229\\
+player\_on\_courtRay Spalding -0.823 0.410240\\
+player\_on\_courtRayjon Tucker 0.196 0.844225\\
+player\_on\_courtReggie Bullock -0.816 0.414497\\
+player\_on\_courtReggie Jackson 0.306 0.759860\\
+player\_on\_courtReggie Perry 0.082 0.934338\\
+player\_on\_courtRichaun Holmes 0.842 0.399686\\
+player\_on\_courtRicky Rubio -0.244 0.807557\\
+player\_on\_courtRJ Barrett 0.472 0.637078\\
+player\_on\_courtRobert Covington -1.281 0.200365\\
+player\_on\_courtRobert Franks 1.258 0.208366\\
+player\_on\_courtRobert Williams III 0.993 0.320849\\
+player\_on\_courtRobert Woodard II -0.076 0.939593\\
+player\_on\_courtRobin Lopez 0.037 0.970662\\
+player\_on\_courtRodions Kurucs -0.722 0.470446\\
+player\_on\_courtRodney Hood -1.923 0.054462 .\\
+player\_on\_courtRodney McGruder -0.054 0.957249\\
+player\_on\_courtRomeo Langford -1.577 0.114849\\
+player\_on\_courtRondae Hollis-Jefferson -0.481 0.630548\\
+player\_on\_courtRoyce O'Neale -1.687 0.091650 .\\
+player\_on\_courtRudy Gay 0.784 0.432765\\
+player\_on\_courtRudy Gobert 0.742 0.458375\\
+player\_on\_courtRui Hachimura -0.530 0.595929\\
+player\_on\_courtRussell Westbrook 1.924 0.054324 .\\
+player\_on\_courtRyan Arcidiacono -0.909 0.363299\\
+player\_on\_courtSaben Lee -0.434 0.663956\\
+player\_on\_courtSaddiq Bey -0.330 0.741427\\
+player\_on\_courtSam Merrill -0.837 0.402833\\
+player\_on\_courtSean McDermott -1.714 0.086555 .\\
+player\_on\_courtSekou Doumbouya -1.551 0.120893\\
+player\_on\_courtSemi Ojeleye -1.897 0.057783 .\\
+player\_on\_courtSerge Ibaka 0.881 0.378422\\
+player\_on\_courtSeth Curry 0.246 0.805421\\
+player\_on\_courtShai Gilgeous-Alexander 1.908 0.056348 .\\
+player\_on\_courtShake Milton 0.424 0.671476\\
+player\_on\_courtShaquille Harrison -1.641 0.100842\\
+player\_on\_courtSindarius Thornwell -0.795 0.426524\\
+player\_on\_courtSkylar Mays -0.013 0.989325\\
+player\_on\_courtSolomon Hill -2.496 0.012566 *\\
+player\_on\_courtSpencer Dinwiddie -0.340 0.733690\\
+player\_on\_courtStanley Johnson -1.487 0.136996\\
+player\_on\_courtStephen Curry 4.196 2.72e-05 \emph{\textbf{
+player\_on\_courtSterling Brown -1.041 0.298037\\
+player\_on\_courtSvi Mykhailiuk -0.363 0.716254\\
+player\_on\_courtT.J. Leaf -0.361 0.718342\\
+player\_on\_courtT.J. McConnell 0.059 0.953276\\
+player\_on\_courtT.J. Warren 0.046 0.963203\\
+player\_on\_courtTacko Fall 0.413 0.679865\\
+player\_on\_courtTaj Gibson -0.764 0.444781\\
+player\_on\_courtTalen Horton-Tucker -0.122 0.902899\\
+player\_on\_courtTaurean Prince -0.106 0.915914\\
+player\_on\_courtTerance Mann -0.595 0.552173\\
+player\_on\_courtTerence Davis -0.035 0.971860\\
+player\_on\_courtTerrance Ferguson -2.879 0.003995 }
+player\_on\_courtTerrence Ross 0.631 0.528081\\
+player\_on\_courtThaddeus Young 1.489 0.136461\\
+player\_on\_courtThanasis Antetokounmpo -1.381 0.167350\\
+player\_on\_courtTheo Maledon -0.951 0.341372\\
+player\_on\_courtTheo Pinson -2.543 0.010990 }\\
+player\_on\_courtThomas Bryant 0.050 0.959858\\
+player\_on\_courtThon Maker 0.052 0.958817\\
+player\_on\_courtTim Frazier -0.883 0.377476\\
+player\_on\_courtTim Hardaway Jr.~0.937 0.348917\\
+player\_on\_courtTimothe Luwawu-Cabarrot -0.865 0.387085\\
+player\_on\_courtTobias Harris 1.664 0.096100 .\\
+player\_on\_courtTomas Satoransky -0.336 0.736675\\
+player\_on\_courtTony Bradley 0.512 0.608925\\
+player\_on\_courtTony Snell -2.299 0.021486 *\\
+player\_on\_courtTorrey Craig -0.703 0.481952\\
+player\_on\_courtTrae Young 3.583 0.000340 \textbf{\emph{
+player\_on\_courtTre Jones -0.760 0.447308\\
+player\_on\_courtTremont Waters 0.208 0.835453\\
+player\_on\_courtTrent Forrest -1.617 0.105797\\
+player\_on\_courtTrevor Ariza -0.810 0.418187\\
+player\_on\_courtTrey Burke -0.151 0.879622\\
+player\_on\_courtTrey Lyles -1.135 0.256562\\
+player\_on\_courtTristan Thompson -0.519 0.603738\\
+player\_on\_courtTroy Brown Jr.~-1.107 0.268182\\
+player\_on\_courtTy-Shon Alexander -1.472 0.141042\\
+player\_on\_courtTy Jerome 0.279 0.780394\\
+player\_on\_courtTyler Bey -1.173 0.240801\\
+player\_on\_courtTyler Cook -1.551 0.120961\\
+player\_on\_courtTyler Herro 0.515 0.606285\\
+player\_on\_courtTyler Johnson -0.993 0.320918\\
+player\_on\_courtTyrell Terry -0.483 0.629443\\
+player\_on\_courtTyrese Haliburton 0.676 0.498742\\
+player\_on\_courtTyrese Maxey 0.067 0.946949\\
+player\_on\_courtTyus Jones 0.134 0.893333\\
+player\_on\_courtUdoka Azubuike -0.690 0.490128\\
+player\_on\_courtUdonis Haslem 1.427 0.153576\\
+player\_on\_courtVictor Oladipo 0.985 0.324772\\
+player\_on\_courtVincent Poirier -1.638 0.101417\\
+player\_on\_courtVlatko Cancar -1.711 0.087125 .\\
+player\_on\_courtWayne Ellington -0.200 0.841667\\
+player\_on\_courtWendell Carter Jr.~0.325 0.745130\\
+player\_on\_courtWes Iwundu -1.880 0.060061 .\\
+player\_on\_courtWesley Matthews -2.060 0.039367 }\\
+player\_on\_courtWill Barton -0.209 0.834421\\
+player\_on\_courtWillie Cauley-Stein -0.935 0.349760\\
+player\_on\_courtXavier Tillman -0.478 0.632610\\
+player\_on\_courtYogi Ferrell -0.378 0.705466\\
+player\_on\_courtYuta Watanabe -1.182 0.237055\\
+player\_on\_courtZach LaVine 2.612 0.009002 } player\_on\_courtZeke
+Nnaji -0.068 0.945783\\
+DRtg\_minus\_Avg 3.768 0.000165 \textbf{\emph{ clutch\_time -0.597
+0.550691\\
+player\_on\_courtAaron Holiday:clutch\_time 0.268 0.788578\\
+player\_on\_courtAaron Nesmith:clutch\_time 0.930 0.352210\\
+player\_on\_courtAbdel Nader:clutch\_time -0.356 0.722206\\
+player\_on\_courtAdam Mokoka:clutch\_time NA NA\\
+player\_on\_courtAl-Farouq Aminu:clutch\_time NA NA\\
+player\_on\_courtAl Horford:clutch\_time -0.912 0.361746\\
+player\_on\_courtAlec Burks:clutch\_time 2.451 0.014272 }\\
+player\_on\_courtAleksej Pokusevski:clutch\_time NA NA\\
+player\_on\_courtAlen Smailagic:clutch\_time NA NA\\
+player\_on\_courtAlex Caruso:clutch\_time 1.053 0.292428\\
+player\_on\_courtAlex Len:clutch\_time 0.440 0.659633\\
+player\_on\_courtAlfonzo McKinnie:clutch\_time NA NA\\
+player\_on\_courtAlize Johnson:clutch\_time NA NA\\
+player\_on\_courtAmida Brimah:clutch\_time NA NA\\
+player\_on\_courtAmir Coffey:clutch\_time NA NA\\
+player\_on\_courtAnderson Varejao:clutch\_time NA NA\\
+player\_on\_courtAndre Drummond:clutch\_time 0.764 0.444624\\
+player\_on\_courtAndre Iguodala:clutch\_time -0.104 0.917407\\
+player\_on\_courtAndre Roberson:clutch\_time 0.106 0.915619\\
+player\_on\_courtAndrew Wiggins:clutch\_time 0.763 0.445459\\
+player\_on\_courtAnfernee Simons:clutch\_time -0.335 0.737889\\
+player\_on\_courtAnthony Davis:clutch\_time -0.029 0.976738\\
+player\_on\_courtAnthony Edwards:clutch\_time -0.027 0.978502\\
+player\_on\_courtAnthony Gill:clutch\_time -0.264 0.791871\\
+player\_on\_courtAnthony Lamb:clutch\_time NA NA\\
+player\_on\_courtAnthony Tolliver:clutch\_time NA NA\\
+player\_on\_courtAnzejs Pasecniks:clutch\_time NA NA\\
+player\_on\_courtArmoni Brooks:clutch\_time NA NA\\
+player\_on\_courtAron Baynes:clutch\_time NA NA\\
+player\_on\_courtAshton Hagans:clutch\_time NA NA\\
+player\_on\_courtAustin Rivers:clutch\_time 0.647 0.517523\\
+player\_on\_courtAvery Bradley:clutch\_time NA NA\\
+player\_on\_courtAxel Toupane:clutch\_time NA NA\\
+player\_on\_courtBam Adebayo:clutch\_time 0.566 0.571065\\
+player\_on\_courtBen McLemore:clutch\_time NA NA\\
+player\_on\_courtBen Simmons:clutch\_time 0.605 0.545032\\
+player\_on\_courtBlake Griffin:clutch\_time -0.204 0.838014\\
+player\_on\_courtBoban Marjanovic:clutch\_time NA NA\\
+player\_on\_courtBobby Portis:clutch\_time NA NA\\
+player\_on\_courtBogdan Bogdanovic:clutch\_time 0.038 0.969466\\
+player\_on\_courtBojan Bogdanovic:clutch\_time -0.282 0.777778\\
+player\_on\_courtBol Bol:clutch\_time NA NA\\
+player\_on\_courtBrad Wanamaker:clutch\_time NA NA\\
+player\_on\_courtBradley Beal:clutch\_time 0.902 0.367187\\
+player\_on\_courtBrandon Clarke:clutch\_time 0.142 0.886901\\
+player\_on\_courtBrandon Goodwin:clutch\_time -0.201 0.840757\\
+player\_on\_courtBrian Bowen II:clutch\_time NA NA\\
+player\_on\_courtBrodric Thomas:clutch\_time -0.068 0.945742\\
+player\_on\_courtBrook Lopez:clutch\_time 0.290 0.772123\\
+player\_on\_courtBruce Brown:clutch\_time 0.860 0.389711\\
+player\_on\_courtBruno Caboclo:clutch\_time NA NA\\
+player\_on\_courtBruno Fernando:clutch\_time NA NA\\
+player\_on\_courtBryn Forbes:clutch\_time NA NA\\
+player\_on\_courtBuddy Hield:clutch\_time 0.854 0.393108\\
+player\_on\_courtCam Reddish:clutch\_time 0.708 0.478772\\
+player\_on\_courtCameron Johnson:clutch\_time 0.431 0.666674\\
+player\_on\_courtCameron Oliver:clutch\_time NA NA\\
+player\_on\_courtCameron Payne:clutch\_time -1.119 0.263117\\
+player\_on\_courtCameron Reynolds:clutch\_time NA NA\\
+player\_on\_courtCaris LeVert:clutch\_time 0.104 0.917553\\
+player\_on\_courtCarmelo Anthony:clutch\_time -0.294 0.768730\\
+player\_on\_courtCarsen Edwards:clutch\_time NA NA\\
+player\_on\_courtCassius Stanley:clutch\_time NA NA\\
+player\_on\_courtCassius Winston:clutch\_time NA NA\\
+player\_on\_courtCedi Osman:clutch\_time 0.417 0.676892\\
+player\_on\_courtChandler Hutchison:clutch\_time -0.071 0.943612\\
+player\_on\_courtCharlie Brown Jr.:clutch\_time NA NA\\
+player\_on\_courtChasson Randle:clutch\_time NA NA\\
+player\_on\_courtChimezie Metu:clutch\_time NA NA\\
+player\_on\_courtChris Boucher:clutch\_time NA NA\\
+player\_on\_courtChris Chiozza:clutch\_time -0.357 0.720996\\
+player\_on\_courtChris Paul:clutch\_time 0.520 0.603032\\
+player\_on\_courtChris Silva:clutch\_time NA NA\\
+player\_on\_courtChristian Wood:clutch\_time 0.074 0.941393\\
+player\_on\_courtChuma Okeke:clutch\_time NA NA\\
+player\_on\_courtCJ Elleby:clutch\_time NA NA\\
+player\_on\_courtCJ McCollum:clutch\_time 0.242 0.809040\\
+player\_on\_courtClint Capela:clutch\_time 0.700 0.484078\\
+player\_on\_courtCoby White:clutch\_time 0.533 0.594073\\
+player\_on\_courtCole Anthony:clutch\_time -0.377 0.706047\\
+player\_on\_courtCollin Sexton:clutch\_time 1.454 0.146052\\
+player\_on\_courtCory Joseph:clutch\_time -0.294 0.769039\\
+player\_on\_courtCristiano Felicio:clutch\_time NA NA\\
+player\_on\_courtD'Angelo Russell:clutch\_time 0.884 0.376483\\
+player\_on\_courtD.J. Augustin:clutch\_time NA NA\\
+player\_on\_courtD.J. Wilson:clutch\_time NA NA\\
+player\_on\_courtDakota Mathias:clutch\_time 0.370 0.711151\\
+player\_on\_courtDamian Jones:clutch\_time NA NA\\
+player\_on\_courtDamian Lillard:clutch\_time 1.384 0.166467\\
+player\_on\_courtDamion Lee:clutch\_time NA NA\\
+player\_on\_courtDamyean Dotson:clutch\_time -0.198 0.843405\\
+player\_on\_courtDaniel Gafford:clutch\_time -0.109 0.913087\\
+player\_on\_courtDaniel Oturu:clutch\_time NA NA\\
+player\_on\_courtDaniel Theis:clutch\_time 0.201 0.840896\\
+player\_on\_courtDanilo Gallinari:clutch\_time 0.074 0.941152\\
+player\_on\_courtDanny Green:clutch\_time 0.820 0.412371\\
+player\_on\_courtDante Exum:clutch\_time NA NA\\
+player\_on\_courtDanuel House Jr.:clutch\_time -0.185 0.853379\\
+player\_on\_courtDaQuan Jeffries:clutch\_time NA NA\\
+player\_on\_courtDario Saric:clutch\_time 0.435 0.663640\\
+player\_on\_courtDarius Bazley:clutch\_time -0.127 0.898869\\
+player\_on\_courtDarius Garland:clutch\_time 1.559 0.118991\\
+player\_on\_courtDarius Miller:clutch\_time NA NA\\
+player\_on\_courtDavid Nwaba:clutch\_time NA NA\\
+player\_on\_courtDavis Bertans:clutch\_time 0.083 0.933821\\
+player\_on\_courtDe'Aaron Fox:clutch\_time -0.077 0.938510\\
+player\_on\_courtDe'Andre Hunter:clutch\_time -0.358 0.720016\\
+player\_on\_courtDe'Anthony Melton:clutch\_time 0.107 0.914475\\
+player\_on\_courtDean Wade:clutch\_time 0.456 0.648678\\
+player\_on\_courtDeAndre' Bembry:clutch\_time 1.174 0.240542\\
+player\_on\_courtDeandre Ayton:clutch\_time 0.161 0.872488\\
+player\_on\_courtDeAndre Jordan:clutch\_time -0.102 0.918888\\
+player\_on\_courtDeividas Sirvydis:clutch\_time NA NA\\
+player\_on\_courtDejounte Murray:clutch\_time 0.671 0.502078\\
+player\_on\_courtDelon Wright:clutch\_time 0.449 0.653089\\
+player\_on\_courtDeMar DeRozan:clutch\_time 0.235 0.813884\\
+player\_on\_courtDeMarcus Cousins:clutch\_time NA NA\\
+player\_on\_courtDeni Avdija:clutch\_time -0.016 0.987564\\
+player\_on\_courtDennis Schroder:clutch\_time 0.361 0.717999\\
+player\_on\_courtDennis Smith Jr.:clutch\_time NA NA\\
+player\_on\_courtDenzel Valentine:clutch\_time 0.334 0.738034\\
+player\_on\_courtDerrick Favors:clutch\_time -0.357 0.721061\\
+player\_on\_courtDerrick Jones Jr.:clutch\_time 0.305 0.760363\\
+player\_on\_courtDerrick Rose:clutch\_time -0.302 0.762369\\
+player\_on\_courtDerrick White:clutch\_time -0.196 0.844325\\
+player\_on\_courtDesmond Bane:clutch\_time 40.677 \textless{} 2e-16
+}\emph{ player\_on\_courtDevin Booker:clutch\_time 1.045 0.296101\\
+player\_on\_courtDevin Cannady:clutch\_time NA NA\\
+player\_on\_courtDevin Vassell:clutch\_time NA NA\\
+player\_on\_courtDevon Dotson:clutch\_time NA NA\\
+player\_on\_courtDevontae Cacok:clutch\_time NA NA\\
+player\_on\_courtDewayne Dedmon:clutch\_time NA NA\\
+player\_on\_courtDillon Brooks:clutch\_time 0.777 0.437099\\
+player\_on\_courtDomantas Sabonis:clutch\_time 0.471 0.637704\\
+player\_on\_courtDonovan Mitchell:clutch\_time 0.009 0.993196\\
+player\_on\_courtDonta Hall:clutch\_time NA NA\\
+player\_on\_courtDonte DiVincenzo:clutch\_time 0.276 0.782609\\
+player\_on\_courtDorian Finney-Smith:clutch\_time 0.110 0.912460\\
+player\_on\_courtDoug McDermott:clutch\_time -0.389 0.697500\\
+player\_on\_courtDraymond Green:clutch\_time 1.000 0.317447\\
+player\_on\_courtDrew Eubanks:clutch\_time 0.466 0.640953\\
+player\_on\_courtDuncan Robinson:clutch\_time 0.564 0.572874\\
+player\_on\_courtDwayne Bacon:clutch\_time NA NA\\
+player\_on\_courtDwight Howard:clutch\_time 0.035 0.972225\\
+player\_on\_courtDwight Powell:clutch\_time NA NA\\
+player\_on\_courtDylan Windler:clutch\_time -0.047 0.962886\\
+player\_on\_courtE'Twaun Moore:clutch\_time NA NA\\
+player\_on\_courtEd Davis:clutch\_time NA NA\\
+player\_on\_courtEdmond Sumner:clutch\_time -0.027 0.978313\\
+player\_on\_courtElfrid Payton:clutch\_time NA NA\\
+player\_on\_courtElijah Bryant:clutch\_time NA NA\\
+player\_on\_courtElijah Hughes:clutch\_time NA NA\\
+player\_on\_courtEnes Kanter:clutch\_time 0.141 0.887770\\
+player\_on\_courtEric Gordon:clutch\_time NA NA\\
+player\_on\_courtEric Paschall:clutch\_time -0.406 0.684949\\
+player\_on\_courtErsan Ilyasova:clutch\_time -0.290 0.771913\\
+player\_on\_courtEvan Fournier:clutch\_time 0.424 0.671525\\
+player\_on\_courtFacundo Campazzo:clutch\_time -0.347 0.728853\\
+player\_on\_courtFrank Jackson:clutch\_time NA NA\\
+player\_on\_courtFrank Kaminsky:clutch\_time -0.320 0.749065\\
+player\_on\_courtFrank Mason:clutch\_time NA NA\\
+player\_on\_courtFrank Ntilikina:clutch\_time -0.138 0.890503\\
+player\_on\_courtFred VanVleet:clutch\_time 0.502 0.615707\\
+player\_on\_courtFreddie Gillespie:clutch\_time NA NA\\
+player\_on\_courtFurkan Korkmaz:clutch\_time 0.714 0.475295\\
+player\_on\_courtGabe Vincent:clutch\_time -0.211 0.832502\\
+player\_on\_courtGabriel Deck:clutch\_time NA NA\\
+player\_on\_courtGarrett Temple:clutch\_time 0.695 0.487023\\
+player\_on\_courtGarrison Mathews:clutch\_time 3.349 0.000814 }\textbf{
+player\_on\_courtGary Clark:clutch\_time NA NA\\
+player\_on\_courtGary Harris:clutch\_time -0.153 0.878289\\
+player\_on\_courtGary Payton II:clutch\_time NA NA\\
+player\_on\_courtGary Trent Jr.:clutch\_time 0.159 0.873898\\
+player\_on\_courtGeorge Hill:clutch\_time -0.043 0.966095\\
+player\_on\_courtGeorges Niang:clutch\_time NA NA\\
+player\_on\_courtGiannis Antetokounmpo:clutch\_time 0.344 0.731214\\
+player\_on\_courtGlenn Robinson III:clutch\_time NA NA\\
+player\_on\_courtGoga Bitadze:clutch\_time -0.414 0.679065\\
+player\_on\_courtGoran Dragic:clutch\_time 0.939 0.347625\\
+player\_on\_courtGorgui Dieng:clutch\_time -0.368 0.712946\\
+player\_on\_courtGrant Williams:clutch\_time -0.131 0.896063\\
+player\_on\_courtGrayson Allen:clutch\_time 0.509 0.610816\\
+player\_on\_courtGreg Whittington:clutch\_time NA NA\\
+player\_on\_courtHamidou Diallo:clutch\_time -0.287 0.774340\\
+player\_on\_courtHarrison Barnes:clutch\_time 1.999 0.045627 *\\
+player\_on\_courtHarry Giles III:clutch\_time NA NA\\
+player\_on\_courtHassan Whiteside:clutch\_time -0.469 0.638864\\
+player\_on\_courtHenry Ellenson:clutch\_time NA NA\\
+player\_on\_courtIgnas Brazdeikis:clutch\_time NA NA\\
+player\_on\_courtIman Shumpert:clutch\_time NA NA\\
+player\_on\_courtImmanuel Quickley:clutch\_time 0.717 0.473440\\
+player\_on\_courtIsaac Bonga:clutch\_time NA NA\\
+player\_on\_courtIsaac Okoro:clutch\_time 0.103 0.918297\\
+player\_on\_courtIsaiah Hartenstein:clutch\_time NA NA\\
+player\_on\_courtIsaiah Joe:clutch\_time 0.283 0.777226\\
+player\_on\_courtIsaiah Roby:clutch\_time NA NA\\
+player\_on\_courtIsaiah Stewart:clutch\_time NA NA\\
+player\_on\_courtIsh Smith:clutch\_time NA NA\\
+player\_on\_courtIvica Zubac:clutch\_time NA NA\\
+player\_on\_courtJa Morant:clutch\_time 1.181 0.237632\\
+player\_on\_courtJabari Parker:clutch\_time NA NA\\
+player\_on\_courtJaden McDaniels:clutch\_time -0.106 0.915282\\
+player\_on\_courtJae'Sean Tate:clutch\_time -0.347 0.728759\\
+player\_on\_courtJae Crowder:clutch\_time 0.105 0.916097\\
+player\_on\_courtJahlil Okafor:clutch\_time -0.296 0.767220\\
+player\_on\_courtJahmi'us Ramsey:clutch\_time NA NA\\
+player\_on\_courtJaKarr Sampson:clutch\_time NA NA\\
+player\_on\_courtJake Layman:clutch\_time NA NA\\
+player\_on\_courtJakob Poeltl:clutch\_time -0.146 0.884086\\
+player\_on\_courtJalen Brunson:clutch\_time NA NA\\
+player\_on\_courtJalen Harris:clutch\_time NA NA\\
+player\_on\_courtJalen Lecque:clutch\_time NA NA\\
+player\_on\_courtJalen Smith:clutch\_time -0.096 0.923394\\
+player\_on\_courtJamal Murray:clutch\_time 0.436 0.662540\\
+player\_on\_courtJames Ennis III:clutch\_time NA NA\\
+player\_on\_courtJames Harden:clutch\_time 0.648 0.516708\\
+player\_on\_courtJames Johnson:clutch\_time NA NA\\
+player\_on\_courtJames Wiseman:clutch\_time NA NA\\
+player\_on\_courtJaMychal Green:clutch\_time -0.358 0.720199\\
+player\_on\_courtJared Dudley:clutch\_time NA NA\\
+player\_on\_courtJared Harper:clutch\_time NA NA\\
+player\_on\_courtJaren Jackson Jr.:clutch\_time NA NA\\
+player\_on\_courtJarred Vanderbilt:clutch\_time -0.586 0.558116\\
+player\_on\_courtJarrell Brantley:clutch\_time NA NA\\
+player\_on\_courtJarrett Allen:clutch\_time -0.292 0.770353\\
+player\_on\_courtJarrett Culver:clutch\_time NA NA\\
+player\_on\_courtJaVale McGee:clutch\_time NA NA\\
+player\_on\_courtJavonte Green:clutch\_time NA NA\\
+player\_on\_courtJay Scrubb:clutch\_time NA NA\\
+player\_on\_courtJaylen Adams:clutch\_time NA NA\\
+player\_on\_courtJaylen Brown:clutch\_time 0.422 0.672936\\
+player\_on\_courtJaylen Hoard:clutch\_time NA NA\\
+player\_on\_courtJaylen Nowell:clutch\_time NA NA\\
+player\_on\_courtJayson Tatum:clutch\_time 1.658 0.097251 .\\
+player\_on\_courtJeff Green:clutch\_time 0.721 0.470865\\
+player\_on\_courtJeff Teague:clutch\_time 1.398 0.162065\\
+player\_on\_courtJerami Grant:clutch\_time 1.692 0.090650 .\\
+player\_on\_courtJeremiah Martin:clutch\_time -0.062 0.950319\\
+player\_on\_courtJeremy Lamb:clutch\_time 0.185 0.853374\\
+player\_on\_courtJerome Robinson:clutch\_time NA NA\\
+player\_on\_courtJevon Carter:clutch\_time 2.301 0.021393 *\\
+player\_on\_courtJimmy Butler:clutch\_time -0.411 0.681337\\
+player\_on\_courtJJ Redick:clutch\_time NA NA\\
+player\_on\_courtJoe Harris:clutch\_time -0.287 0.774021\\
+player\_on\_courtJoe Ingles:clutch\_time -0.350 0.725983\\
+player\_on\_courtJoel Embiid:clutch\_time 1.260 0.207760\\
+player\_on\_courtJohn Collins:clutch\_time -0.322 0.747134\\
+player\_on\_courtJohn Konchar:clutch\_time NA NA\\
+player\_on\_courtJohn Wall:clutch\_time NA NA\\
+player\_on\_courtJonas Valanciunas:clutch\_time -0.318 0.750653\\
+player\_on\_courtJontay Porter:clutch\_time NA NA\\
+player\_on\_courtJordan Bell:clutch\_time NA NA\\
+player\_on\_courtJordan Bone:clutch\_time NA NA\\
+player\_on\_courtJordan Clarkson:clutch\_time -0.426 0.669870\\
+player\_on\_courtJordan McLaughlin:clutch\_time NA NA\\
+player\_on\_courtJordan Nwora:clutch\_time NA NA\\
+player\_on\_courtJordan Poole:clutch\_time 0.755 0.450361\\
+player\_on\_courtJosh Green:clutch\_time NA NA\\
+player\_on\_courtJosh Hall:clutch\_time NA NA\\
+player\_on\_courtJosh Jackson:clutch\_time 0.162 0.871329\\
+player\_on\_courtJosh Okogie:clutch\_time -0.144 0.885141\\
+player\_on\_courtJosh Richardson:clutch\_time 1.033 0.301769\\
+player\_on\_courtJrue Holiday:clutch\_time -0.158 0.874170\\
+player\_on\_courtJuan Toscano-Anderson:clutch\_time 0.580 0.561664\\
+player\_on\_courtJuancho Hernangomez:clutch\_time -0.210 0.834032\\
+player\_on\_courtJulius Randle:clutch\_time 0.378 0.705680\\
+player\_on\_courtJustin Holiday:clutch\_time 0.496 0.620145\\
+player\_on\_courtJustin Jackson:clutch\_time -0.260 0.794917\\
+player\_on\_courtJustin James:clutch\_time NA NA\\
+player\_on\_courtJustin Patton:clutch\_time NA NA\\
+player\_on\_courtJustin Robinson:clutch\_time NA NA\\
+player\_on\_courtJustise Winslow:clutch\_time NA NA\\
+player\_on\_courtJusuf Nurkic:clutch\_time 0.745 0.456514\\
+player\_on\_courtJuwan Morgan:clutch\_time 0.817 0.414083\\
+player\_on\_courtKarim Mane:clutch\_time NA NA\\
+player\_on\_courtKarl-Anthony Towns:clutch\_time -0.477 0.633171\\
+player\_on\_courtKawhi Leonard:clutch\_time NA NA\\
+player\_on\_courtKeita Bates-Diop:clutch\_time -0.179 0.857704\\
+player\_on\_courtKelan Martin:clutch\_time NA NA\\
+player\_on\_courtKeldon Johnson:clutch\_time 0.338 0.735522\\
+player\_on\_courtKeljin Blevins:clutch\_time NA NA\\
+player\_on\_courtKelly Olynyk:clutch\_time -0.321 0.748033\\
+player\_on\_courtKelly Oubre Jr.:clutch\_time -0.146 0.883532\\
+player\_on\_courtKemba Walker:clutch\_time 1.913 0.055812 .\\
+player\_on\_courtKendrick Nunn:clutch\_time -0.383 0.701829\\
+player\_on\_courtKenrich Williams:clutch\_time -0.022 0.982789\\
+player\_on\_courtKent Bazemore:clutch\_time 0.815 0.415107\\
+player\_on\_courtKentavious Caldwell-Pope:clutch\_time 0.802 0.422330\\
+player\_on\_courtKenyon Martin Jr.:clutch\_time NA NA\\
+player\_on\_courtKevin Durant:clutch\_time -0.192 0.847379\\
+player\_on\_courtKevin Huerter:clutch\_time 0.125 0.900241\\
+player\_on\_courtKevin Knox II:clutch\_time -0.296 0.767439\\
+player\_on\_courtKevin Love:clutch\_time 0.518 0.604243\\
+player\_on\_courtKevin Porter Jr.:clutch\_time NA NA\\
+player\_on\_courtKevon Looney:clutch\_time NA NA\\
+player\_on\_courtKhem Birch:clutch\_time -0.059 0.953174\\
+player\_on\_courtKhris Middleton:clutch\_time -0.081 0.935248\\
+player\_on\_courtKhyri Thomas:clutch\_time NA NA\\
+player\_on\_courtKillian Hayes:clutch\_time NA NA\\
+player\_on\_courtKillian Tillie:clutch\_time NA NA\\
+player\_on\_courtKostas Antetokounmpo:clutch\_time NA NA\\
+player\_on\_courtKris Dunn:clutch\_time NA NA\\
+player\_on\_courtKristaps Porzingis:clutch\_time NA NA\\
+player\_on\_courtKyle Anderson:clutch\_time 0.292 0.770247\\
+player\_on\_courtKyle Guy:clutch\_time NA NA\\
+player\_on\_courtKyle Kuzma:clutch\_time 0.016 0.987161\\
+player\_on\_courtKyle Lowry:clutch\_time NA NA\\
+player\_on\_courtKyrie Irving:clutch\_time 0.795 0.426494\\
+player\_on\_courtKZ Okpala:clutch\_time NA NA\\
+player\_on\_courtLamar Stevens:clutch\_time 0.413 0.679536\\
+player\_on\_courtLaMarcus Aldridge:clutch\_time -0.124 0.900997\\
+player\_on\_courtLandry Shamet:clutch\_time -0.260 0.794493\\
+player\_on\_courtLangston Galloway:clutch\_time NA NA\\
+player\_on\_courtLarry Nance Jr.:clutch\_time 0.131 0.896050\\
+player\_on\_courtLauri Markkanen:clutch\_time -0.098 0.922273\\
+player\_on\_courtLeBron James:clutch\_time 0.050 0.959986\\
+player\_on\_courtLonnie Walker IV:clutch\_time 0.288 0.773304\\
+player\_on\_courtLou Williams:clutch\_time -0.033 0.973676\\
+player\_on\_courtLouis King:clutch\_time NA NA\\
+player\_on\_courtLuguentz Dort:clutch\_time 0.384 0.701065\\
+player\_on\_courtLuka Doncic:clutch\_time 1.557 0.119402\\
+player\_on\_courtLuka Samanic:clutch\_time -0.224 0.823044\\
+player\_on\_courtLuke Kennard:clutch\_time NA NA\\
+player\_on\_courtLuke Kornet:clutch\_time NA NA\\
+player\_on\_courtMalachi Flynn:clutch\_time NA NA\\
+player\_on\_courtMalcolm Brogdon:clutch\_time 0.270 0.787071\\
+player\_on\_courtMalik Beasley:clutch\_time 0.682 0.495332\\
+player\_on\_courtMalik Fitts:clutch\_time NA NA\\
+player\_on\_courtMamadi Diakite:clutch\_time NA NA\\
+player\_on\_courtMarc Gasol:clutch\_time -0.226 0.820900\\
+player\_on\_courtMarcus Morris Sr.:clutch\_time NA NA\\
+player\_on\_courtMarcus Smart:clutch\_time -0.197 0.844052\\
+player\_on\_courtMarkelle Fultz:clutch\_time NA NA\\
+player\_on\_courtMarkieff Morris:clutch\_time 0.325 0.745200\\
+player\_on\_courtMarkus Howard:clutch\_time NA NA\\
+player\_on\_courtMarques Bolden:clutch\_time NA NA\\
+player\_on\_courtMarquese Chriss:clutch\_time NA NA\\
+player\_on\_courtMarvin Bagley III:clutch\_time NA NA\\
+player\_on\_courtMason Jones:clutch\_time NA NA\\
+player\_on\_courtMason Plumlee:clutch\_time -0.100 0.920196\\
+player\_on\_courtMatisse Thybulle:clutch\_time 2.746 0.006035 }
+player\_on\_courtMatt Thomas:clutch\_time NA NA\\
+player\_on\_courtMatthew Dellavedova:clutch\_time NA NA\\
+player\_on\_courtMaurice Harkless:clutch\_time NA NA\\
+player\_on\_courtMax Strus:clutch\_time NA NA\\
+player\_on\_courtMaxi Kleber:clutch\_time 0.575 0.565259\\
+player\_on\_courtMeyers Leonard:clutch\_time NA NA\\
+player\_on\_courtMfiondu Kabengele:clutch\_time 2.765 0.005699 **
+player\_on\_courtMichael Carter-Williams:clutch\_time NA NA\\
+player\_on\_courtMichael Porter Jr.:clutch\_time -0.214 0.830934\\
+player\_on\_courtMikal Bridges:clutch\_time 1.171 0.241779\\
+player\_on\_courtMike Conley:clutch\_time -0.104 0.917404\\
+player\_on\_courtMike James:clutch\_time NA NA\\
+player\_on\_courtMike Muscala:clutch\_time 1.464 0.143135\\
+player\_on\_courtMike Scott:clutch\_time -0.035 0.972205\\
+player\_on\_courtMitchell Robinson:clutch\_time NA NA\\
+player\_on\_courtMiye Oni:clutch\_time NA NA\\
+player\_on\_courtMo Bamba:clutch\_time NA NA\\
+player\_on\_courtMonte Morris:clutch\_time 0.404 0.686290\\
+player\_on\_courtMontrezl Harrell:clutch\_time -0.212 0.832481\\
+player\_on\_courtMoritz Wagner:clutch\_time NA NA\\
+player\_on\_courtMoses Brown:clutch\_time NA NA\\
+player\_on\_courtMychal Mulder:clutch\_time NA NA\\
+player\_on\_courtMyles Turner:clutch\_time -0.212 0.832012\\
+player\_on\_courtNassir Little:clutch\_time NA NA\\
+player\_on\_courtNate Hinton:clutch\_time NA NA\\
+player\_on\_courtNathan Knight:clutch\_time NA NA\\
+player\_on\_courtNaz Reid:clutch\_time -0.435 0.663484\\
+player\_on\_courtNemanja Bjelica:clutch\_time NA NA\\
+player\_on\_courtNerlens Noel:clutch\_time 0.171 0.864582\\
+player\_on\_courtNico Mannion:clutch\_time NA NA\\
+player\_on\_courtNicolas Batum:clutch\_time NA NA\\
+player\_on\_courtNicolas Claxton:clutch\_time NA NA\\
+player\_on\_courtNicolo Melli:clutch\_time NA NA\\
+player\_on\_courtNikola Jokic:clutch\_time 0.755 0.450162\\
+player\_on\_courtNikola Vucevic:clutch\_time -0.574 0.565921\\
+player\_on\_courtNoah Vonleh:clutch\_time NA NA\\
+player\_on\_courtNorman Powell:clutch\_time -0.489 0.625152\\
+player\_on\_courtNorvel Pelle:clutch\_time NA NA\\
+player\_on\_courtObi Toppin:clutch\_time NA NA\\
+player\_on\_courtOG Anunoby:clutch\_time NA NA\\
+player\_on\_courtOnyeka Okongwu:clutch\_time NA NA\\
+player\_on\_courtOshae Brissett:clutch\_time 0.132 0.894633\\
+player\_on\_courtOtto Porter Jr.:clutch\_time -0.112 0.911218\\
+player\_on\_courtP.J. Tucker:clutch\_time 0.802 0.422607\\
+player\_on\_courtPascal Siakam:clutch\_time 1.581 0.113925\\
+player\_on\_courtPat Connaughton:clutch\_time 0.139 0.889496\\
+player\_on\_courtPatrick Beverley:clutch\_time NA NA\\
+player\_on\_courtPatrick McCaw:clutch\_time NA NA\\
+player\_on\_courtPatrick Patterson:clutch\_time NA NA\\
+player\_on\_courtPatrick Williams:clutch\_time -0.179 0.857860\\
+player\_on\_courtPatty Mills:clutch\_time 0.661 0.508523\\
+player\_on\_courtPaul George:clutch\_time NA NA\\
+player\_on\_courtPaul Millsap:clutch\_time -0.064 0.948729\\
+player\_on\_courtPaul Reed:clutch\_time NA NA\\
+player\_on\_courtPaul Watson:clutch\_time NA NA\\
+player\_on\_courtPayton Pritchard:clutch\_time NA NA\\
+player\_on\_courtPJ Dozier:clutch\_time -0.212 0.831755\\
+player\_on\_courtPrecious Achiuwa:clutch\_time 1.616 0.106042\\
+player\_on\_courtQuinn Cook:clutch\_time NA NA\\
+player\_on\_courtQuinndary Weatherspoon:clutch\_time NA NA\\
+player\_on\_courtR.J. Hampton:clutch\_time NA NA\\
+player\_on\_courtRajon Rondo:clutch\_time NA NA\\
+player\_on\_courtRaul Neto:clutch\_time -0.172 0.863726\\
+player\_on\_courtRay Spalding:clutch\_time NA NA\\
+player\_on\_courtRayjon Tucker:clutch\_time NA NA\\
+player\_on\_courtReggie Bullock:clutch\_time 0.553 0.580314\\
+player\_on\_courtReggie Jackson:clutch\_time NA NA\\
+player\_on\_courtReggie Perry:clutch\_time NA NA\\
+player\_on\_courtRichaun Holmes:clutch\_time NA NA\\
+player\_on\_courtRicky Rubio:clutch\_time -0.158 0.874090\\
+player\_on\_courtRJ Barrett:clutch\_time 0.514 0.607395\\
+player\_on\_courtRobert Covington:clutch\_time 0.220 0.826232\\
+player\_on\_courtRobert Franks:clutch\_time NA NA\\
+player\_on\_courtRobert Williams III:clutch\_time -0.140 0.888934\\
+player\_on\_courtRobert Woodard II:clutch\_time NA NA\\
+player\_on\_courtRobin Lopez:clutch\_time 1.067 0.286086\\
+player\_on\_courtRodions Kurucs:clutch\_time NA NA\\
+player\_on\_courtRodney Hood:clutch\_time -0.059 0.953262\\
+player\_on\_courtRodney McGruder:clutch\_time NA NA\\
+player\_on\_courtRomeo Langford:clutch\_time NA NA\\
+player\_on\_courtRondae Hollis-Jefferson:clutch\_time -0.234 0.815169\\
+player\_on\_courtRoyce O'Neale:clutch\_time 0.466 0.641374\\
+player\_on\_courtRudy Gay:clutch\_time -1.742 0.081584 .\\
+player\_on\_courtRudy Gobert:clutch\_time 0.092 0.926921\\
+player\_on\_courtRui Hachimura:clutch\_time -0.247 0.804870\\
+player\_on\_courtRussell Westbrook:clutch\_time 0.250 0.802222\\
+player\_on\_courtRyan Arcidiacono:clutch\_time -0.198 0.842814\\
+player\_on\_courtSaben Lee:clutch\_time NA NA\\
+player\_on\_courtSaddiq Bey:clutch\_time 0.491 0.623161\\
+player\_on\_courtSam Merrill:clutch\_time NA NA\\
+player\_on\_courtSean McDermott:clutch\_time NA NA\\
+player\_on\_courtSekou Doumbouya:clutch\_time -0.120 0.904628\\
+player\_on\_courtSemi Ojeleye:clutch\_time -0.055 0.956087\\
+player\_on\_courtSerge Ibaka:clutch\_time NA NA\\
+player\_on\_courtSeth Curry:clutch\_time -0.534 0.593264\\
+player\_on\_courtShai Gilgeous-Alexander:clutch\_time -0.963 0.335379\\
+player\_on\_courtShake Milton:clutch\_time 0.299 0.764808\\
+player\_on\_courtShaquille Harrison:clutch\_time 4.029 5.62e-05 **\emph{
+player\_on\_courtSindarius Thornwell:clutch\_time NA NA\\
+player\_on\_courtSkylar Mays:clutch\_time NA NA\\
+player\_on\_courtSolomon Hill:clutch\_time 0.552 0.580733\\
+player\_on\_courtSpencer Dinwiddie:clutch\_time NA NA\\
+player\_on\_courtStanley Johnson:clutch\_time NA NA\\
+player\_on\_courtStephen Curry:clutch\_time 0.548 0.584019\\
+player\_on\_courtSterling Brown:clutch\_time NA NA\\
+player\_on\_courtSvi Mykhailiuk:clutch\_time -0.429 0.667772\\
+player\_on\_courtT.J. Leaf:clutch\_time NA NA\\
+player\_on\_courtT.J. McConnell:clutch\_time 0.539 0.589722\\
+player\_on\_courtT.J. Warren:clutch\_time NA NA\\
+player\_on\_courtTacko Fall:clutch\_time NA NA\\
+player\_on\_courtTaj Gibson:clutch\_time -0.185 0.853447\\
+player\_on\_courtTalen Horton-Tucker:clutch\_time 0.677 0.498186\\
+player\_on\_courtTaurean Prince:clutch\_time 1.125 0.260722\\
+player\_on\_courtTerance Mann:clutch\_time NA NA\\
+player\_on\_courtTerence Davis:clutch\_time NA NA\\
+player\_on\_courtTerrance Ferguson:clutch\_time NA NA\\
+player\_on\_courtTerrence Ross:clutch\_time -0.296 0.767230\\
+player\_on\_courtThaddeus Young:clutch\_time 0.367 0.713385\\
+player\_on\_courtThanasis Antetokounmpo:clutch\_time NA NA\\
+player\_on\_courtTheo Maledon:clutch\_time NA NA\\
+player\_on\_courtTheo Pinson:clutch\_time NA NA\\
+player\_on\_courtThomas Bryant:clutch\_time NA NA\\
+player\_on\_courtThon Maker:clutch\_time NA NA\\
+player\_on\_courtTim Frazier:clutch\_time NA NA\\
+player\_on\_courtTim Hardaway Jr.:clutch\_time NA NA\\
+player\_on\_courtTimothe Luwawu-Cabarrot:clutch\_time 2.000 0.045482 }\\
+player\_on\_courtTobias Harris:clutch\_time 0.757 0.448804\\
+player\_on\_courtTomas Satoransky:clutch\_time -0.666 0.505226\\
+player\_on\_courtTony Bradley:clutch\_time NA NA\\
+player\_on\_courtTony Snell:clutch\_time -0.003 0.997688\\
+player\_on\_courtTorrey Craig:clutch\_time -0.280 0.779817\\
+player\_on\_courtTrae Young:clutch\_time 1.121 0.262291\\
+player\_on\_courtTre Jones:clutch\_time -0.233 0.815488\\
+player\_on\_courtTremont Waters:clutch\_time NA NA\\
+player\_on\_courtTrent Forrest:clutch\_time NA NA\\
+player\_on\_courtTrevor Ariza:clutch\_time 0.081 0.935442\\
+player\_on\_courtTrey Burke:clutch\_time NA NA\\
+player\_on\_courtTrey Lyles:clutch\_time -0.130 0.896819\\
+player\_on\_courtTristan Thompson:clutch\_time 0.759 0.448142\\
+player\_on\_courtTroy Brown Jr.:clutch\_time NA NA\\
+player\_on\_courtTy-Shon Alexander:clutch\_time 1.053 0.292208\\
+player\_on\_courtTy Jerome:clutch\_time NA NA\\
+player\_on\_courtTyler Bey:clutch\_time NA NA\\
+player\_on\_courtTyler Cook:clutch\_time -0.070 0.944003\\
+player\_on\_courtTyler Herro:clutch\_time 0.461 0.644728\\
+player\_on\_courtTyler Johnson:clutch\_time -0.197 0.843768\\
+player\_on\_courtTyrell Terry:clutch\_time NA NA\\
+player\_on\_courtTyrese Haliburton:clutch\_time NA NA\\
+player\_on\_courtTyrese Maxey:clutch\_time NA NA\\
+player\_on\_courtTyus Jones:clutch\_time 0.788 0.430638\\
+player\_on\_courtUdoka Azubuike:clutch\_time NA NA\\
+player\_on\_courtUdonis Haslem:clutch\_time NA NA\\
+player\_on\_courtVictor Oladipo:clutch\_time NA NA\\
+player\_on\_courtVincent Poirier:clutch\_time NA NA\\
+player\_on\_courtVlatko Cancar:clutch\_time NA NA\\
+player\_on\_courtWayne Ellington:clutch\_time -0.387 0.698482\\
+player\_on\_courtWendell Carter Jr.:clutch\_time 0.200 0.841098\\
+player\_on\_courtWes Iwundu:clutch\_time NA NA\\
+player\_on\_courtWesley Matthews:clutch\_time 0.510 0.609735\\
+player\_on\_courtWill Barton:clutch\_time 1.263 0.206487\\
+player\_on\_courtWillie Cauley-Stein:clutch\_time 0.165 0.869086\\
+player\_on\_courtXavier Tillman:clutch\_time 1.102 0.270598\\
+player\_on\_courtYogi Ferrell:clutch\_time NA NA\\
+player\_on\_courtYuta Watanabe:clutch\_time NA NA\\
+player\_on\_courtZach LaVine:clutch\_time 0.391 0.695612\\
+player\_on\_courtZeke Nnaji:clutch\_time NA NA\\
+--- Signif. codes: 0 `\emph{\textbf{' 0.001 '}' 0.01 '}' 0.05 `.' 0.1 '
+' 1
+
+Residual standard error: 26.71 on 21931 degrees of freedom Multiple
+R-squared: 0.2379, Adjusted R-squared: 0.2109 F-statistic: 8.799 on 778
+and 21931 DF, p-value: \textless{} 2.2e-16
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fixed_df =}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{tidy}\NormalTok{(fixed_lm_}\DecValTok{2020}\NormalTok{_}\DecValTok{21}\NormalTok{))}
+
+
+
+
+\KeywordTok{stargazer}\NormalTok{(fixed_lm_}\DecValTok{2020}\NormalTok{_}\DecValTok{21}\NormalTok{,}
+          \DataTypeTok{type=}\StringTok{"text"}\NormalTok{,}
+          \DataTypeTok{align=}\OtherTok{TRUE}\NormalTok{,}
+          \DataTypeTok{no.space=}\OtherTok{TRUE}\NormalTok{,}
+          \DataTypeTok{report=}\NormalTok{(}\StringTok{"vc*p"}\NormalTok{),}
+          \DataTypeTok{out =} \StringTok{"output.html"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+===============================================================================
+Dependent variable:\\
+--------------------------- PER\_adj\\
+-------------------------------------------------------------------------------
+player\_on\_courtAaron Holiday -3.131\\
+p = 0.523\\
+player\_on\_courtAaron Nesmith -7.057\\
+p = 0.180\\
+player\_on\_courtAbdel Nader 1.021\\
+p = 0.871\\
+player\_on\_courtAdam Mokoka -20.764**\\
+p = 0.012\\
+player\_on\_courtAl-Farouq Aminu -10.715\\
+p = 0.105\\
+player\_on\_courtAl Horford 7.177\\
+p = 0.263\\
+player\_on\_courtAlec Burks 1.745\\
+p = 0.734\\
+player\_on\_courtAleksej Pokusevski -7.774\\
+p = 0.156\\
+player\_on\_courtAlen Smailagic -8.050\\
+p = 0.327\\
+player\_on\_courtAlex Caruso -6.013\\
+p = 0.224\\
+player\_on\_courtAlex Len -3.049\\
+p = 0.530\\
+player\_on\_courtAlfonzo McKinnie 0.682\\
+p = 0.904\\
+player\_on\_courtAlize Johnson -0.343\\
+p = 0.962\\
+player\_on\_courtAmida Brimah -7.371\\
+p = 0.521\\
+player\_on\_courtAmir Coffey -11.101**\\
+p = 0.032\\
+player\_on\_courtAnderson Varejao 9.078\\
+p = 0.467\\
+player\_on\_courtAndre Drummond 5.646\\
+p = 0.278\\
+player\_on\_courtAndre Iguodala -7.849\\
+p = 0.110\\
+player\_on\_courtAndre Roberson -15.496\\
+p = 0.214\\
+player\_on\_courtAndrew Wiggins 3.854\\
+p = 0.421\\
+player\_on\_courtAnfernee Simons -0.522\\
+p = 0.914\\
+player\_on\_courtAnthony Davis 11.062**\\
+p = 0.045\\
+player\_on\_courtAnthony Edwards 4.632\\
+p = 0.336\\
+player\_on\_courtAnthony Gill -2.920\\
+p = 0.632\\
+player\_on\_courtAnthony Lamb -6.362\\
+p = 0.336\\
+player\_on\_courtAnthony Tolliver -13.672\\
+p = 0.108\\
+player\_on\_courtAnzejs Pasecniks -53.608**\\
+p = 0.047\\
+player\_on\_courtArmoni Brooks -3.237\\
+p = 0.642\\
+player\_on\_courtAron Baynes -4.870\\
+p = 0.353\\
+player\_on\_courtAshton Hagans -33.267*\\
+p = 0.084\\
+player\_on\_courtAustin Rivers -6.539\\
+p = 0.226\\
+player\_on\_courtAvery Bradley -5.877\\
+p = 0.366\\
+player\_on\_courtAxel Toupane -6.398\\
+p = 0.468\\
+player\_on\_courtBam Adebayo 8.729*\\
+p = 0.073\\
+player\_on\_courtBen McLemore -2.799\\
+p = 0.587\\
+player\_on\_courtBen Simmons 3.126\\
+p = 0.519\\
+player\_on\_courtBlake Griffin -0.731\\
+p = 0.885\\
+player\_on\_courtBoban Marjanovic 7.154\\
+p = 0.221\\
+player\_on\_courtBobby Portis 5.603\\
+p = 0.226\\
+player\_on\_courtBogdan Bogdanovic 4.081\\
+p = 0.415\\
+player\_on\_courtBojan Bogdanovic 1.941\\
+p = 0.677\\
+player\_on\_courtBol Bol -2.676\\
+p = 0.644\\
+player\_on\_courtBrad Wanamaker -5.390\\
+p = 0.340\\
+player\_on\_courtBradley Beal 15.730***\\
+p = 0.002\\
+player\_on\_courtBrandon Clarke 2.290\\
+p = 0.646\\
+player\_on\_courtBrandon Goodwin -3.817\\
+p = 0.483\\
+player\_on\_courtBrian Bowen II -18.827\\
+p = 0.101\\
+player\_on\_courtBrodric Thomas -9.096\\
+p = 0.136\\
+player\_on\_courtBrook Lopez 0.860\\
+p = 0.850\\
+player\_on\_courtBruce Brown -1.827\\
+p = 0.699\\
+player\_on\_courtBruno Caboclo 3.340\\
+p = 0.771\\
+player\_on\_courtBruno Fernando -10.819*\\
+p = 0.056\\
+player\_on\_courtBryn Forbes -1.274\\
+p = 0.781\\
+player\_on\_courtBuddy Hield 1.266\\
+p = 0.793\\
+player\_on\_courtCam Reddish -1.519\\
+p = 0.806\\
+player\_on\_courtCameron Johnson -0.811\\
+p = 0.863\\
+player\_on\_courtCameron Oliver 2.408\\
+p = 0.862\\
+player\_on\_courtCameron Payne 4.204\\
+p = 0.367\\
+player\_on\_courtCameron Reynolds 0.406\\
+p = 0.975\\
+player\_on\_courtCaris LeVert 10.412*\\
+p = 0.051\\
+player\_on\_courtCarmelo Anthony 3.811\\
+p = 0.424\\
+player\_on\_courtCarsen Edwards -4.430\\
+p = 0.453\\
+player\_on\_courtCassius Stanley 3.290\\
+p = 0.613\\
+player\_on\_courtCassius Winston -5.828\\
+p = 0.378\\
+player\_on\_courtCedi Osman -0.562\\
+p = 0.912\\
+player\_on\_courtChandler Hutchison -9.346\\
+p = 0.135\\
+player\_on\_courtCharlie Brown Jr.~-6.532\\
+p = 0.518\\
+player\_on\_courtChasson Randle -8.046\\
+p = 0.151\\
+player\_on\_courtChimezie Metu 2.409\\
+p = 0.681\\
+player\_on\_courtChris Boucher 6.830\\
+p = 0.177\\
+player\_on\_courtChris Chiozza 0.624\\
+p = 0.922\\
+player\_on\_courtChris Paul 10.250**\\
+p = 0.026\\
+player\_on\_courtChris Silva -10.346\\
+p = 0.195\\
+player\_on\_courtChristian Wood 8.114\\
+p = 0.147\\
+player\_on\_courtChuma Okeke -4.305\\
+p = 0.425\\
+player\_on\_courtCJ Elleby -7.029\\
+p = 0.234\\
+player\_on\_courtCJ McCollum 12.896**\\
+p = 0.013\\
+player\_on\_courtClint Capela 5.161\\
+p = 0.271\\
+player\_on\_courtCoby White 0.508\\
+p = 0.917\\
+player\_on\_courtCole Anthony 0.833\\
+p = 0.878\\
+player\_on\_courtCollin Sexton 10.105**\\
+p = 0.044\\
+player\_on\_courtCory Joseph -1.871\\
+p = 0.707\\
+player\_on\_courtCristiano Felicio -4.878\\
+p = 0.519\\
+player\_on\_courtD'Angelo Russell 10.359*\\
+p = 0.059\\
+player\_on\_courtD.J. Augustin -1.480\\
+p = 0.772\\
+player\_on\_courtD.J. Wilson -2.522\\
+p = 0.666\\
+player\_on\_courtDakota Mathias -4.904\\
+p = 0.647\\
+player\_on\_courtDamian Jones -4.728\\
+p = 0.415\\
+player\_on\_courtDamian Lillard 18.281***\\
+p = 0.0002\\
+player\_on\_courtDamion Lee -4.989\\
+p = 0.324\\
+player\_on\_courtDamyean Dotson -5.808\\
+p = 0.279\\
+player\_on\_courtDaniel Gafford 4.568\\
+p = 0.364\\
+player\_on\_courtDaniel Oturu -7.309\\
+p = 0.207\\
+player\_on\_courtDaniel Theis -1.384\\
+p = 0.778\\
+player\_on\_courtDanilo Gallinari 3.944\\
+p = 0.412\\
+player\_on\_courtDanny Green -3.405\\
+p = 0.473\\
+player\_on\_courtDante Exum -22.029*\\
+p = 0.055\\
+player\_on\_courtDanuel House Jr.~-6.549\\
+p = 0.272\\
+player\_on\_courtDaQuan Jeffries -9.585\\
+p = 0.112\\
+player\_on\_courtDario Saric 2.034\\
+p = 0.681\\
+player\_on\_courtDarius Bazley -3.624\\
+p = 0.482\\
+player\_on\_courtDarius Garland 4.287\\
+p = 0.406\\
+player\_on\_courtDarius Miller -4.296\\
+p = 0.552\\
+player\_on\_courtDavid Nwaba 0.477\\
+p = 0.940\\
+player\_on\_courtDavis Bertans -1.516\\
+p = 0.759\\
+player\_on\_courtDe'Aaron Fox 12.105**\\
+p = 0.018\\
+player\_on\_courtDe'Andre Hunter -0.127\\
+p = 0.984\\
+player\_on\_courtDe'Anthony Melton 1.640\\
+p = 0.744\\
+player\_on\_courtDean Wade -7.206\\
+p = 0.149\\
+player\_on\_courtDeAndre' Bembry -6.780\\
+p = 0.193\\
+player\_on\_courtDeandre Ayton 3.119\\
+p = 0.495\\
+player\_on\_courtDeAndre Jordan -3.084\\
+p = 0.544\\
+player\_on\_courtDeividas Sirvydis -7.007\\
+p = 0.323\\
+player\_on\_courtDejounte Murray 4.558\\
+p = 0.351\\
+player\_on\_courtDelon Wright 0.474\\
+p = 0.924\\
+player\_on\_courtDeMar DeRozan 10.910**\\
+p = 0.030\\
+player\_on\_courtDeMarcus Cousins 17.653***\\
+p = 0.002\\
+player\_on\_courtDeni Avdija -9.652*\\
+p = 0.061\\
+player\_on\_courtDennis Schroder 1.660\\
+p = 0.734\\
+player\_on\_courtDennis Smith Jr.~-0.060\\
+p = 0.994\\
+player\_on\_courtDenzel Valentine -3.065\\
+p = 0.541\\
+player\_on\_courtDerrick Favors 0.441\\
+p = 0.926\\
+player\_on\_courtDerrick Jones Jr.~-5.412\\
+p = 0.282\\
+player\_on\_courtDerrick Rose 8.338\\
+p = 0.106\\
+player\_on\_courtDerrick White 4.489\\
+p = 0.443\\
+player\_on\_courtDesmond Bane -2.425\\
+p = 0.610\\
+player\_on\_courtDevin Booker 11.733**\\
+p = 0.011\\
+player\_on\_courtDevin Cannady 9.671\\
+p = 0.366\\
+player\_on\_courtDevin Vassell -5.031\\
+p = 0.311\\
+player\_on\_courtDevon Dotson 29.849***\\
+p = 0.002\\
+player\_on\_courtDevontae Cacok -2.227\\
+p = 0.754\\
+player\_on\_courtDewayne Dedmon 4.625\\
+p = 0.514\\
+player\_on\_courtDillon Brooks 5.402\\
+p = 0.259\\
+player\_on\_courtDomantas Sabonis 7.491\\
+p = 0.133\\
+player\_on\_courtDonovan Mitchell 18.101***\\
+p = 0.0003\\
+player\_on\_courtDonta Hall 7.782\\
+p = 0.360\\
+player\_on\_courtDonte DiVincenzo -1.876\\
+p = 0.699\\
+player\_on\_courtDorian Finney-Smith -4.413\\
+p = 0.367\\
+player\_on\_courtDoug McDermott 2.984\\
+p = 0.543\\
+player\_on\_courtDraymond Green -4.840\\
+p = 0.326\\
+player\_on\_courtDrew Eubanks -0.625\\
+p = 0.904\\
+player\_on\_courtDuncan Robinson -2.225\\
+p = 0.640\\
+player\_on\_courtDwayne Bacon -1.981\\
+p = 0.681\\
+player\_on\_courtDwight Howard -0.810\\
+p = 0.863\\
+player\_on\_courtDwight Powell -1.437\\
+p = 0.771\\
+player\_on\_courtDylan Windler -8.762\\
+p = 0.151\\
+player\_on\_courtE'Twaun Moore -2.287\\
+p = 0.705\\
+player\_on\_courtEd Davis -6.273\\
+p = 0.350\\
+player\_on\_courtEdmond Sumner -2.215\\
+p = 0.666\\
+player\_on\_courtElfrid Payton -0.783\\
+p = 0.875\\
+player\_on\_courtElijah Bryant -9.308\\
+p = 0.273\\
+player\_on\_courtElijah Hughes 3.378\\
+p = 0.640\\
+player\_on\_courtEnes Kanter 3.575\\
+p = 0.451\\
+player\_on\_courtEric Gordon 4.914\\
+p = 0.444\\
+player\_on\_courtEric Paschall 2.137\\
+p = 0.705\\
+player\_on\_courtErsan Ilyasova -0.455\\
+p = 0.950\\
+player\_on\_courtEvan Fournier 5.938\\
+p = 0.275\\
+player\_on\_courtFacundo Campazzo -4.074\\
+p = 0.393\\
+player\_on\_courtFrank Jackson 0.048\\
+p = 0.994\\
+player\_on\_courtFrank Kaminsky -0.594\\
+p = 0.908\\
+player\_on\_courtFrank Mason -10.208\\
+p = 0.461\\
+player\_on\_courtFrank Ntilikina -6.957\\
+p = 0.234\\
+player\_on\_courtFred VanVleet 8.265\\
+p = 0.115\\
+player\_on\_courtFreddie Gillespie -3.361\\
+p = 0.629\\
+player\_on\_courtFurkan Korkmaz 0.435\\
+p = 0.929\\
+player\_on\_courtGabe Vincent -3.305\\
+p = 0.521\\
+player\_on\_courtGabriel Deck 3.275\\
+p = 0.733\\
+player\_on\_courtGarrett Temple -8.259\\
+p = 0.109\\
+player\_on\_courtGarrison Mathews -8.070*\\
+p = 0.098\\
+player\_on\_courtGary Clark -11.625**\\
+p = 0.040\\
+player\_on\_courtGary Harris -3.275\\
+p = 0.562\\
+player\_on\_courtGary Payton II -0.121\\
+p = 0.990\\
+player\_on\_courtGary Trent Jr.~1.331\\
+p = 0.794\\
+player\_on\_courtGeorge Hill -5.217\\
+p = 0.352\\
+player\_on\_courtGeorges Niang -5.348\\
+p = 0.251\\
+player\_on\_courtGiannis Antetokounmpo 17.936***\\
+p = 0.0002\\
+player\_on\_courtGlenn Robinson III -6.384\\
+p = 0.342\\
+player\_on\_courtGoga Bitadze 1.878\\
+p = 0.730\\
+player\_on\_courtGoran Dragic 2.784\\
+p = 0.591\\
+player\_on\_courtGorgui Dieng 1.911\\
+p = 0.740\\
+player\_on\_courtGrant Williams -8.090*\\
+p = 0.096\\
+player\_on\_courtGrayson Allen -2.750\\
+p = 0.588\\
+player\_on\_courtGreg Whittington -23.225*\\
+p = 0.093\\
+player\_on\_courtHamidou Diallo 0.723\\
+p = 0.891\\
+player\_on\_courtHarrison Barnes -0.353\\
+p = 0.945\\
+player\_on\_courtHarry Giles III -2.350\\
+p = 0.673\\
+player\_on\_courtHassan Whiteside 4.004\\
+p = 0.490\\
+player\_on\_courtHenry Ellenson -4.921\\
+p = 0.856\\
+player\_on\_courtIgnas Brazdeikis -2.794\\
+p = 0.742\\
+player\_on\_courtIman Shumpert -12.455\\
+p = 0.517\\
+player\_on\_courtImmanuel Quickley 5.437\\
+p = 0.264\\
+player\_on\_courtIsaac Bonga -14.614***\\
+p = 0.008\\
+player\_on\_courtIsaac Okoro -7.086\\
+p = 0.149\\
+player\_on\_courtIsaiah Hartenstein 2.289\\
+p = 0.676\\
+player\_on\_courtIsaiah Joe -3.791\\
+p = 0.483\\
+player\_on\_courtIsaiah Roby -3.380\\
+p = 0.498\\
+player\_on\_courtIsaiah Stewart -0.490\\
+p = 0.921\\
+player\_on\_courtIsh Smith -2.582\\
+p = 0.622\\
+player\_on\_courtIvica Zubac 0.158\\
+p = 0.973\\
+player\_on\_courtJa Morant 7.335\\
+p = 0.129\\
+player\_on\_courtJabari Parker -3.516\\
+p = 0.651\\
+player\_on\_courtJaden McDaniels -3.607\\
+p = 0.470\\
+player\_on\_courtJae'Sean Tate -1.226\\
+p = 0.801\\
+player\_on\_courtJae Crowder -3.077\\
+p = 0.510\\
+player\_on\_courtJahlil Okafor -2.065\\
+p = 0.744\\
+player\_on\_courtJahmi'us Ramsey 0.823\\
+p = 0.921\\
+player\_on\_courtJaKarr Sampson -6.214\\
+p = 0.320\\
+player\_on\_courtJake Layman -5.835\\
+p = 0.280\\
+player\_on\_courtJakob Poeltl -0.943\\
+p = 0.846\\
+player\_on\_courtJalen Brunson 2.872\\
+p = 0.546\\
+player\_on\_courtJalen Harris -3.054\\
+p = 0.719\\
+player\_on\_courtJalen Lecque 16.125\\
+p = 0.244\\
+player\_on\_courtJalen Smith -9.282\\
+p = 0.120\\
+player\_on\_courtJamal Murray 7.714\\
+p = 0.148\\
+player\_on\_courtJames Ennis III -4.457\\
+p = 0.426\\
+player\_on\_courtJames Harden 13.010**\\
+p = 0.011\\
+player\_on\_courtJames Johnson -3.645\\
+p = 0.560\\
+player\_on\_courtJames Wiseman 1.745\\
+p = 0.756\\
+player\_on\_courtJaMychal Green 0.004\\
+p = 1.000\\
+player\_on\_courtJared Dudley -15.779*\\
+p = 0.055\\
+player\_on\_courtJared Harper -25.696**\\
+p = 0.011\\
+player\_on\_courtJaren Jackson Jr.~8.756\\
+p = 0.236\\
+player\_on\_courtJarred Vanderbilt -5.767\\
+p = 0.246\\
+player\_on\_courtJarrell Brantley 3.112\\
+p = 0.610\\
+player\_on\_courtJarrett Allen 2.313\\
+p = 0.642\\
+player\_on\_courtJarrett Culver -4.926\\
+p = 0.404\\
+player\_on\_courtJaVale McGee 3.111\\
+p = 0.555\\
+player\_on\_courtJavonte Green -6.751\\
+p = 0.224\\
+player\_on\_courtJay Scrubb -19.829**\\
+p = 0.039\\
+player\_on\_courtJaylen Adams -19.332*\\
+p = 0.071\\
+player\_on\_courtJaylen Brown 12.368**\\
+p = 0.015\\
+player\_on\_courtJaylen Hoard -5.789\\
+p = 0.423\\
+player\_on\_courtJaylen Nowell 2.982\\
+p = 0.592\\
+player\_on\_courtJayson Tatum 13.796***\\
+p = 0.005\\
+player\_on\_courtJeff Green -2.604\\
+p = 0.587\\
+player\_on\_courtJeff Teague -6.305\\
+p = 0.186\\
+player\_on\_courtJerami Grant 8.605*\\
+p = 0.094\\
+player\_on\_courtJeremiah Martin -9.227\\
+p = 0.361\\
+player\_on\_courtJeremy Lamb 2.116\\
+p = 0.718\\
+player\_on\_courtJerome Robinson -13.509*\\
+p = 0.082\\
+player\_on\_courtJevon Carter -3.031\\
+p = 0.534\\
+player\_on\_courtJimmy Butler 14.648***\\
+p = 0.005\\
+player\_on\_courtJJ Redick -6.458\\
+p = 0.432\\
+player\_on\_courtJoe Harris -1.102\\
+p = 0.814\\
+player\_on\_courtJoe Ingles 0.389\\
+p = 0.935\\
+player\_on\_courtJoel Embiid 20.847***\\
+p = 0.00004\\
+player\_on\_courtJohn Collins 5.701\\
+p = 0.220\\
+player\_on\_courtJohn Konchar -4.656\\
+p = 0.399\\
+player\_on\_courtJohn Wall 8.517\\
+p = 0.132\\
+player\_on\_courtJonas Valanciunas 9.228*\\
+p = 0.058\\
+player\_on\_courtJontay Porter -7.708\\
+p = 0.381\\
+player\_on\_courtJordan Bell -6.312\\
+p = 0.648\\
+player\_on\_courtJordan Bone -6.223\\
+p = 0.449\\
+player\_on\_courtJordan Clarkson 10.123**\\
+p = 0.032\\
+player\_on\_courtJordan McLaughlin -3.199\\
+p = 0.544\\
+player\_on\_courtJordan Nwora -2.161\\
+p = 0.712\\
+player\_on\_courtJordan Poole 5.985\\
+p = 0.248\\
+player\_on\_courtJosh Green -6.585\\
+p = 0.243\\
+player\_on\_courtJosh Hall -14.249**\\
+p = 0.045\\
+player\_on\_courtJosh Jackson 2.309\\
+p = 0.643\\
+player\_on\_courtJosh Okogie -7.817\\
+p = 0.122\\
+player\_on\_courtJosh Richardson -0.901\\
+p = 0.855\\
+player\_on\_courtJrue Holiday 6.918\\
+p = 0.137\\
+player\_on\_courtJuan Toscano-Anderson -8.922*\\
+p = 0.085\\
+player\_on\_courtJuancho Hernangomez -4.761\\
+p = 0.358\\
+player\_on\_courtJulius Randle 8.828*\\
+p = 0.064\\
+player\_on\_courtJustin Holiday -4.506\\
+p = 0.348\\
+player\_on\_courtJustin Jackson -1.542\\
+p = 0.782\\
+player\_on\_courtJustin James -4.086\\
+p = 0.477\\
+player\_on\_courtJustin Patton -3.244\\
+p = 0.703\\
+player\_on\_courtJustin Robinson -12.612\\
+p = 0.212\\
+player\_on\_courtJustise Winslow -5.901\\
+p = 0.345\\
+player\_on\_courtJusuf Nurkic 4.840\\
+p = 0.373\\
+player\_on\_courtJuwan Morgan -12.255**\\
+p = 0.045\\
+player\_on\_courtKarim Mane -15.961*\\
+p = 0.082\\
+player\_on\_courtKarl-Anthony Towns 14.460***\\
+p = 0.007\\
+player\_on\_courtKawhi Leonard 16.782***\\
+p = 0.001\\
+player\_on\_courtKeita Bates-Diop -6.101\\
+p = 0.323\\
+player\_on\_courtKelan Martin 0.070\\
+p = 0.991\\
+player\_on\_courtKeldon Johnson -0.508\\
+p = 0.917\\
+player\_on\_courtKeljin Blevins -13.527*\\
+p = 0.056\\
+player\_on\_courtKelly Olynyk 2.023\\
+p = 0.675\\
+player\_on\_courtKelly Oubre Jr.~0.998\\
+p = 0.845\\
+player\_on\_courtKemba Walker 8.588\\
+p = 0.112\\
+player\_on\_courtKendrick Nunn 1.651\\
+p = 0.742\\
+player\_on\_courtKenrich Williams -2.421\\
+p = 0.622\\
+player\_on\_courtKent Bazemore -4.412\\
+p = 0.365\\
+player\_on\_courtKentavious Caldwell-Pope -5.150\\
+p = 0.284\\
+player\_on\_courtKenyon Martin Jr.~-1.700\\
+p = 0.753\\
+player\_on\_courtKevin Durant 17.916***\\
+p = 0.001\\
+player\_on\_courtKevin Huerter -1.336\\
+p = 0.772\\
+player\_on\_courtKevin Knox II -2.117\\
+p = 0.701\\
+player\_on\_courtKevin Love 0.568\\
+p = 0.934\\
+player\_on\_courtKevin Porter Jr.~2.047\\
+p = 0.750\\
+player\_on\_courtKevon Looney -6.581\\
+p = 0.185\\
+player\_on\_courtKhem Birch -2.192\\
+p = 0.653\\
+player\_on\_courtKhris Middleton 7.301\\
+p = 0.109\\
+player\_on\_courtKhyri Thomas 11.879\\
+p = 0.341\\
+player\_on\_courtKillian Hayes -8.723\\
+p = 0.180\\
+player\_on\_courtKillian Tillie -2.401\\
+p = 0.740\\
+player\_on\_courtKostas Antetokounmpo -20.600***\\
+p = 0.010\\
+player\_on\_courtKris Dunn -15.920*\\
+p = 0.097\\
+player\_on\_courtKristaps Porzingis 9.118*\\
+p = 0.084\\
+player\_on\_courtKyle Anderson 1.760\\
+p = 0.711\\
+player\_on\_courtKyle Guy -6.701\\
+p = 0.272\\
+player\_on\_courtKyle Kuzma -1.306\\
+p = 0.785\\
+player\_on\_courtKyle Lowry 4.999\\
+p = 0.361\\
+player\_on\_courtKyrie Irving 17.084***\\
+p = 0.001\\
+player\_on\_courtKZ Okpala -15.655***\\
+p = 0.006\\
+player\_on\_courtLamar Stevens -3.866\\
+p = 0.490\\
+player\_on\_courtLaMarcus Aldridge 2.345\\
+p = 0.727\\
+player\_on\_courtLandry Shamet -4.462\\
+p = 0.351\\
+player\_on\_courtLangston Galloway -3.405\\
+p = 0.543\\
+player\_on\_courtLarry Nance Jr.~-4.116\\
+p = 0.490\\
+player\_on\_courtLauri Markkanen 1.812\\
+p = 0.730\\
+player\_on\_courtLeBron James 13.752***\\
+p = 0.009\\
+player\_on\_courtLonnie Walker IV -1.806\\
+p = 0.720\\
+player\_on\_courtLou Williams 3.526\\
+p = 0.449\\
+player\_on\_courtLouis King -4.446\\
+p = 0.699\\
+player\_on\_courtLuguentz Dort -0.700\\
+p = 0.894\\
+player\_on\_courtLuka Doncic 17.796***\\
+p = 0.0002\\
+player\_on\_courtLuka Samanic -4.634\\
+p = 0.437\\
+player\_on\_courtLuke Kennard -3.638\\
+p = 0.440\\
+player\_on\_courtLuke Kornet -6.171\\
+p = 0.306\\
+player\_on\_courtMalachi Flynn -3.889\\
+p = 0.469\\
+player\_on\_courtMalcolm Brogdon 8.699*\\
+p = 0.088\\
+player\_on\_courtMalik Beasley 5.083\\
+p = 0.376\\
+player\_on\_courtMalik Fitts -16.756\\
+p = 0.290\\
+player\_on\_courtMamadi Diakite -7.574\\
+p = 0.276\\
+player\_on\_courtMarc Gasol -4.349\\
+p = 0.390\\
+player\_on\_courtMarcus Morris Sr.~1.124\\
+p = 0.813\\
+player\_on\_courtMarcus Smart 1.738\\
+p = 0.736\\
+player\_on\_courtMarkelle Fultz 5.288\\
+p = 0.601\\
+player\_on\_courtMarkieff Morris -7.619\\
+p = 0.121\\
+player\_on\_courtMarkus Howard -6.184\\
+p = 0.249\\
+player\_on\_courtMarques Bolden 3.824\\
+p = 0.759\\
+player\_on\_courtMarquese Chriss 3.349\\
+p = 0.862\\
+player\_on\_courtMarvin Bagley III 2.872\\
+p = 0.605\\
+player\_on\_courtMason Jones -1.081\\
+p = 0.861\\
+player\_on\_courtMason Plumlee 0.585\\
+p = 0.909\\
+player\_on\_courtMatisse Thybulle -6.961\\
+p = 0.142\\
+player\_on\_courtMatt Thomas -6.513\\
+p = 0.219\\
+player\_on\_courtMatthew Dellavedova -5.447\\
+p = 0.553\\
+player\_on\_courtMaurice Harkless -10.921*\\
+p = 0.057\\
+player\_on\_courtMax Strus -2.412\\
+p = 0.667\\
+player\_on\_courtMaxi Kleber -7.949\\
+p = 0.119\\
+player\_on\_courtMeyers Leonard -22.565\\
+p = 0.241\\
+player\_on\_courtMfiondu Kabengele -5.943\\
+p = 0.292\\
+player\_on\_courtMichael Carter-Williams -3.686\\
+p = 0.537\\
+player\_on\_courtMichael Porter Jr.~6.702\\
+p = 0.166\\
+player\_on\_courtMikal Bridges 0.063\\
+p = 0.989\\
+player\_on\_courtMike Conley 9.051*\\
+p = 0.078\\
+player\_on\_courtMike James -4.902\\
+p = 0.465\\
+player\_on\_courtMike Muscala 0.178\\
+p = 0.976\\
+player\_on\_courtMike Scott -9.959**\\
+p = 0.050\\
+player\_on\_courtMitchell Robinson -1.195\\
+p = 0.843\\
+player\_on\_courtMiye Oni -12.205**\\
+p = 0.015\\
+player\_on\_courtMo Bamba 4.521\\
+p = 0.403\\
+player\_on\_courtMonte Morris 1.329\\
+p = 0.792\\
+player\_on\_courtMontrezl Harrell 7.216\\
+p = 0.130\\
+player\_on\_courtMoritz Wagner -3.120\\
+p = 0.569\\
+player\_on\_courtMoses Brown 3.561\\
+p = 0.519\\
+player\_on\_courtMychal Mulder -5.511\\
+p = 0.271\\
+player\_on\_courtMyles Turner 0.572\\
+p = 0.917\\
+player\_on\_courtNassir Little -7.940\\
+p = 0.134\\
+player\_on\_courtNate Hinton -1.405\\
+p = 0.843\\
+player\_on\_courtNathan Knight 1.041\\
+p = 0.858\\
+player\_on\_courtNaz Reid 5.907\\
+p = 0.224\\
+player\_on\_courtNemanja Bjelica -3.714\\
+p = 0.511\\
+player\_on\_courtNerlens Noel -6.096\\
+p = 0.209\\
+player\_on\_courtNico Mannion -9.309\\
+p = 0.132\\
+player\_on\_courtNicolas Batum -4.328\\
+p = 0.349\\
+player\_on\_courtNicolas Claxton -2.004\\
+p = 0.715\\
+player\_on\_courtNicolo Melli -6.065\\
+p = 0.344\\
+player\_on\_courtNikola Jokic 21.107***\\
+p = 0.00001\\
+player\_on\_courtNikola Vucevic 13.609***\\
+p = 0.005\\
+player\_on\_courtNoah Vonleh -31.279**\\
+p = 0.024\\
+player\_on\_courtNorman Powell 4.566\\
+p = 0.340\\
+player\_on\_courtNorvel Pelle -8.105\\
+p = 0.340\\
+player\_on\_courtObi Toppin -3.020\\
+p = 0.537\\
+player\_on\_courtOG Anunoby 2.649\\
+p = 0.634\\
+player\_on\_courtOnyeka Okongwu -1.588\\
+p = 0.744\\
+player\_on\_courtOshae Brissett 0.185\\
+p = 0.978\\
+player\_on\_courtOtto Porter Jr.~0.552\\
+p = 0.931\\
+player\_on\_courtP.J. Tucker -13.204***\\
+p = 0.006\\
+player\_on\_courtPascal Siakam 8.689*\\
+p = 0.090\\
+player\_on\_courtPat Connaughton -5.936\\
+p = 0.193\\
+player\_on\_courtPatrick Beverley -2.760\\
+p = 0.591\\
+player\_on\_courtPatrick McCaw -10.470\\
+p = 0.401\\
+player\_on\_courtPatrick Patterson -4.524\\
+p = 0.431\\
+player\_on\_courtPatrick Williams -5.750\\
+p = 0.234\\
+player\_on\_courtPatty Mills -0.370\\
+p = 0.940\\
+player\_on\_courtPaul George 11.657**\\
+p = 0.016\\
+player\_on\_courtPaul Millsap 3.909\\
+p = 0.429\\
+player\_on\_courtPaul Reed 5.816\\
+p = 0.352\\
+player\_on\_courtPaul Watson 0.884\\
+p = 0.889\\
+player\_on\_courtPayton Pritchard -2.910\\
+p = 0.546\\
+player\_on\_courtPJ Dozier -2.795\\
+p = 0.598\\
+player\_on\_courtPrecious Achiuwa -1.960\\
+p = 0.693\\
+player\_on\_courtQuinn Cook 3.420\\
+p = 0.617\\
+player\_on\_courtQuinndary Weatherspoon -14.636**\\
+p = 0.036\\
+player\_on\_courtR.J. Hampton -4.383\\
+p = 0.403\\
+player\_on\_courtRajon Rondo -3.691\\
+p = 0.463\\
+player\_on\_courtRaul Neto -1.616\\
+p = 0.737\\
+player\_on\_courtRay Spalding -15.825\\
+p = 0.411\\
+player\_on\_courtRayjon Tucker 1.523\\
+p = 0.845\\
+player\_on\_courtReggie Bullock -3.941\\
+p = 0.415\\
+player\_on\_courtReggie Jackson 1.408\\
+p = 0.760\\
+player\_on\_courtReggie Perry 0.508\\
+p = 0.935\\
+player\_on\_courtRichaun Holmes 4.233\\
+p = 0.400\\
+player\_on\_courtRicky Rubio -1.189\\
+p = 0.808\\
+player\_on\_courtRJ Barrett 2.234\\
+p = 0.638\\
+player\_on\_courtRobert Covington -6.083\\
+p = 0.201\\
+player\_on\_courtRobert Franks 14.424\\
+p = 0.209\\
+player\_on\_courtRobert Williams III 5.085\\
+p = 0.321\\
+player\_on\_courtRobert Woodard II -0.622\\
+p = 0.940\\
+player\_on\_courtRobin Lopez 0.174\\
+p = 0.971\\
+player\_on\_courtRodions Kurucs -5.328\\
+p = 0.471\\
+player\_on\_courtRodney Hood -9.902*\\
+p = 0.055\\
+player\_on\_courtRodney McGruder -0.427\\
+p = 0.958\\
+player\_on\_courtRomeo Langford -10.752\\
+p = 0.115\\
+player\_on\_courtRondae Hollis-Jefferson -3.728\\
+p = 0.631\\
+player\_on\_courtRoyce O'Neale -7.873*\\
+p = 0.092\\
+player\_on\_courtRudy Gay 3.860\\
+p = 0.433\\
+player\_on\_courtRudy Gobert 3.461\\
+p = 0.459\\
+player\_on\_courtRui Hachimura -2.620\\
+p = 0.596\\
+player\_on\_courtRussell Westbrook 9.231*\\
+p = 0.055\\
+player\_on\_courtRyan Arcidiacono -5.009\\
+p = 0.364\\
+player\_on\_courtSaben Lee -2.329\\
+p = 0.664\\
+player\_on\_courtSaddiq Bey -1.599\\
+p = 0.742\\
+player\_on\_courtSam Merrill -4.799\\
+p = 0.403\\
+player\_on\_courtSean McDermott -12.953*\\
+p = 0.087\\
+player\_on\_courtSekou Doumbouya -7.945\\
+p = 0.121\\
+player\_on\_courtSemi Ojeleye -9.453*\\
+p = 0.058\\
+player\_on\_courtSerge Ibaka 4.818\\
+p = 0.379\\
+player\_on\_courtSeth Curry 1.198\\
+p = 0.806\\
+player\_on\_courtShai Gilgeous-Alexander 11.261*\\
+p = 0.057\\
+player\_on\_courtShake Milton 2.021\\
+p = 0.672\\
+player\_on\_courtShaquille Harrison -9.179\\
+p = 0.101\\
+player\_on\_courtSindarius Thornwell -9.117\\
+p = 0.427\\
+player\_on\_courtSkylar Mays -0.075\\
+p = 0.990\\
+player\_on\_courtSolomon Hill -11.558**\\
+p = 0.013\\
+player\_on\_courtSpencer Dinwiddie -6.538\\
+p = 0.734\\
+player\_on\_courtStanley Johnson -7.474\\
+p = 0.137\\
+player\_on\_courtStephen Curry 20.569***\\
+p = 0.00003\\
+player\_on\_courtSterling Brown -5.510\\
+p = 0.299\\
+player\_on\_courtSvi Mykhailiuk -1.789\\
+p = 0.717\\
+player\_on\_courtT.J. Leaf -3.303\\
+p = 0.719\\
+player\_on\_courtT.J. McConnell 0.284\\
+p = 0.954\\
+player\_on\_courtT.J. Warren 0.637\\
+p = 0.964\\
+player\_on\_courtTacko Fall 2.920\\
+p = 0.680\\
+player\_on\_courtTaj Gibson -4.046\\
+p = 0.445\\
+player\_on\_courtTalen Horton-Tucker -0.591\\
+p = 0.903\\
+player\_on\_courtTaurean Prince -0.591\\
+p = 0.916\\
+player\_on\_courtTerance Mann -2.739\\
+p = 0.553\\
+player\_on\_courtTerence Davis -0.177\\
+p = 0.972\\
+player\_on\_courtTerrance Ferguson -24.425***\\
+p = 0.004\\
+player\_on\_courtTerrence Ross 3.404\\
+p = 0.529\\
+player\_on\_courtThaddeus Young 7.272\\
+p = 0.137\\
+player\_on\_courtThanasis Antetokounmpo -6.646\\
+p = 0.168\\
+player\_on\_courtTheo Maledon -4.701\\
+p = 0.342\\
+player\_on\_courtTheo Pinson -18.773**\\
+p = 0.011\\
+player\_on\_courtThomas Bryant 0.461\\
+p = 0.960\\
+player\_on\_courtThon Maker 0.521\\
+p = 0.959\\
+player\_on\_courtTim Frazier -10.997\\
+p = 0.378\\
+player\_on\_courtTim Hardaway Jr.~4.436\\
+p = 0.349\\
+player\_on\_courtTimothe Luwawu-Cabarrot -4.273\\
+p = 0.388\\
+player\_on\_courtTobias Harris 7.956*\\
+p = 0.097\\
+player\_on\_courtTomas Satoransky -1.714\\
+p = 0.737\\
+player\_on\_courtTony Bradley 2.799\\
+p = 0.609\\
+player\_on\_courtTony Snell -11.665**\\
+p = 0.022\\
+player\_on\_courtTorrey Craig -3.362\\
+p = 0.482\\
+player\_on\_courtTrae Young 16.772***\\
+p = 0.0004\\
+player\_on\_courtTre Jones -4.322\\
+p = 0.448\\
+player\_on\_courtTremont Waters 1.296\\
+p = 0.836\\
+player\_on\_courtTrent Forrest -9.451\\
+p = 0.106\\
+player\_on\_courtTrevor Ariza -4.777\\
+p = 0.419\\
+player\_on\_courtTrey Burke -0.751\\
+p = 0.880\\
+player\_on\_courtTrey Lyles -7.737\\
+p = 0.257\\
+player\_on\_courtTristan Thompson -2.597\\
+p = 0.604\\
+player\_on\_courtTroy Brown Jr.~-6.470\\
+p = 0.269\\
+player\_on\_courtTy-Shon Alexander -11.728\\
+p = 0.142\\
+player\_on\_courtTy Jerome 1.662\\
+p = 0.781\\
+player\_on\_courtTyler Bey -8.865\\
+p = 0.241\\
+player\_on\_courtTyler Cook -9.449\\
+p = 0.121\\
+player\_on\_courtTyler Herro 2.614\\
+p = 0.607\\
+player\_on\_courtTyler Johnson -5.255\\
+p = 0.321\\
+player\_on\_courtTyrell Terry -4.623\\
+p = 0.630\\
+player\_on\_courtTyrese Haliburton 3.432\\
+p = 0.499\\
+player\_on\_courtTyrese Maxey 0.318\\
+p = 0.947\\
+player\_on\_courtTyus Jones 0.635\\
+p = 0.894\\
+player\_on\_courtUdoka Azubuike -5.499\\
+p = 0.491\\
+player\_on\_courtUdonis Haslem 38.456\\
+p = 0.154\\
+player\_on\_courtVictor Oladipo 5.933\\
+p = 0.325\\
+player\_on\_courtVincent Poirier -15.696\\
+p = 0.102\\
+player\_on\_courtVlatko Cancar -9.171*\\
+p = 0.088\\
+player\_on\_courtWayne Ellington -1.085\\
+p = 0.842\\
+player\_on\_courtWendell Carter Jr.~1.665\\
+p = 0.746\\
+player\_on\_courtWes Iwundu -12.822*\\
+p = 0.061\\
+player\_on\_courtWesley Matthews -10.180**\\
+p = 0.040\\
+player\_on\_courtWill Barton -1.051\\
+p = 0.835\\
+player\_on\_courtWillie Cauley-Stein -4.721\\
+p = 0.350\\
+player\_on\_courtXavier Tillman -2.362\\
+p = 0.633\\
+player\_on\_courtYogi Ferrell -2.790\\
+p = 0.706\\
+player\_on\_courtYuta Watanabe -6.223\\
+p = 0.238\\
+player\_on\_courtZach LaVine 13.251***\\
+p = 0.010\\
+player\_on\_courtZeke Nnaji -0.362\\
+p = 0.946\\
+DRtg\_minus\_Avg 0.284***\\
+p = 0.0002\\
+clutch\_time -11.467\\
+p = 0.551\\
+player\_on\_courtAaron Holiday:clutch\_time 8.871\\
+p = 0.789\\
+player\_on\_courtAaron Nesmith:clutch\_time 30.827\\
+p = 0.353\\
+player\_on\_courtAbdel Nader:clutch\_time -11.841\\
+p = 0.723\\
+player\_on\_courtAdam Mokoka:clutch\_time
+
+player\_on\_courtAl-Farouq Aminu:clutch\_time
+
+player\_on\_courtAl Horford:clutch\_time -25.058\\
+p = 0.362\\
+player\_on\_courtAlec Burks:clutch\_time 66.657**\\
+p = 0.015\\
+player\_on\_courtAleksej Pokusevski:clutch\_time
+
+player\_on\_courtAlen Smailagic:clutch\_time
+
+player\_on\_courtAlex Caruso:clutch\_time 26.195\\
+p = 0.293\\
+player\_on\_courtAlex Len:clutch\_time 11.957\\
+p = 0.660\\
+player\_on\_courtAlfonzo McKinnie:clutch\_time
+
+player\_on\_courtAlize Johnson:clutch\_time
+
+player\_on\_courtAmida Brimah:clutch\_time
+
+player\_on\_courtAmir Coffey:clutch\_time
+
+player\_on\_courtAnderson Varejao:clutch\_time
+
+player\_on\_courtAndre Drummond:clutch\_time 19.061\\
+p = 0.445\\
+player\_on\_courtAndre Iguodala:clutch\_time -2.817\\
+p = 0.918\\
+player\_on\_courtAndre Roberson:clutch\_time 3.709\\
+p = 0.916\\
+player\_on\_courtAndrew Wiggins:clutch\_time 20.706\\
+p = 0.446\\
+player\_on\_courtAnfernee Simons:clutch\_time -11.066\\
+p = 0.738\\
+player\_on\_courtAnthony Davis:clutch\_time -0.795\\
+p = 0.977\\
+player\_on\_courtAnthony Edwards:clutch\_time -0.637\\
+p = 0.979\\
+player\_on\_courtAnthony Gill:clutch\_time -8.781\\
+p = 0.792\\
+player\_on\_courtAnthony Lamb:clutch\_time
+
+player\_on\_courtAnthony Tolliver:clutch\_time
+
+player\_on\_courtAnzejs Pasecniks:clutch\_time
+
+player\_on\_courtArmoni Brooks:clutch\_time
+
+player\_on\_courtAron Baynes:clutch\_time
+
+player\_on\_courtAshton Hagans:clutch\_time
+
+player\_on\_courtAustin Rivers:clutch\_time 21.459\\
+p = 0.518\\
+player\_on\_courtAvery Bradley:clutch\_time
+
+player\_on\_courtAxel Toupane:clutch\_time
+
+player\_on\_courtBam Adebayo:clutch\_time 14.086\\
+p = 0.572\\
+player\_on\_courtBen McLemore:clutch\_time
+
+player\_on\_courtBen Simmons:clutch\_time 13.841\\
+p = 0.546\\
+player\_on\_courtBlake Griffin:clutch\_time -4.841\\
+p = 0.839\\
+player\_on\_courtBoban Marjanovic:clutch\_time
+
+player\_on\_courtBobby Portis:clutch\_time
+
+player\_on\_courtBogdan Bogdanovic:clutch\_time 1.040\\
+p = 0.970\\
+player\_on\_courtBojan Bogdanovic:clutch\_time -7.007\\
+p = 0.778\\
+player\_on\_courtBol Bol:clutch\_time
+
+player\_on\_courtBrad Wanamaker:clutch\_time
+
+player\_on\_courtBradley Beal:clutch\_time 22.426\\
+p = 0.368\\
+player\_on\_courtBrandon Clarke:clutch\_time 3.865\\
+p = 0.887\\
+player\_on\_courtBrandon Goodwin:clutch\_time -6.664\\
+p = 0.841\\
+player\_on\_courtBrian Bowen II:clutch\_time
+
+player\_on\_courtBrodric Thomas:clutch\_time -2.265\\
+p = 0.946\\
+player\_on\_courtBrook Lopez:clutch\_time 6.827\\
+p = 0.773\\
+player\_on\_courtBruce Brown:clutch\_time 21.364\\
+p = 0.390\\
+player\_on\_courtBruno Caboclo:clutch\_time
+
+player\_on\_courtBruno Fernando:clutch\_time
+
+player\_on\_courtBryn Forbes:clutch\_time
+
+player\_on\_courtBuddy Hield:clutch\_time 28.240\\
+p = 0.394\\
+player\_on\_courtCam Reddish:clutch\_time 23.580\\
+p = 0.479\\
+player\_on\_courtCameron Johnson:clutch\_time 9.608\\
+p = 0.667\\
+player\_on\_courtCameron Oliver:clutch\_time
+
+player\_on\_courtCameron Payne:clutch\_time -30.343\\
+p = 0.264\\
+player\_on\_courtCameron Reynolds:clutch\_time
+
+player\_on\_courtCaris LeVert:clutch\_time 2.457\\
+p = 0.918\\
+player\_on\_courtCarmelo Anthony:clutch\_time -9.721\\
+p = 0.769\\
+player\_on\_courtCarsen Edwards:clutch\_time
+
+player\_on\_courtCassius Stanley:clutch\_time
+
+player\_on\_courtCassius Winston:clutch\_time
+
+player\_on\_courtCedi Osman:clutch\_time 10.377\\
+p = 0.677\\
+player\_on\_courtChandler Hutchison:clutch\_time -2.356\\
+p = 0.944\\
+player\_on\_courtCharlie Brown Jr.:clutch\_time
+
+player\_on\_courtChasson Randle:clutch\_time
+
+player\_on\_courtChimezie Metu:clutch\_time
+
+player\_on\_courtChris Boucher:clutch\_time
+
+player\_on\_courtChris Chiozza:clutch\_time -11.900\\
+p = 0.721\\
+player\_on\_courtChris Paul:clutch\_time 11.589\\
+p = 0.604\\
+player\_on\_courtChris Silva:clutch\_time
+
+player\_on\_courtChristian Wood:clutch\_time 2.440\\
+p = 0.942\\
+player\_on\_courtChuma Okeke:clutch\_time
+
+player\_on\_courtCJ Elleby:clutch\_time
+
+player\_on\_courtCJ McCollum:clutch\_time 6.575\\
+p = 0.810\\
+player\_on\_courtClint Capela:clutch\_time 17.375\\
+p = 0.485\\
+player\_on\_courtCoby White:clutch\_time 12.598\\
+p = 0.595\\
+player\_on\_courtCole Anthony:clutch\_time -12.506\\
+p = 0.707\\
+player\_on\_courtCollin Sexton:clutch\_time 34.407\\
+p = 0.147\\
+player\_on\_courtCory Joseph:clutch\_time -9.716\\
+p = 0.770\\
+player\_on\_courtCristiano Felicio:clutch\_time
+
+player\_on\_courtD'Angelo Russell:clutch\_time 24.115\\
+p = 0.377\\
+player\_on\_courtD.J. Augustin:clutch\_time
+
+player\_on\_courtD.J. Wilson:clutch\_time
+
+player\_on\_courtDakota Mathias:clutch\_time 12.747\\
+p = 0.712\\
+player\_on\_courtDamian Jones:clutch\_time
+
+player\_on\_courtDamian Lillard:clutch\_time 37.548\\
+p = 0.167\\
+player\_on\_courtDamion Lee:clutch\_time
+
+player\_on\_courtDamyean Dotson:clutch\_time -5.382\\
+p = 0.844\\
+player\_on\_courtDaniel Gafford:clutch\_time -2.967\\
+p = 0.914\\
+player\_on\_courtDaniel Oturu:clutch\_time
+
+player\_on\_courtDaniel Theis:clutch\_time 6.641\\
+p = 0.841\\
+player\_on\_courtDanilo Gallinari:clutch\_time 2.441\\
+p = 0.942\\
+player\_on\_courtDanny Green:clutch\_time 18.728\\
+p = 0.413\\
+player\_on\_courtDante Exum:clutch\_time
+
+player\_on\_courtDanuel House Jr.:clutch\_time -6.146\\
+p = 0.854\\
+player\_on\_courtDaQuan Jeffries:clutch\_time
+
+player\_on\_courtDario Saric:clutch\_time 11.814\\
+p = 0.664\\
+player\_on\_courtDarius Bazley:clutch\_time -3.458\\
+p = 0.899\\
+player\_on\_courtDarius Garland:clutch\_time 42.415\\
+p = 0.119\\
+player\_on\_courtDarius Miller:clutch\_time
+
+player\_on\_courtDavid Nwaba:clutch\_time
+
+player\_on\_courtDavis Bertans:clutch\_time 1.964\\
+p = 0.934\\
+player\_on\_courtDe'Aaron Fox:clutch\_time -2.554\\
+p = 0.939\\
+player\_on\_courtDe'Andre Hunter:clutch\_time -11.943\\
+p = 0.721\\
+player\_on\_courtDe'Anthony Melton:clutch\_time 3.554\\
+p = 0.915\\
+player\_on\_courtDean Wade:clutch\_time 12.381\\
+p = 0.649\\
+player\_on\_courtDeAndre' Bembry:clutch\_time 38.879\\
+p = 0.241\\
+player\_on\_courtDeandre Ayton:clutch\_time 3.576\\
+p = 0.873\\
+player\_on\_courtDeAndre Jordan:clutch\_time -2.769\\
+p = 0.919\\
+player\_on\_courtDeividas Sirvydis:clutch\_time
+
+player\_on\_courtDejounte Murray:clutch\_time 15.002\\
+p = 0.503\\
+player\_on\_courtDelon Wright:clutch\_time 11.183\\
+p = 0.654\\
+player\_on\_courtDeMar DeRozan:clutch\_time 5.268\\
+p = 0.814\\
+player\_on\_courtDeMarcus Cousins:clutch\_time
+
+player\_on\_courtDeni Avdija:clutch\_time -0.516\\
+p = 0.988\\
+player\_on\_courtDennis Schroder:clutch\_time 8.538\\
+p = 0.718\\
+player\_on\_courtDennis Smith Jr.:clutch\_time
+
+player\_on\_courtDenzel Valentine:clutch\_time 9.089\\
+p = 0.739\\
+player\_on\_courtDerrick Favors:clutch\_time -11.801\\
+p = 0.722\\
+player\_on\_courtDerrick Jones Jr.:clutch\_time 10.095\\
+p = 0.761\\
+player\_on\_courtDerrick Rose:clutch\_time -7.166\\
+p = 0.763\\
+player\_on\_courtDerrick White:clutch\_time -5.369\\
+p = 0.845\\
+player\_on\_courtDesmond Bane:clutch\_time 960.658***\\
+p = 0.000\\
+player\_on\_courtDevin Booker:clutch\_time 23.838\\
+p = 0.297\\
+player\_on\_courtDevin Cannady:clutch\_time
+
+player\_on\_courtDevin Vassell:clutch\_time
+
+player\_on\_courtDevon Dotson:clutch\_time
+
+player\_on\_courtDevontae Cacok:clutch\_time
+
+player\_on\_courtDewayne Dedmon:clutch\_time
+
+player\_on\_courtDillon Brooks:clutch\_time 18.358\\
+p = 0.438\\
+player\_on\_courtDomantas Sabonis:clutch\_time 10.783\\
+p = 0.638\\
+player\_on\_courtDonovan Mitchell:clutch\_time 0.232\\
+p = 0.994\\
+player\_on\_courtDonta Hall:clutch\_time
+
+player\_on\_courtDonte DiVincenzo:clutch\_time 6.860\\
+p = 0.783\\
+player\_on\_courtDorian Finney-Smith:clutch\_time 3.636\\
+p = 0.913\\
+player\_on\_courtDoug McDermott:clutch\_time -9.668\\
+p = 0.698\\
+player\_on\_courtDraymond Green:clutch\_time 33.075\\
+p = 0.318\\
+player\_on\_courtDrew Eubanks:clutch\_time 15.445\\
+p = 0.641\\
+player\_on\_courtDuncan Robinson:clutch\_time 13.316\\
+p = 0.573\\
+player\_on\_courtDwayne Bacon:clutch\_time
+
+player\_on\_courtDwight Howard:clutch\_time 0.944\\
+p = 0.973\\
+player\_on\_courtDwight Powell:clutch\_time
+
+player\_on\_courtDylan Windler:clutch\_time -1.549\\
+p = 0.963\\
+player\_on\_courtE'Twaun Moore:clutch\_time
+
+player\_on\_courtEd Davis:clutch\_time
+
+player\_on\_courtEdmond Sumner:clutch\_time -0.677\\
+p = 0.979\\
+player\_on\_courtElfrid Payton:clutch\_time
+
+player\_on\_courtElijah Bryant:clutch\_time
+
+player\_on\_courtElijah Hughes:clutch\_time
+
+player\_on\_courtEnes Kanter:clutch\_time 4.665\\
+p = 0.888\\
+player\_on\_courtEric Gordon:clutch\_time
+
+player\_on\_courtEric Paschall:clutch\_time -13.469\\
+p = 0.685\\
+player\_on\_courtErsan Ilyasova:clutch\_time -9.713\\
+p = 0.772\\
+player\_on\_courtEvan Fournier:clutch\_time 11.559\\
+p = 0.672\\
+player\_on\_courtFacundo Campazzo:clutch\_time -8.188\\
+p = 0.729\\
+player\_on\_courtFrank Jackson:clutch\_time
+
+player\_on\_courtFrank Kaminsky:clutch\_time -8.699\\
+p = 0.750\\
+player\_on\_courtFrank Mason:clutch\_time
+
+player\_on\_courtFrank Ntilikina:clutch\_time -3.765\\
+p = 0.891\\
+player\_on\_courtFred VanVleet:clutch\_time 16.630\\
+p = 0.616\\
+player\_on\_courtFreddie Gillespie:clutch\_time
+
+player\_on\_courtFurkan Korkmaz:clutch\_time 23.611\\
+p = 0.476\\
+player\_on\_courtGabe Vincent:clutch\_time -7.005\\
+p = 0.833\\
+player\_on\_courtGabriel Deck:clutch\_time
+
+player\_on\_courtGarrett Temple:clutch\_time 17.322\\
+p = 0.488\\
+player\_on\_courtGarrison Mathews:clutch\_time 90.921***\\
+p = 0.001\\
+player\_on\_courtGary Clark:clutch\_time
+
+player\_on\_courtGary Harris:clutch\_time -3.646\\
+p = 0.879\\
+player\_on\_courtGary Payton II:clutch\_time
+
+player\_on\_courtGary Trent Jr.:clutch\_time 5.254\\
+p = 0.874\\
+player\_on\_courtGeorge Hill:clutch\_time -1.411\\
+p = 0.967\\
+player\_on\_courtGeorges Niang:clutch\_time
+
+player\_on\_courtGiannis Antetokounmpo:clutch\_time 8.106\\
+p = 0.732\\
+player\_on\_courtGlenn Robinson III:clutch\_time
+
+player\_on\_courtGoga Bitadze:clutch\_time -13.721\\
+p = 0.680\\
+player\_on\_courtGoran Dragic:clutch\_time 31.110\\
+p = 0.348\\
+player\_on\_courtGorgui Dieng:clutch\_time -12.221\\
+p = 0.713\\
+player\_on\_courtGrant Williams:clutch\_time -4.321\\
+p = 0.897\\
+player\_on\_courtGrayson Allen:clutch\_time 11.663\\
+p = 0.611\\
+player\_on\_courtGreg Whittington:clutch\_time
+
+player\_on\_courtHamidou Diallo:clutch\_time -7.805\\
+p = 0.775\\
+player\_on\_courtHarrison Barnes:clutch\_time 66.185**\\
+p = 0.046\\
+player\_on\_courtHarry Giles III:clutch\_time
+
+player\_on\_courtHassan Whiteside:clutch\_time -15.592\\
+p = 0.639\\
+player\_on\_courtHenry Ellenson:clutch\_time
+
+player\_on\_courtIgnas Brazdeikis:clutch\_time
+
+player\_on\_courtIman Shumpert:clutch\_time
+
+player\_on\_courtImmanuel Quickley:clutch\_time 19.465\\
+p = 0.474\\
+player\_on\_courtIsaac Bonga:clutch\_time
+
+player\_on\_courtIsaac Okoro:clutch\_time 2.426\\
+p = 0.919\\
+player\_on\_courtIsaiah Hartenstein:clutch\_time
+
+player\_on\_courtIsaiah Joe:clutch\_time 9.382\\
+p = 0.778\\
+player\_on\_courtIsaiah Roby:clutch\_time
+
+player\_on\_courtIsaiah Stewart:clutch\_time
+
+player\_on\_courtIsh Smith:clutch\_time
+
+player\_on\_courtIvica Zubac:clutch\_time
+
+player\_on\_courtJa Morant:clutch\_time 27.909\\
+p = 0.238\\
+player\_on\_courtJabari Parker:clutch\_time
+
+player\_on\_courtJaden McDaniels:clutch\_time -2.648\\
+p = 0.916\\
+player\_on\_courtJae'Sean Tate:clutch\_time -11.469\\
+p = 0.729\\
+player\_on\_courtJae Crowder:clutch\_time 2.616\\
+p = 0.917\\
+player\_on\_courtJahlil Okafor:clutch\_time -9.863\\
+p = 0.768\\
+player\_on\_courtJahmi'us Ramsey:clutch\_time
+
+player\_on\_courtJaKarr Sampson:clutch\_time
+
+player\_on\_courtJake Layman:clutch\_time
+
+player\_on\_courtJakob Poeltl:clutch\_time -3.334\\
+p = 0.885\\
+player\_on\_courtJalen Brunson:clutch\_time
+
+player\_on\_courtJalen Harris:clutch\_time
+
+player\_on\_courtJalen Lecque:clutch\_time
+
+player\_on\_courtJalen Smith:clutch\_time -2.632\\
+p = 0.924\\
+player\_on\_courtJamal Murray:clutch\_time 10.360\\
+p = 0.663\\
+player\_on\_courtJames Ennis III:clutch\_time
+
+player\_on\_courtJames Harden:clutch\_time 14.864\\
+p = 0.517\\
+player\_on\_courtJames Johnson:clutch\_time
+
+player\_on\_courtJames Wiseman:clutch\_time
+
+player\_on\_courtJaMychal Green:clutch\_time -11.847\\
+p = 0.721\\
+player\_on\_courtJared Dudley:clutch\_time
+
+player\_on\_courtJared Harper:clutch\_time
+
+player\_on\_courtJaren Jackson Jr.:clutch\_time
+
+player\_on\_courtJarred Vanderbilt:clutch\_time -19.379\\
+p = 0.559\\
+player\_on\_courtJarrell Brantley:clutch\_time
+
+player\_on\_courtJarrett Allen:clutch\_time -6.907\\
+p = 0.771\\
+player\_on\_courtJarrett Culver:clutch\_time
+
+player\_on\_courtJaVale McGee:clutch\_time
+
+player\_on\_courtJavonte Green:clutch\_time
+
+player\_on\_courtJay Scrubb:clutch\_time
+
+player\_on\_courtJaylen Adams:clutch\_time
+
+player\_on\_courtJaylen Brown:clutch\_time 10.514\\
+p = 0.673\\
+player\_on\_courtJaylen Hoard:clutch\_time
+
+player\_on\_courtJaylen Nowell:clutch\_time
+
+player\_on\_courtJayson Tatum:clutch\_time 45.022*\\
+p = 0.098\\
+player\_on\_courtJeff Green:clutch\_time 17.034\\
+p = 0.471\\
+player\_on\_courtJeff Teague:clutch\_time 46.226\\
+p = 0.163\\
+player\_on\_courtJerami Grant:clutch\_time 40.091*\\
+p = 0.091\\
+player\_on\_courtJeremiah Martin:clutch\_time -2.133\\
+p = 0.951\\
+player\_on\_courtJeremy Lamb:clutch\_time 4.634\\
+p = 0.854\\
+player\_on\_courtJerome Robinson:clutch\_time
+
+player\_on\_courtJevon Carter:clutch\_time 62.478**\\
+p = 0.022\\
+player\_on\_courtJimmy Butler:clutch\_time -10.234\\
+p = 0.682\\
+player\_on\_courtJJ Redick:clutch\_time
+
+player\_on\_courtJoe Harris:clutch\_time -6.556\\
+p = 0.775\\
+player\_on\_courtJoe Ingles:clutch\_time -8.706\\
+p = 0.726\\
+player\_on\_courtJoel Embiid:clutch\_time 29.818\\
+p = 0.208\\
+player\_on\_courtJohn Collins:clutch\_time -8.742\\
+p = 0.748\\
+player\_on\_courtJohn Konchar:clutch\_time
+
+player\_on\_courtJohn Wall:clutch\_time
+
+player\_on\_courtJonas Valanciunas:clutch\_time -7.902\\
+p = 0.751\\
+player\_on\_courtJontay Porter:clutch\_time
+
+player\_on\_courtJordan Bell:clutch\_time
+
+player\_on\_courtJordan Bone:clutch\_time
+
+player\_on\_courtJordan Clarkson:clutch\_time -11.565\\
+p = 0.670\\
+player\_on\_courtJordan McLaughlin:clutch\_time
+
+player\_on\_courtJordan Nwora:clutch\_time
+
+player\_on\_courtJordan Poole:clutch\_time 25.002\\
+p = 0.451\\
+player\_on\_courtJosh Green:clutch\_time
+
+player\_on\_courtJosh Hall:clutch\_time
+
+player\_on\_courtJosh Jackson:clutch\_time 5.361\\
+p = 0.872\\
+player\_on\_courtJosh Okogie:clutch\_time -3.927\\
+p = 0.886\\
+player\_on\_courtJosh Richardson:clutch\_time 34.161\\
+p = 0.302\\
+player\_on\_courtJrue Holiday:clutch\_time -3.737\\
+p = 0.875\\
+player\_on\_courtJuan Toscano-Anderson:clutch\_time 19.224\\
+p = 0.562\\
+player\_on\_courtJuancho Hernangomez:clutch\_time -6.940\\
+p = 0.835\\
+player\_on\_courtJulius Randle:clutch\_time 8.920\\
+p = 0.706\\
+player\_on\_courtJustin Holiday:clutch\_time 11.069\\
+p = 0.621\\
+player\_on\_courtJustin Jackson:clutch\_time -8.626\\
+p = 0.795\\
+player\_on\_courtJustin James:clutch\_time
+
+player\_on\_courtJustin Patton:clutch\_time
+
+player\_on\_courtJustin Robinson:clutch\_time
+
+player\_on\_courtJustise Winslow:clutch\_time
+
+player\_on\_courtJusuf Nurkic:clutch\_time 24.694\\
+p = 0.457\\
+player\_on\_courtJuwan Morgan:clutch\_time 27.183\\
+p = 0.415\\
+player\_on\_courtKarim Mane:clutch\_time
+
+player\_on\_courtKarl-Anthony Towns:clutch\_time -11.909\\
+p = 0.634\\
+player\_on\_courtKawhi Leonard:clutch\_time
+
+player\_on\_courtKeita Bates-Diop:clutch\_time -5.969\\
+p = 0.858\\
+player\_on\_courtKelan Martin:clutch\_time
+
+player\_on\_courtKeldon Johnson:clutch\_time 7.983\\
+p = 0.736\\
+player\_on\_courtKeljin Blevins:clutch\_time
+
+player\_on\_courtKelly Olynyk:clutch\_time -8.720\\
+p = 0.749\\
+player\_on\_courtKelly Oubre Jr.:clutch\_time -4.851\\
+p = 0.884\\
+player\_on\_courtKemba Walker:clutch\_time 63.416*\\
+p = 0.056\\
+player\_on\_courtKendrick Nunn:clutch\_time -12.671\\
+p = 0.702\\
+player\_on\_courtKenrich Williams:clutch\_time -0.537\\
+p = 0.983\\
+player\_on\_courtKent Bazemore:clutch\_time 22.128\\
+p = 0.416\\
+player\_on\_courtKentavious Caldwell-Pope:clutch\_time 18.342\\
+p = 0.423\\
+player\_on\_courtKenyon Martin Jr.:clutch\_time
+
+player\_on\_courtKevin Durant:clutch\_time -4.805\\
+p = 0.848\\
+player\_on\_courtKevin Huerter:clutch\_time 2.957\\
+p = 0.901\\
+player\_on\_courtKevin Knox II:clutch\_time -9.811\\
+p = 0.768\\
+player\_on\_courtKevin Love:clutch\_time 14.289\\
+p = 0.605\\
+player\_on\_courtKevin Porter Jr.:clutch\_time
+
+player\_on\_courtKevon Looney:clutch\_time
+
+player\_on\_courtKhem Birch:clutch\_time -1.942\\
+p = 0.954\\
+player\_on\_courtKhris Middleton:clutch\_time -1.916\\
+p = 0.936\\
+player\_on\_courtKhyri Thomas:clutch\_time
+
+player\_on\_courtKillian Hayes:clutch\_time
+
+player\_on\_courtKillian Tillie:clutch\_time
+
+player\_on\_courtKostas Antetokounmpo:clutch\_time
+
+player\_on\_courtKris Dunn:clutch\_time
+
+player\_on\_courtKristaps Porzingis:clutch\_time
+
+player\_on\_courtKyle Anderson:clutch\_time 6.673\\
+p = 0.771\\
+player\_on\_courtKyle Guy:clutch\_time
+
+player\_on\_courtKyle Kuzma:clutch\_time 0.368\\
+p = 0.988\\
+player\_on\_courtKyle Lowry:clutch\_time
+
+player\_on\_courtKyrie Irving:clutch\_time 19.792\\
+p = 0.427\\
+player\_on\_courtKZ Okpala:clutch\_time
+
+player\_on\_courtLamar Stevens:clutch\_time 13.712\\
+p = 0.680\\
+player\_on\_courtLaMarcus Aldridge:clutch\_time -4.154\\
+p = 0.901\\
+player\_on\_courtLandry Shamet:clutch\_time -7.069\\
+p = 0.795\\
+player\_on\_courtLangston Galloway:clutch\_time
+
+player\_on\_courtLarry Nance Jr.:clutch\_time 3.576\\
+p = 0.897\\
+player\_on\_courtLauri Markkanen:clutch\_time -3.233\\
+p = 0.923\\
+player\_on\_courtLeBron James:clutch\_time 1.190\\
+p = 0.960\\
+player\_on\_courtLonnie Walker IV:clutch\_time 7.172\\
+p = 0.774\\
+player\_on\_courtLou Williams:clutch\_time -1.090\\
+p = 0.974\\
+player\_on\_courtLouis King:clutch\_time
+
+player\_on\_courtLuguentz Dort:clutch\_time 9.575\\
+p = 0.702\\
+player\_on\_courtLuka Doncic:clutch\_time 51.490\\
+p = 0.120\\
+player\_on\_courtLuka Samanic:clutch\_time -7.437\\
+p = 0.824\\
+player\_on\_courtLuke Kennard:clutch\_time
+
+player\_on\_courtLuke Kornet:clutch\_time
+
+player\_on\_courtMalachi Flynn:clutch\_time
+
+player\_on\_courtMalcolm Brogdon:clutch\_time 6.399\\
+p = 0.788\\
+player\_on\_courtMalik Beasley:clutch\_time 17.081\\
+p = 0.496\\
+player\_on\_courtMalik Fitts:clutch\_time
+
+player\_on\_courtMamadi Diakite:clutch\_time
+
+player\_on\_courtMarc Gasol:clutch\_time -7.494\\
+p = 0.821\\
+player\_on\_courtMarcus Morris Sr.:clutch\_time
+
+player\_on\_courtMarcus Smart:clutch\_time -4.903\\
+p = 0.845\\
+player\_on\_courtMarkelle Fultz:clutch\_time
+
+player\_on\_courtMarkieff Morris:clutch\_time 10.751\\
+p = 0.746\\
+player\_on\_courtMarkus Howard:clutch\_time
+
+player\_on\_courtMarques Bolden:clutch\_time
+
+player\_on\_courtMarquese Chriss:clutch\_time
+
+player\_on\_courtMarvin Bagley III:clutch\_time
+
+player\_on\_courtMason Jones:clutch\_time
+
+player\_on\_courtMason Plumlee:clutch\_time -2.373\\
+p = 0.921\\
+player\_on\_courtMatisse Thybulle:clutch\_time 62.739***\\
+p = 0.007\\
+player\_on\_courtMatt Thomas:clutch\_time
+
+player\_on\_courtMatthew Dellavedova:clutch\_time
+
+player\_on\_courtMaurice Harkless:clutch\_time
+
+player\_on\_courtMax Strus:clutch\_time
+
+player\_on\_courtMaxi Kleber:clutch\_time 19.040\\
+p = 0.566\\
+player\_on\_courtMeyers Leonard:clutch\_time
+
+player\_on\_courtMfiondu Kabengele:clutch\_time 91.790***\\
+p = 0.006\\
+player\_on\_courtMichael Carter-Williams:clutch\_time
+
+player\_on\_courtMichael Porter Jr.:clutch\_time -4.882\\
+p = 0.831\\
+player\_on\_courtMikal Bridges:clutch\_time 26.076\\
+p = 0.242\\
+player\_on\_courtMike Conley:clutch\_time -2.821\\
+p = 0.918\\
+player\_on\_courtMike James:clutch\_time
+
+player\_on\_courtMike Muscala:clutch\_time 48.677\\
+p = 0.144\\
+player\_on\_courtMike Scott:clutch\_time -0.947\\
+p = 0.973\\
+player\_on\_courtMitchell Robinson:clutch\_time
+
+player\_on\_courtMiye Oni:clutch\_time
+
+player\_on\_courtMo Bamba:clutch\_time
+
+player\_on\_courtMonte Morris:clutch\_time 10.056\\
+p = 0.687\\
+player\_on\_courtMontrezl Harrell:clutch\_time -5.255\\
+p = 0.833\\
+player\_on\_courtMoritz Wagner:clutch\_time
+
+player\_on\_courtMoses Brown:clutch\_time
+
+player\_on\_courtMychal Mulder:clutch\_time
+
+player\_on\_courtMyles Turner:clutch\_time -4.879\\
+p = 0.833\\
+player\_on\_courtNassir Little:clutch\_time
+
+player\_on\_courtNate Hinton:clutch\_time
+
+player\_on\_courtNathan Knight:clutch\_time
+
+player\_on\_courtNaz Reid:clutch\_time -14.390\\
+p = 0.664\\
+player\_on\_courtNemanja Bjelica:clutch\_time
+
+player\_on\_courtNerlens Noel:clutch\_time 4.240\\
+p = 0.865\\
+player\_on\_courtNico Mannion:clutch\_time
+
+player\_on\_courtNicolas Batum:clutch\_time
+
+player\_on\_courtNicolas Claxton:clutch\_time
+
+player\_on\_courtNicolo Melli:clutch\_time
+
+player\_on\_courtNikola Jokic:clutch\_time 16.553\\
+p = 0.451\\
+player\_on\_courtNikola Vucevic:clutch\_time -18.985\\
+p = 0.566\\
+player\_on\_courtNoah Vonleh:clutch\_time
+
+player\_on\_courtNorman Powell:clutch\_time -16.153\\
+p = 0.626\\
+player\_on\_courtNorvel Pelle:clutch\_time
+
+player\_on\_courtObi Toppin:clutch\_time
+
+player\_on\_courtOG Anunoby:clutch\_time
+
+player\_on\_courtOnyeka Okongwu:clutch\_time
+
+player\_on\_courtOshae Brissett:clutch\_time 4.423\\
+p = 0.895\\
+player\_on\_courtOtto Porter Jr.:clutch\_time -3.061\\
+p = 0.912\\
+player\_on\_courtP.J. Tucker:clutch\_time 19.922\\
+p = 0.423\\
+player\_on\_courtPascal Siakam:clutch\_time 52.348\\
+p = 0.114\\
+player\_on\_courtPat Connaughton:clutch\_time 3.447\\
+p = 0.890\\
+player\_on\_courtPatrick Beverley:clutch\_time
+
+player\_on\_courtPatrick McCaw:clutch\_time
+
+player\_on\_courtPatrick Patterson:clutch\_time
+
+player\_on\_courtPatrick Williams:clutch\_time -5.923\\
+p = 0.858\\
+player\_on\_courtPatty Mills:clutch\_time 14.521\\
+p = 0.509\\
+player\_on\_courtPaul George:clutch\_time
+
+player\_on\_courtPaul Millsap:clutch\_time -2.128\\
+p = 0.949\\
+player\_on\_courtPaul Reed:clutch\_time
+
+player\_on\_courtPaul Watson:clutch\_time
+
+player\_on\_courtPayton Pritchard:clutch\_time
+
+player\_on\_courtPJ Dozier:clutch\_time -5.042\\
+p = 0.832\\
+player\_on\_courtPrecious Achiuwa:clutch\_time 53.488\\
+p = 0.107\\
+player\_on\_courtQuinn Cook:clutch\_time
+
+player\_on\_courtQuinndary Weatherspoon:clutch\_time
+
+player\_on\_courtR.J. Hampton:clutch\_time
+
+player\_on\_courtRajon Rondo:clutch\_time
+
+player\_on\_courtRaul Neto:clutch\_time -4.265\\
+p = 0.864\\
+player\_on\_courtRay Spalding:clutch\_time
+
+player\_on\_courtRayjon Tucker:clutch\_time
+
+player\_on\_courtReggie Bullock:clutch\_time 13.068\\
+p = 0.581\\
+player\_on\_courtReggie Jackson:clutch\_time
+
+player\_on\_courtReggie Perry:clutch\_time
+
+player\_on\_courtRichaun Holmes:clutch\_time
+
+player\_on\_courtRicky Rubio:clutch\_time -3.941\\
+p = 0.875\\
+player\_on\_courtRJ Barrett:clutch\_time 12.134\\
+p = 0.608\\
+player\_on\_courtRobert Covington:clutch\_time 5.956\\
+p = 0.827\\
+player\_on\_courtRobert Franks:clutch\_time
+
+player\_on\_courtRobert Williams III:clutch\_time -3.480\\
+p = 0.889\\
+player\_on\_courtRobert Woodard II:clutch\_time
+
+player\_on\_courtRobin Lopez:clutch\_time 28.939\\
+p = 0.287\\
+player\_on\_courtRodions Kurucs:clutch\_time
+
+player\_on\_courtRodney Hood:clutch\_time -1.941\\
+p = 0.954\\
+player\_on\_courtRodney McGruder:clutch\_time
+
+player\_on\_courtRomeo Langford:clutch\_time
+
+player\_on\_courtRondae Hollis-Jefferson:clutch\_time -7.859\\
+p = 0.816\\
+player\_on\_courtRoyce O'Neale:clutch\_time 11.566\\
+p = 0.642\\
+player\_on\_courtRudy Gay:clutch\_time -39.857*\\
+p = 0.082\\
+player\_on\_courtRudy Gobert:clutch\_time 2.487\\
+p = 0.927\\
+player\_on\_courtRui Hachimura:clutch\_time -6.147\\
+p = 0.805\\
+player\_on\_courtRussell Westbrook:clutch\_time 5.918\\
+p = 0.803\\
+player\_on\_courtRyan Arcidiacono:clutch\_time -6.579\\
+p = 0.843\\
+player\_on\_courtSaben Lee:clutch\_time
+
+player\_on\_courtSaddiq Bey:clutch\_time 13.341\\
+p = 0.624\\
+player\_on\_courtSam Merrill:clutch\_time
+
+player\_on\_courtSean McDermott:clutch\_time
+
+player\_on\_courtSekou Doumbouya:clutch\_time -3.259\\
+p = 0.905\\
+player\_on\_courtSemi Ojeleye:clutch\_time -1.822\\
+p = 0.957\\
+player\_on\_courtSerge Ibaka:clutch\_time
+
+player\_on\_courtSeth Curry:clutch\_time -13.281\\
+p = 0.594\\
+player\_on\_courtShai Gilgeous-Alexander:clutch\_time -26.355\\
+p = 0.336\\
+player\_on\_courtShake Milton:clutch\_time 7.067\\
+p = 0.765\\
+player\_on\_courtShaquille Harrison:clutch\_time 109.955***\\
+p = 0.0001\\
+player\_on\_courtSindarius Thornwell:clutch\_time
+
+player\_on\_courtSkylar Mays:clutch\_time
+
+player\_on\_courtSolomon Hill:clutch\_time 13.709\\
+p = 0.581\\
+player\_on\_courtSpencer Dinwiddie:clutch\_time
+
+player\_on\_courtStanley Johnson:clutch\_time
+
+player\_on\_courtStephen Curry:clutch\_time 14.870\\
+p = 0.585\\
+player\_on\_courtSterling Brown:clutch\_time
+
+player\_on\_courtSvi Mykhailiuk:clutch\_time -10.677\\
+p = 0.668\\
+player\_on\_courtT.J. Leaf:clutch\_time
+
+player\_on\_courtT.J. McConnell:clutch\_time 12.745\\
+p = 0.590\\
+player\_on\_courtT.J. Warren:clutch\_time
+
+player\_on\_courtTacko Fall:clutch\_time
+
+player\_on\_courtTaj Gibson:clutch\_time -6.123\\
+p = 0.854\\
+player\_on\_courtTalen Horton-Tucker:clutch\_time 18.390\\
+p = 0.499\\
+player\_on\_courtTaurean Prince:clutch\_time 37.329\\
+p = 0.261\\
+player\_on\_courtTerance Mann:clutch\_time
+
+player\_on\_courtTerence Davis:clutch\_time
+
+player\_on\_courtTerrance Ferguson:clutch\_time
+
+player\_on\_courtTerrence Ross:clutch\_time -9.815\\
+p = 0.768\\
+player\_on\_courtThaddeus Young:clutch\_time 9.135\\
+p = 0.714\\
+player\_on\_courtThanasis Antetokounmpo:clutch\_time
+
+player\_on\_courtTheo Maledon:clutch\_time
+
+player\_on\_courtTheo Pinson:clutch\_time
+
+player\_on\_courtThomas Bryant:clutch\_time
+
+player\_on\_courtThon Maker:clutch\_time
+
+player\_on\_courtTim Frazier:clutch\_time
+
+player\_on\_courtTim Hardaway Jr.:clutch\_time
+
+player\_on\_courtTimothe Luwawu-Cabarrot:clutch\_time 54.338**\\
+p = 0.046\\
+player\_on\_courtTobias Harris:clutch\_time 17.893\\
+p = 0.449\\
+player\_on\_courtTomas Satoransky:clutch\_time -18.119\\
+p = 0.506\\
+player\_on\_courtTony Bradley:clutch\_time
+
+player\_on\_courtTony Snell:clutch\_time -0.079\\
+p = 0.998\\
+player\_on\_courtTorrey Craig:clutch\_time -7.587\\
+p = 0.780\\
+player\_on\_courtTrae Young:clutch\_time 27.834\\
+p = 0.263\\
+player\_on\_courtTre Jones:clutch\_time -7.749\\
+p = 0.816\\
+player\_on\_courtTremont Waters:clutch\_time
+
+player\_on\_courtTrent Forrest:clutch\_time
+
+player\_on\_courtTrevor Ariza:clutch\_time 2.216\\
+p = 0.936\\
+player\_on\_courtTrey Burke:clutch\_time
+
+player\_on\_courtTrey Lyles:clutch\_time -4.334\\
+p = 0.897\\
+player\_on\_courtTristan Thompson:clutch\_time 20.614\\
+p = 0.449\\
+player\_on\_courtTroy Brown Jr.:clutch\_time
+
+player\_on\_courtTy-Shon Alexander:clutch\_time 35.467\\
+p = 0.293\\
+player\_on\_courtTy Jerome:clutch\_time
+
+player\_on\_courtTyler Bey:clutch\_time
+
+player\_on\_courtTyler Cook:clutch\_time -2.337\\
+p = 0.945\\
+player\_on\_courtTyler Herro:clutch\_time 11.485\\
+p = 0.645\\
+player\_on\_courtTyler Johnson:clutch\_time -6.531\\
+p = 0.844\\
+player\_on\_courtTyrell Terry:clutch\_time
+
+player\_on\_courtTyrese Haliburton:clutch\_time
+
+player\_on\_courtTyrese Maxey:clutch\_time
+
+player\_on\_courtTyus Jones:clutch\_time 26.052\\
+p = 0.431\\
+player\_on\_courtUdoka Azubuike:clutch\_time
+
+player\_on\_courtUdonis Haslem:clutch\_time
+
+player\_on\_courtVictor Oladipo:clutch\_time
+
+player\_on\_courtVincent Poirier:clutch\_time
+
+player\_on\_courtVlatko Cancar:clutch\_time
+
+player\_on\_courtWayne Ellington:clutch\_time -10.559\\
+p = 0.699\\
+player\_on\_courtWendell Carter Jr.:clutch\_time 5.453\\
+p = 0.842\\
+player\_on\_courtWes Iwundu:clutch\_time
+
+player\_on\_courtWesley Matthews:clutch\_time 12.075\\
+p = 0.610\\
+player\_on\_courtWill Barton:clutch\_time 28.939\\
+p = 0.207\\
+player\_on\_courtWillie Cauley-Stein:clutch\_time 5.456\\
+p = 0.870\\
+player\_on\_courtXavier Tillman:clutch\_time 29.929\\
+p = 0.271\\
+player\_on\_courtYogi Ferrell:clutch\_time
+
+player\_on\_courtYuta Watanabe:clutch\_time
+
+player\_on\_courtZach LaVine:clutch\_time 9.266\\
+p = 0.696\\
+player\_on\_courtZeke Nnaji:clutch\_time
+
+Constant 21.889***\\
+p = 0.000\\
+-------------------------------------------------------------------------------
+Observations 22,710\\
+R2 0.238\\
+Adjusted R2 0.211\\
+Residual Std. Error 26.712 (df = 21931)\\
+F Statistic 8.799*** (df = 778; 21931)
+===============================================================================
+Note: \emph{p\textless0.1; \textbf{p\textless0.05; }}p\textless0.01
+
+\end{document}

@@ -1,0 +1,181 @@
+---
+title: "NBA Regression Analysis New"
+author: "Jason Winik"
+date: "5/30/2022"
+output:
+  pdf_document:
+    keep_tex: true
+header-includes:
+   - \usepackage{dcolumn}    
+classoption: landscape
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(stargazer)
+library(broom)
+library(aod)
+library(glue)
+
+setwd("C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Outputs")
+
+data = read_csv('long_data_all_seasons_tate.csv')
+names(data)[34] <- 'DRtg_minus_Avg'
+
+data <- subset(data, data$limit == 1)
+data <- subset(data, data$PER_adj > 0)
+
+
+count <- data %>%
+  count(player_on_court)
+
+map_df <- data %>%
+  select(player_on_court, games_played)
+
+map <- map_df[!duplicated(map_df$player_on_court), ]
+
+data$drop_test <- paste(data$player_on_court, "-", data$game_id, "-", data$PER_adj)
+
+
+write.csv(data,"C:\\Users\\jwini\\Documents\\Gtihub Repositories\\NBA-clutch-perf\\in_game_analysis\\Regression Outputs\\duplicates.csv", row.names = FALSE)
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+data$clutch_time <- as.numeric(data$clutch_time)
+data$PER_adj <- as.numeric(data$PER_adj)
+data$DRtg_minus_Avg <- as.numeric(data$DRtg_minus_Avg)
+
+
+fixed_lm = lm(data = data, PER_adj ~player_on_court+ DRtg_minus_Avg+ player_on_court*clutch_time)
+
+#summary(fixed_lm)
+fixed_df = as.data.frame(tidy(fixed_lm))
+
+
+#run Wald test
+#H <- rep(mean_interaction,510)
+#coefs = coef(fixed_lm)
+#b = coef(fixed_lm)[-1]
+
+wald.test(Sigma = vcov(fixed_lm),
+          b = coef(fixed_lm),
+          Terms = 117:229)
+
+w = 265.5
+k = 113
+
+var = (w - (k-1))/w
+
+fixed_df['adj'] <- var
+fixed_df['coefficient_adj'] <- fixed_df['adj'] * fixed_df['estimate']
+fixed_df$name <- sub("player_on_court","", fixed_df$term)
+fixed_df$name <- sub(":clutch_time","", fixed_df$name)
+
+merged <- merge(fixed_df, count, by.x = "name", by.y = "player_on_court")
+
+mean_se <- mean(merged$std.error)
+
+merged$SD <- merged$std.error * sqrt(merged$n)
+merged$variance <- merged$SD * merged$SD
+merged$alpha <- merged$variance / (merged$variance + merged$adj)
+merged$adj_SE <- merged$std.error / mean_se
+
+merged$coef_final <- merged$estimate * merged$alpha * merged$adj_SE
+
+
+glue("The Wald Statistic for Testing that all the deviations of player fixed effects from the average were zero was W_stat = {w} and k = {k}.")
+glue("The amount of variation explained by the presence of clutch time is {var}.")
+
+
+
+write.csv(merged,"C:\\Users\\jwini\\Documents\\Gtihub Repositories\\NBA-clutch-perf\\in_game_analysis\\Regression Outputs\\adjusted_coefficients.csv", row.names = FALSE)
+
+write.csv(fixed_df,"C:\\Users\\jwini\\Documents\\Gtihub Repositories\\NBA-clutch-perf\\in_game_analysis\\Regression Outputs\\reg1.csv", row.names = FALSE)
+
+
+```
+
+
+```{r echo=TRUE, results='asis'}
+
+stargazer(fixed_lm,
+          font.size = "small", 
+          align = TRUE, 
+          no.space = TRUE,
+          single.row = TRUE,
+          type = "text")
+
+
+
+
+
+```
+
+
+
+
+```{r results='asis'}
+
+
+
+
+fixed_lm_season = lm(data = data, PER_adj ~player_on_court+clutch_time+ DRtg_minus_Avg + Season + player_on_court*clutch_time)
+
+#summary(fixed_lm_season)
+fixed_df_season = as.data.frame(tidy(fixed_lm_season))
+
+#(fixed_lm_season)
+
+wald.test(Sigma = vcov(fixed_lm_season),
+          b = coef(fixed_lm_season),
+          Terms = 120:231)
+
+w = 268.7
+k = 112
+
+var = (w - (k-1))/w
+
+fixed_df_season['adj'] <- var
+fixed_df_season['coefficient_adj'] <- fixed_df_season['adj'] * fixed_df_season['estimate']
+fixed_df_season$name <- sub("player_on_court","", fixed_df_season$term)
+fixed_df_season$name <- sub(":clutch_time","", fixed_df_season$name)
+
+merged <- merge(fixed_df_season, count, by.x = "name", by.y = "player_on_court")
+
+mean_se <- mean(merged$std.error)
+
+merged$SD <- merged$std.error * sqrt(merged$n)
+merged$variance <- merged$SD * merged$SD
+merged$alpha <- merged$variance / (merged$variance + merged$adj)
+merged$adj_SE <- merged$std.error / mean_se
+
+merged$coef_final <- merged$estimate * merged$alpha * merged$adj_SE
+
+
+
+
+
+stargazer(fixed_lm_season,
+          font.size = "small", 
+          align = TRUE, 
+          no.space = TRUE,
+          single.row = TRUE,
+          type = "text")
+#glue("The Wald Statistic for Testing that all the deviations of player fixed effects from the average were zero was W_stat = {w} and k = {k}.")
+#glue("The amount of variation explained by the presence of clutch time is {var}.")
+
+
+yo = colnames(fixed_lm_season)
+
+write.csv(merged,"C:\\Users\\jwini\\Documents\\Gtihub Repositories\\NBA-clutch-perf\\in_game_analysis\\Regression Outputs\\adjusted_coefficients_season.csv", row.names = FALSE)
+
+write.csv(fixed_df,"C:\\Users\\jwini\\Documents\\Gtihub Repositories\\NBA-clutch-perf\\in_game_analysis\\Regression Outputs\\reg2.csv", row.names = FALSE)
+
+
+
+```
+

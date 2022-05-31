@@ -1,0 +1,27 @@
+---
+title: "Analysis"
+author: "Jason Winik"
+date: "5/28/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(stargazer)
+
+setwd("C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Regression Outputs")
+
+data = read_csv('C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Outputs/NBA_clutch_time_PER_long_2020_21.csv')
+is.na(data)<-sapply(data, is.infinite)
+data[is.na(data)]<-0
+#long = gather(data, key = "Time", value = "PER", "PER_not_CT_pace_adj", "PER_CT_pace_adj")
+```
+
+# 2020-21 Fixed Effects Regression Results
+
+```{r results='asis'}
+fixed_lm = lm(data = data, PER_adj ~ player_on_court+ player_on_court * clutch_time)
+summary(fixed_lm)
+
+stargazer(fixed_lm, type="latex", out = "output.html")
+```

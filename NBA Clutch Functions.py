@@ -45,6 +45,7 @@ def clutch_time_col(data):
         filtered['remaining_time'] = pd.to_timedelta(filtered['remaining_time']).astype('timedelta64[s]')
         filtered['play_length'] = filtered['play_length'].str.replace('-12','00')
         filtered['play_length'] = filtered['play_length'].str.replace('-5','00')
+
         filtered['play_length'] = pd.to_timedelta(filtered['play_length']).astype('timedelta64[s]')
         
         
@@ -84,14 +85,19 @@ def get_possessions(data):
 #sched_20_21 = r"2020-2021_NBA_Historical_Schedule.csv"
 #sched = pd.read_csv(os.path.join(input_sched_path,sched_20_21))
 
-#need to read in schedule first
-def add_team(pbp_player, schedule):
+#need to read in schedule,initials first
+initials_df = pd.read_csv(r'C:\Users\jwini\Documents\Gtihub Repositories\NBA-clutch-perf\in_game_analysis\Schedules\Team Initials Mapping.csv')
+
+def add_team(pbp_player, schedule, initials_df=initials_df):
     road_sched = schedule[['GAME ID', 'ROAD TEAM']]
     home_sched = schedule[['GAME ID', 'HOME TEAM']]
     road_sched_dict = dict(road_sched.values)
     home_sched_dict = dict(home_sched.values)
     
-    home_pivot = pd.melt(pbp_player, id_vars=['data_set','game_id','elapsed', 'play_length',
+    initials_df = initials_df[['SHORT NAME', 'Tm']]
+    initials = dict(initials_df.values)
+    
+    home_pivot = pd.melt(pbp_player, id_vars=['game_id','elapsed', 'play_length',
                                                  "clutch_time", "remaining_time", "player", "steal","block", "assist", "points",
                                                  "event_type", "type", "result", 'possessions'], 
                             value_vars=['h1', 'h2', 'h3', 'h4', 'h5'], 
@@ -99,7 +105,8 @@ def add_team(pbp_player, schedule):
     home_pivot['home_or_away'] = "home"
     home_pivot['home_team'] = home_pivot['game_id'].map(home_sched_dict)
     home_pivot['away_team'] = home_pivot['game_id'].map(road_sched_dict)
-    home_pivot['team'] = home_pivot['game_id'].map(home_sched_dict)    
+    home_pivot['team'] = home_pivot['game_id'].map(home_sched_dict)
+    home_pivot['opponent'] = home_pivot['game_id'].map(road_sched_dict)    
     
     away_pivot = pd.melt(pbp_player, id_vars=['game_id','elapsed', 'play_length',
                                                  "clutch_time", "remaining_time", "player", "steal","block", "assist", "points",
@@ -109,11 +116,17 @@ def add_team(pbp_player, schedule):
     away_pivot['home_or_away'] = "away"
     away_pivot['home_team'] = away_pivot['game_id'].map(home_sched_dict)
     away_pivot['away_team'] = away_pivot['game_id'].map(road_sched_dict) 
-    away_pivot['team'] = away_pivot['game_id'].map(road_sched_dict) 
+    away_pivot['team'] = away_pivot['game_id'].map(road_sched_dict)
+    away_pivot['opponent'] = away_pivot['game_id'].map(home_sched_dict)
     
     pbp_pivot = pd.concat([home_pivot, away_pivot], sort=True)
     pbp_pivot['team'] = np.where(pbp_pivot['home_or_away'] == "home", pbp_pivot['home_team'], pbp_pivot['away_team'])
-
+    
+    pbp_pivot['home_team'] = pbp_pivot['home_team'].map(initials)
+    pbp_pivot['away_team'] = pbp_pivot['away_team'].map(initials) 
+    pbp_pivot['team'] = pbp_pivot['team'].map(initials)
+    pbp_pivot['opponent'] = pbp_pivot['opponent'].map(initials) 
+    
     return pbp_pivot
 
 # takes the 10 player columns and pivots them long, such that there's 10 copies
@@ -144,7 +157,7 @@ def pivot_pbp(pbp_player, year_start, year_end, schedule):
                         - pbp_pivot['FT_Miss_PER'] * 20.091
                         - pbp_pivot['FG_Miss_PER'] * 39.190
                     - pbp_pivot['TO_PER'] * 53.897)
-    #pbp_pivot['Season'] = str(year_start)+ "-" + str(year_end)
+    pbp_pivot['Season'] = str(year_start)+ "-" + str(year_end)
     return pbp_pivot
 
 
@@ -153,11 +166,46 @@ def pivot_pbp(pbp_player, year_start, year_end, schedule):
 #PER per play is calculated, now aggregate by game
 ##############################
 
+
+### Adjustments when data is long ###
+# makes clutch adjustment (not_clutch_pace / league pace)
+# Multiply clutch_adj by clutch PER
+
+def get_clutch_adjustment(pbp_grouped):
+    clutch_df = pbp_grouped[['clutch_time', 'possessions', 'play_length']]
+    clutch_df = clutch_df.groupby(['clutch_time']).agg(
+        possessions = ('possessions', 'sum'),
+        time_played = ('play_length', 'sum'))
+    clutch_df = clutch_df.reset_index()
+    clutch_df['league_pace'] = clutch_df['possessions'] / clutch_df['time_played']
+    clutch_pace = clutch_df['league_pace'][0]
+    not_clutch_pace = clutch_df['league_pace'][1]
+    clutch_adj = not_clutch_pace / clutch_pace
+    
+    return clutch_adj
+
+### get place adjustment ###
+
+pace_data = pd.read_csv(r"C:\Users\jwini\Documents\Gtihub Repositories\NBA-clutch-perf\in_game_analysis\team_season_data.csv")
+def get_pace_adjustment(pbp_grouped, pace_data, year_start, year_end):
+    pace_df = pace_data[['Season', 'Tm','Pace', 'Pace Adjustment', 'DRtg', 'DRtg - Avg']]
+    year = str(year_start) + "-" + str(year_end)
+    pace_df = pace_df[pace_df['Season'] == year]
+    
+    defense_var = pace_df[['Tm', 'DRtg', 'DRtg - Avg']]
+    pace_adj = pace_df[['Tm','Pace', 'Pace Adjustment']]
+    
+    #merge defense based on opponent
+    pbp_grouped = pbp_grouped.merge(defense_var, left_on = 'opponent', right_on='Tm')
+    #merge pace
+    pbp_grouped = pbp_grouped.merge(pace_adj, left_on = 'team', right_on='Tm')
+    return pbp_grouped
+
 #group by game, season, player, clutch time or not. 
 #creates a df that has 2 rows of boxscore PER for the player, CT and not-CT stats
 def game_level_long(pbp_pivot, year_start, year_end):
     pbp_groups = ['game_id','player_on_court', "clutch_time",
-                  'home_or_away', 'team']
+                  'home_or_away', 'team', 'home_team', 'away_team', 'opponent']
     pbp_grouped = pbp_pivot.groupby(pbp_groups).sum()
     
     pbp_grouped['play_length_mins'] = pbp_grouped['play_length'] / 60 
@@ -175,8 +223,19 @@ def game_level_long(pbp_pivot, year_start, year_end):
                         - pbp_grouped['TO_PER'] * 53.897) * (1/pbp_grouped['play_length_mins'])
     pbp_grouped = pbp_grouped.reset_index()
     #pbp_grouped['above_500_mins'] = np.where(pbp_grouped['play_length_mins'] >= 500,1,0)
+    pbp_grouped['Season'] = str(year_start)+ "-" + str(year_end)
     pbp_grouped['possessions_per_mins_played'] = pbp_grouped['possessions'] / pbp_grouped['play_length_mins']
+    clutch_adj = get_clutch_adjustment(pbp_grouped)
+    pbp_grouped = get_pace_adjustment(pbp_grouped, pace_data, year_start, year_end)
+    pbp_grouped['clutch_adj'] = clutch_adj
+    pbp_grouped.loc[pbp_grouped['clutch_time'] == 0, ['clutch_adj']] = 1 
+    pbp_grouped['PER_adj'] = pbp_grouped['PER'] * pbp_grouped['Pace Adjustment'] * pbp_grouped['clutch_adj']
     return pbp_grouped
+
+
+
+
+
 
 # separates df into 2 dfs, CT and Non-CT, then merges on player and game to make data wide
 # Once the data is wide, we can regress one column on the other
@@ -184,17 +243,19 @@ def game_level_long_to_wide(pbp_grouped, year_start, year_end):
     clutch = pbp_grouped[pbp_grouped["clutch_time"] == 1]
     clutch = clutch.rename(columns={col: col+'_CT' 
                         for col in clutch.columns if col not in ['game_id', 'player_on_court',
-                                                                 'home_or_away', 'team', 'home_team', 'away_team']})
+                                                                 'home_or_away', 'team', 'home_team', 'away_team', 'opponent']})
     
     not_clutch = pbp_grouped[pbp_grouped["clutch_time"] == 0]
     not_clutch = not_clutch.rename(columns={col: col+'_not_CT' 
                         for col in not_clutch.columns if col not in ['game_id', 'player_on_court',
-                                                                     'home_or_away', 'team', 'home_team', 'away_team']})
+                                                                     'home_or_away', 'team', 'home_team', 'away_team', 'opponent']})
     
-    clutch_merged = pd.merge(not_clutch, clutch, how="outer",on=['data_set',"game_id", "player_on_court",
-                                                                 'home_or_away', 'team', 'home_team', 'away_team'])
+    clutch_merged = pd.merge(not_clutch, clutch, how="outer",on=["game_id", "player_on_court",
+                                                                 'home_or_away', 'team', 'home_team', 'away_team', 'opponent'])
     clutch_merged["PER_Diff"] = clutch_merged["PER_CT"] - clutch_merged["PER_not_CT"] #this is the PER_diff we want
+    clutch_merged["PER_Diff_adj"] = clutch_merged["PER_adj_CT"] - clutch_merged["PER_adj_not_CT"] #this is the PER_diff we want
     clutch_merged['Season'] = str(year_start)+ "-" + str(year_end)
+    clutch_merged['harmonic_sum'] = (clutch_merged["play_length_CT"] * clutch_merged["play_length_not_CT"]) / (clutch_merged["play_length_CT"] + clutch_merged["play_length_not_CT"])
     return clutch_merged
     
    
@@ -222,7 +283,9 @@ def create_clutch_df(input_data_path, year_csv, year_start, year_end, schedule
     else:
         pass
     
-    return final_clutch
+    return PER_pivot, final_clutch
+
+
 
 
 
@@ -233,8 +296,8 @@ export_path = r"C:\Users\jwini\Documents\Gtihub Repositories\NBA-clutch-perf\in_
 
 def df_list_to_wide(df_list):
     multiple = pd.concat(df_list)
-    multiple_short = multiple[['data_set','player_on_court', 'Season', 'PER_CT', 'PER_not_CT', 'PER_Diff']]
-    multiple_mean = multiple_short.groupby(['player_on_court', 'data_set','Season']).mean().reset_index()
+    multiple_short = multiple[['player_on_court', 'Season', 'PER_adj_CT', 'PER_adj_not_CT', 'PER_Diff_adj']]
+    multiple_mean = multiple_short.groupby(['player_on_court','Season']).mean().reset_index()
    
     return multiple_mean
 
@@ -264,6 +327,7 @@ def avg_df_merge_years(df_list, year_start, year_end, column = 'Season', remove_
         ungrouped_path = "NBA_PER_Data_" +str(year_start) + "_" +str(year_end)+".csv"
         final.to_csv(os.path.join(export_path, ungrouped_path))       
     return final
+
 
 
 

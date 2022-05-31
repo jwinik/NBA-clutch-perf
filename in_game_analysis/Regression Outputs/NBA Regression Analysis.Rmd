@@ -1,0 +1,403 @@
+---
+title: "Analysis"
+author: "Jason Winik"
+date: "5/28/2022"
+output:
+  pdf_document:
+    keep_tex: true
+header-includes:
+   - \usepackage{dcolumn}    
+classoption: landscape
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(stargazer)
+library(broom)
+library(aod)
+library(glue)
+
+setwd("C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Regression Outputs")
+
+data_21 = read_csv('C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Outputs/NBA_clutch_time_PER_long_2020_21.csv')
+is.na(data_21)<-sapply(data_21, is.infinite)
+data_21[is.na(data_21)]<-0
+mean_21 <- mean(data_21$PER_adj)
+data_21$PER_adj_diff <- data_21$PER_adj - mean_21
+
+data_19 = read_csv('C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Outputs/NBA_clutch_time_PER_long_2018_19.csv')
+is.na(data_19)<-sapply(data_19, is.infinite)
+data_19[is.na(data_19)]<-0
+names(data_19)[34] <- 'DRtg_minus_Avg'
+
+data_18 = read_csv('C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Outputs/NBA_clutch_time_PER_long_2017_18.csv')
+is.na(data_18)<-sapply(data_18, is.infinite)
+data_18[is.na(data_18)]<-0
+names(data_18)[34] <- 'DRtg_minus_Avg'
+
+data_17 = read_csv('C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Outputs/NBA_clutch_time_PER_long_2016_17.csv')
+is.na(data_17)<-sapply(data_17, is.infinite)
+data_17[is.na(data_17)]<-0
+names(data_17)[34] <- 'DRtg_minus_Avg'
+
+data_16 = read_csv('C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Outputs/NBA_clutch_time_PER_long_2015_16.csv')
+is.na(data_16)<-sapply(data_16, is.infinite)
+data_16[is.na(data_16)]<-0
+names(data_16)[34] <- 'DRtg_minus_Avg'
+
+```
+
+# 2020-21
+## Data Cleaning
+```{r}
+#Convert long to wide, figure out which don't have clutch time, cut em
+data_21_clutch <- data_21 %>%
+  filter(clutch_time == 1)
+data_21_not_clutch <- data_21 %>%
+  filter(clutch_time == 0)
+data_21_wide = merge(data_21_not_clutch, data_21_clutch, by=c("game_id", "player_on_court"))
+
+clutch_names_21 <- data_21_clutch["game_id"]
+clutch_names_21 <- as.list(clutch_names_21["game_id"])
+clutch_names_21 <- unlist(clutch_names_21)
+
+data_21 = data_21 %>%
+  subset(player_on_court %in% clutch_names_21)
+
+
+```
+
+## 2020-21 Fixed Effects Regression Results
+
+```{r results='asis'}
+#run the regression, make it a df
+fixed_lm_2020_21 = lm(data = data_21, PER_adj ~ player_on_court + DRtg_minus_Avg + player_on_court * clutch_time, na.action =  na.exclude)
+#summary(fixed_lm_2020_21)
+fixed_df_20_21 = as.data.frame(tidy(fixed_lm_2020_21))
+
+#find out what the average coefficient for the interaction term is
+mean_interaction_df = fixed_df_20_21 %>%
+  filter(grepl(':clutch_time', term))
+mean_interaction = mean(mean_interaction_df$estimate,na.rm = TRUE)
+#make a diff column : coefficient - average coefficient
+fixed_df_20_21$mean_interaction = ifelse(grepl(':clutch_time',fixed_df_20_21$term), mean_interaction,0)
+fixed_df_20_21$diff = fixed_df_20_21$estimate - fixed_df_20_21$mean_interaction
+
+#run Wald test
+H <- rep(mean_interaction,269)
+
+coefs = coef(fixed_lm_2020_21)
+wald.test(Sigma = vcov(fixed_lm_2020_21),
+          b = coef(fixed_lm_2020_21),
+          Terms =273:541,
+          H0 = H)
+
+w = 3949.5
+k = 269
+
+var = (w - (k-1))/w
+
+fixed_df_20_21['variance'] <- var
+fixed_df_20_21['coefficient_adj'] <- fixed_df_20_21['variance'] * fixed_df_20_21['estimate']
+fixed_df_20_21['diff_adj'] <- fixed_df_20_21['variance'] * fixed_df_20_21['diff']
+
+glue("The Wald Statistic for Testing that all the deviations of player fixed effects from the average were zero was W_stat = {w} and k = {k}.")
+glue("The amount of variation explained by the presence of clutch time is {var}.")
+
+#stargazer(fixed_lm_2020_21,
+#          type="latex",
+#          align=TRUE,
+#         no.space=TRUE,
+#         style = "qje")
+abline(fixed_lm_2020_21)
+```
+
+
+# 2018-19
+## Data Cleaning
+
+
+```{r}
+#Convert long to wide, figure out which don't have clutch time, cut em
+data_19_clutch <- data_19 %>%
+  filter(clutch_time == 1)
+data_19_not_clutch <- data_19 %>%
+  filter(clutch_time == 0)
+data_19_wide = merge(data_19_not_clutch, data_19_clutch, by=c("game_id", "player_on_court"))
+
+clutch_names_19 <- data_19_clutch["player_on_court"]
+clutch_names_19 <- as.list(clutch_names_19["player_on_court"])
+clutch_names_19 <- unlist(clutch_names_19)
+
+data_19 = data_19 %>%
+  subset(player_on_court %in% clutch_names_19)
+
+
+```
+
+
+## 2018-19 Fixed Effects Regression Results
+
+```{r results='asis'}
+fixed_lm_2018_19 = lm(data = data_19, PER_adj ~ player_on_court + DRtg_minus_Avg + player_on_court * clutch_time)
+summary(fixed_lm_2018_19)
+fixed_df_18_19 = as.data.frame(tidy(fixed_lm_2018_19))
+
+#find out what the average coefficient for the interaction term is
+mean_interaction_df = fixed_df_18_19 %>%
+  filter(grepl(':clutch_time', term))
+mean_interaction = mean(mean_interaction_df$estimate,na.rm = TRUE)
+#make a diff column : coefficient - average coefficient
+fixed_df_18_19$mean_interaction = ifelse(grepl(':clutch_time',fixed_df_18_19$term), mean_interaction,0)
+fixed_df_18_19$diff = fixed_df_18_19$estimate - fixed_df_18_19$mean_interaction
+
+#run Wald test
+H <- rep(mean_interaction,589-297+1)
+
+coefs = coef(fixed_lm_2018_19)
+wald.test(Sigma = vcov(fixed_lm_2018_19),
+          b = coef(fixed_lm_2018_19),
+          Terms =297:589,
+          H0 = H)
+
+w = 3244.4
+k = 293
+
+var = (w - (k-1))/w
+
+fixed_df_18_19['variance'] <- var
+fixed_df_18_19['coefficient_adj'] <- fixed_df_18_19['variance'] * fixed_df_18_19['estimate']
+fixed_df_18_19['diff_adj'] <- fixed_df_18_19['variance'] * fixed_df_18_19['diff']
+
+
+glue("The Wald Statistic for Testing that all the deviations of player fixed effects from the average were zero was W_stat = {w} and k = {k}.")
+glue("The amount of variation explained by the presence of clutch time is {var}.")
+
+
+#stargazer(fixed_lm_2018_19,
+#          type="text",
+#          align=TRUE,
+#          no.space=TRUE,
+#          report=("vc*p"),
+#         out = "output_18_19.html")
+```
+
+# 2017-18
+## Data Cleaning
+
+
+```{r}
+#Convert long to wide, figure out which don't have clutch time, cut em
+data_18_clutch <- data_18 %>%
+  filter(clutch_time == 1)
+data_18_not_clutch <- data_18 %>%
+  filter(clutch_time == 0)
+data_18_wide = merge(data_18_not_clutch, data_18_clutch, by=c("game_id", "player_on_court"))
+
+clutch_names_18 <- data_18_clutch["player_on_court"]
+clutch_names_18 <- as.list(clutch_names_18["player_on_court"])
+clutch_names_18 <- unlist(clutch_names_18)
+
+data_18 = data_18 %>%
+  subset(player_on_court %in% clutch_names_18)
+
+
+```
+
+
+## 2017-18 Fixed Effects Regression Results
+
+```{r results='asis'}
+fixed_lm_2017_18 = lm(data = data_18, PER_adj ~ player_on_court + DRtg_minus_Avg + player_on_court * clutch_time)
+summary(fixed_lm_2017_18)
+fixed_df_17_18 = as.data.frame(tidy(fixed_lm_2017_18))
+
+#find out what the average coefficient for the interaction term is
+mean_interaction_df = fixed_df_17_18 %>%
+  filter(grepl(':clutch_time', term))
+mean_interaction = mean(mean_interaction_df$estimate,na.rm = TRUE)
+#make a diff column : coefficient - average coefficient
+fixed_df_17_18$mean_interaction = ifelse(grepl(':clutch_time',fixed_df_17_18$term), mean_interaction,0)
+fixed_df_17_18$diff = fixed_df_17_18$estimate - fixed_df_17_18$mean_interaction
+
+#run Wald test
+H <- rep(mean_interaction,539-272+1)
+
+coefs = coef(fixed_lm_2017_18)
+wald.test(Sigma = vcov(fixed_lm_2017_18),
+          b = coef(fixed_lm_2017_18),
+          Terms =272:539,
+          H0 = H)
+
+w = 5803.8
+k = 268
+
+var = (w - (k-1))/w
+
+fixed_df_17_18['variance'] <- var
+fixed_df_17_18['coefficient_adj'] <- fixed_df_17_18['variance'] * fixed_df_17_18['estimate']
+fixed_df_17_18['diff_adj'] <- fixed_df_17_18['variance'] * fixed_df_17_18['diff']
+
+glue("The Wald Statistic for Testing that all the deviations of player fixed effects from the average were zero was W_stat = {w} and k = {k}.")
+glue("The amount of variation explained by the presence of clutch time is {var}.")
+
+
+#stargazer(fixed_lm_2018_19,
+#          type="text",
+#          align=TRUE,
+#          no.space=TRUE,
+#          report=("vc*p"),
+#         out = "output_18_19.html")
+```
+
+# 2016-17
+## Data Cleaning
+
+
+```{r}
+#Convert long to wide, figure out which don't have clutch time, cut em
+data_17_clutch <- data_17 %>%
+  filter(clutch_time == 1)
+data_17_not_clutch <- data_17 %>%
+  filter(clutch_time == 0)
+data_17_wide = merge(data_17_not_clutch, data_17_clutch, by=c("game_id", "player_on_court"))
+
+clutch_names_17 <- data_17_clutch["player_on_court"]
+clutch_names_17 <- as.list(clutch_names_17["player_on_court"])
+clutch_names_17 <- unlist(clutch_names_17)
+
+data_17 = data_17 %>%
+  subset(player_on_court %in% clutch_names_17)
+
+
+```
+
+
+## 2016-17 Fixed Effects Regression Results
+
+```{r results='asis'}
+fixed_lm_2016_17 = lm(data = data_17, PER_adj ~ player_on_court + DRtg_minus_Avg + player_on_court * clutch_time)
+summary(fixed_lm_2016_17)
+fixed_df_16_17 = as.data.frame(tidy(fixed_lm_2016_17))
+
+#find out what the average coefficient for the interaction term is
+mean_interaction_df = fixed_df_16_17 %>%
+  filter(grepl(':clutch_time', term))
+mean_interaction = mean(mean_interaction_df$estimate,na.rm = TRUE)
+#make a diff column : coefficient - average coefficient
+fixed_df_16_17$mean_interaction = ifelse(grepl(':clutch_time',fixed_df_16_17$term), mean_interaction,0)
+fixed_df_16_17$diff = fixed_df_16_17$estimate - fixed_df_16_17$mean_interaction
+
+#run Wald test
+H <- rep(mean_interaction,1+589-297)
+
+coefs = coef(fixed_lm_2016_17)
+
+wald.test(Sigma = vcov(fixed_lm_2016_17),
+          b = coef(fixed_lm_2016_17),
+          Terms =297:589)
+
+w = 1532.5
+k = 293
+
+alpha = (w - (k-1))/w
+
+fixed_df_16_17['alpha'] <- var
+fixed_df_16_17['variance'] <- 
+fixed_df_16_17['coefficient_adj'] <- fixed_df_16_17['variance'] * fixed_df_16_17['estimate']
+fixed_df_16_17['diff_adj'] <- fixed_df_16_17['variance'] * fixed_df_16_17['diff']
+
+glue("The Wald Statistic for Testing that all the deviations of player fixed effects from the average were zero was W_stat = {w} and k = {k}.")
+glue("The amount of variation explained by the presence of clutch time is {var}.")
+
+
+#stargazer(fixed_lm_2018_19,
+#          type="text",
+#          align=TRUE,
+#          no.space=TRUE,
+#          report=("vc*p"),
+#         out = "output_18_19.html")
+```
+
+# 2015-16
+## Data Cleaning
+
+
+```{r}
+#Convert long to wide, figure out which don't have clutch time, cut em
+data_16_clutch <- data_16 %>%
+  filter(clutch_time == 1)
+data_16_not_clutch <- data_16 %>%
+  filter(clutch_time == 0)
+data_16_wide = merge(data_16_not_clutch, data_16_clutch, by=c("game_id", "player_on_court"))
+
+clutch_names_16 <- data_16_clutch["player_on_court"]
+clutch_names_16 <- as.list(clutch_names_16["player_on_court"])
+clutch_names_16 <- unlist(clutch_names_16)
+
+data_16 = data_16 %>%
+  subset(player_on_court %in% clutch_names_16)
+
+
+```
+
+
+## 2015-16 Fixed Effects Regression Results
+
+```{r results='asis'}
+fixed_lm_2015_16 = lm(data = data_16, PER_adj ~ player_on_court + DRtg_minus_Avg + player_on_court * clutch_time)
+summary(fixed_lm_2015_16)
+fixed_df_15_16 = as.data.frame(tidy(fixed_lm_2015_16))
+
+#find out what the average coefficient for the interaction term is
+mean_interaction_df = fixed_df_15_16 %>%
+  filter(grepl(':clutch_time', term))
+mean_interaction = mean(mean_interaction_df$estimate,na.rm = TRUE)
+#make a diff column : coefficient - average coefficient
+fixed_df_15_16$mean_interaction = ifelse(grepl(':clutch_time',fixed_df_15_16$term), mean_interaction,0)
+fixed_df_15_16$diff = fixed_df_15_16$estimate - fixed_df_15_16$mean_interaction
+
+#run Wald test
+H <- rep(mean_interaction,589-297+1)
+
+coefs = coef(fixed_lm_2015_16)
+wald.test(Sigma = vcov(fixed_lm_2015_16),
+          b = coef(fixed_lm_2015_16),
+          Terms =297:589,
+          H0 = H)
+
+w = 3244.4
+k = 293
+
+var = (w - (k-1))/w
+
+fixed_df_15_16['variance'] <- var
+fixed_df_15_16['coefficient_adj'] <- fixed_df_15_16['variance'] * fixed_df_15_16['estimate']
+fixed_df_15_16['diff_adj'] <- fixed_df_15_16['variance'] * fixed_df_15_16['diff']
+
+glue("The Wald Statistic for Testing that all the deviations of player fixed effects from the average were zero was W_stat = {w} and k = {k}.")
+glue("The amount of variation explained by the presence of clutch time is {var}.")
+
+
+#stargazer(fixed_lm_2018_19,
+#          type="text",
+#          align=TRUE,
+#          no.space=TRUE,
+#          report=("vc*p"),
+#         out = "output_18_19.html")
+```
+
+
+```{r eval=FALSE, include=FALSE}
+#export csv's of regression output
+write.csv(fixed_df_20_21,"C:\\Users\\jwini\\Documents\\Gtihub Repositories\\NBA-clutch-perf\\in_game_analysis\\Regression Outputs\\fixed_df_20_21.csv", row.names = FALSE)
+
+write.csv(fixed_df_18_19,"C:\\Users\\jwini\\Documents\\Gtihub Repositories\\NBA-clutch-perf\\in_game_analysis\\Regression Outputs\\fixed_df_18_19.csv", row.names = FALSE)
+
+write.csv(fixed_df_17_18,"C:\\Users\\jwini\\Documents\\Gtihub Repositories\\NBA-clutch-perf\\in_game_analysis\\Regression Outputs\\fixed_df_17_18.csv", row.names = FALSE)
+
+write.csv(fixed_df_16_17,"C:\\Users\\jwini\\Documents\\Gtihub Repositories\\NBA-clutch-perf\\in_game_analysis\\Regression Outputs\\fixed_df_16_17.csv", row.names = FALSE)
+
+write.csv(fixed_df_15_16,"C:\\Users\\jwini\\Documents\\Gtihub Repositories\\NBA-clutch-perf\\in_game_analysis\\Regression Outputs\\fixed_df_15_16.csv", row.names = FALSE)
+```
+

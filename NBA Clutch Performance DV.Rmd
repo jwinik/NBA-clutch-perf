@@ -143,9 +143,9 @@ ggplot(wide, aes(x = Avg_Minutes.y, y = Avg_PER.y)) +
 ```{r}
 library(tidyverse)
 
-data <- read.csv("C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Outputs/season_dummies_2020_21.csv")
+df <- read.csv("C:/Users/jwini/Documents/Gtihub Repositories/NBA-clutch-perf/in_game_analysis/Outputs/season_dummies_2020_21.csv")
 
-lm()
+lm(data = df, PER_pace ~ clutch_time)
 
 ```
 
